@@ -64,7 +64,7 @@ export default function ProfileMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        {/* Minha Conta */}
+
         <MenuItem component={Link} href="/login/minha-conta">
           <ListItemIcon>
             {user?.image ? (
@@ -76,7 +76,6 @@ export default function ProfileMenu() {
           <ListItemText primary="Minha Conta" />
         </MenuItem>
 
-        {/* Criar Conta */}
         <MenuItem component={Link} href="/login/criar-conta">
           <ListItemIcon>
             <PersonAddIcon fontSize="small" />
@@ -84,7 +83,6 @@ export default function ProfileMenu() {
           <ListItemText primary="Criar Conta" />
         </MenuItem>
 
-        {/* Meus Pedidos */}
         <MenuItem component={Link} href="/login/meus-pedidos">
           <ListItemIcon>
             <ReceiptLongIcon fontSize="small" />
@@ -94,7 +92,6 @@ export default function ProfileMenu() {
 
         <Divider />
 
-        {/* Entrar / Sair */}
         {status === "authenticated" ? (
           <MenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
             <ListItemIcon>

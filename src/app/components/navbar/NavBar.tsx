@@ -9,7 +9,6 @@ export default function Navbar() {
     <AppBar position="sticky" color="primary" elevation={1}>
       <Container maxWidth="lg">
         <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-          {/* Logo / Nome */}
           <Typography
             variant="h6"
             component={Link}
@@ -19,7 +18,6 @@ export default function Navbar() {
             ScoreOn
           </Typography>
 
-          {/* Menu de Navegação */}
           <Stack direction="row" spacing={1} alignItems="center">
             <Button component={Link} href="/" color="inherit">
               Início
@@ -31,7 +29,6 @@ export default function Navbar() {
               Login
             </Button>
 
-            {/* Ícone de Perfil */}
             <ProfileMenu />
           </Stack>
         </Toolbar>
