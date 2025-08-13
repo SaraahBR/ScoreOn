@@ -1,0 +1,248 @@
+{
+  "appName": "ScoreOn",
+  "api": {
+    "errors": {
+      "invalid_data": "Invalid data.",
+      "not_found": "Record not found.",
+      "expired": "Code expired.",
+      "mismatch": "Code does not match.",
+      "too_many_attempts": "Too many attempts, please try again later.",
+      "email_in_use": "Email already registered.",
+      "email_required": "Email is required.",
+      "invalid_image_format": "Invalid image format.",
+      "save_image_error": "Error while saving the photo."
+    },
+    "success": {
+      "verify_ok": "Registration confirmed successfully!",
+      "registration_started": "Registration started. Check your email.",
+      "image_saved": "Photo updated successfully.",
+      "image_removed": "Photo removed successfully."
+    }
+  },
+  "features": {
+    "students": { "title": "Classes and students", "desc": "Manage classes and student profiles with ease." },
+    "grades": { "title": "Assessments and averages", "desc": "Record grades, calculate averages, and track progress." },
+    "trust": { "title": "Reliable", "desc": "Accessibility standards and best practices." }
+  },
+  "footer": {
+    "links": { "home": "Home", "about": "About" },
+    "social": { "instagram": "Instagram", "facebook": "Facebook", "linkedin": "LinkedIn" },
+    "copyright": "© {{year}} All rights reserved."
+  },
+  "headers": {
+    "home": { "title": "Welcome to ScoreOn", "subtitle": "Manage grades and classes efficiently." },
+    "about": { "title": "About Us", "subtitle": "Learn more about our mission and values." }
+  },
+  "hero": {
+    "title": "Centralize your students' grades",
+    "subtitle": "Create assessments, track averages, and generate reports in a few clicks.",
+    "cta_primary": "Create class",
+    "cta_secondary": "See examples"
+  },
+  "navbar": { "home": "Home", "about": "About" },
+  "landing": {
+    "title": "ScoreOn — Grade Management System",
+    "subtitle": "Manage classes, enroll students, and record assessments with ease.",
+    "cta_start": "Get started",
+    "cta_docs": "Documentation"
+  },
+  "register": {
+    "title": "Create account",
+    "form": { "name": "Name", "email": "Email", "password": "Password" },
+    "password_hint": "Min. 8 characters, with uppercase, lowercase, number, and special character.",
+    "password_rules": "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.",
+    "continue": "Continue",
+    "generating_code": "Generating code...",
+    "errors": { "start_failed": "Failed to start registration", "invalid_code": "Invalid code" },
+    "code": {
+      "info": "The confirmation code shown below is unique and will be required to confirm your account creation.",
+      "prompt": "Enter the code shown below to confirm your registration:",
+      "label": "Code"
+    },
+    "confirm": "Confirm registration",
+    "confirming": "Confirming...",
+    "back": "Back",
+    "success_created": "Account created successfully! You can now sign in with email and password."
+  },
+  "reset": {
+    "title": "Forgot password",
+    "info": "The recovery code is the same code shown to you when registering. Keep this code — it is required to reset your password.",
+    "form": { "email": "Email", "code": "Recovery code", "new_password": "New password" },
+    "save": "Save new password",
+    "saving": "Saving...",
+    "success": "Password updated successfully! You can log in now.",
+    "errors": { "generic": "Could not reset the password." }
+  },
+  "studentsPage": {
+    "title": "Student Management",
+    "form": {
+      "class_label": "Class",
+      "student_name": "Student Name",
+      "registration": "Registration",
+      "submit_new": "Add",
+      "submit_save": "Save"
+    },
+    "section_title_for_class": "Students in {{className}}",
+    "table": {
+      "header_name": "Name",
+      "header_registration": "Registration",
+      "header_actions": "Actions",
+      "empty_for_class": "No students in this class yet."
+    },
+    "actions": { "edit": "Edit", "delete": "Delete" }
+  },
+  "accountPage": {
+    "title": "Account information",
+    "my_data": {
+      "title": "My data",
+      "email": "Email",
+      "name": "Name",
+      "cpf": "CPF",
+      "cpf_placeholder": "Enter your CPF",
+      "gender": "Gender",
+      "gender_female": "Female",
+      "gender_male": "Male",
+      "gender_unspecified": "Prefer not to say",
+      "birth": "Date of birth",
+      "save_changes": "Save changes",
+      "change_password": "Change password"
+    },
+    "avatar": {
+      "alt": "Profile photo",
+      "choose": "Choose photo",
+      "save": "Save photo",
+      "saving": "Saving...",
+      "remove": "Remove",
+      "login_required": "Sign in to change your photo.",
+      "select_first": "Select an image first."
+    },
+    "address": {
+      "title": "Address",
+      "address": "Address",
+      "address_placeholder": "Enter your address",
+      "city": "City",
+      "city_placeholder": "Enter your city",
+      "zip": "ZIP code",
+      "zip_placeholder": "Enter your ZIP code",
+      "phone": "Phone",
+      "phone_placeholder": "Enter your phone number",
+      "save": "Save address"
+    }
+  },
+  "classesPage": {
+    "title": "Manage Classes",
+    "form": {
+      "class_name": "Class Name",
+      "school_year": "School Year",
+      "year_invalid": "Enter a valid year (4 digits)",
+      "submit_new": "Add",
+      "submit_save": "Save"
+    },
+    "list_title": "Registered Classes",
+    "table": {
+      "header_name": "Name",
+      "header_year": "School Year",
+      "header_actions": "Actions",
+      "empty": "No classes registered."
+    },
+    "actions": { "edit": "Edit", "delete": "Delete" }
+  },
+  "gradesPage": {
+    "title": "Grades & Assessments",
+    "form": {
+      "class_label": "Class",
+      "assessment_name": "Assessment name",
+      "create_assessment": "Create assessment"
+    },
+    "assessments": {
+      "title": "Class Assessments",
+      "header_name": "Name",
+      "header_actions": "Actions",
+      "empty": "No assessments for this class."
+    },
+    "grades": {
+      "title": "Grade Entry",
+      "header_student": "Student",
+      "save": "Save"
+    },
+    "view": {
+      "title": "Grades Overview",
+      "header_student": "Student"
+    },
+    "actions": { "delete": "Delete" }
+  },
+  "resetConfirm": {
+    "title": "Reset password",
+    "new_password": "New password",
+    "save": "Save new password",
+    "saving": "Saving...",
+    "success": "Password updated! You can sign in now.",
+    "error_link": "Invalid or expired link."
+  },
+  "verifyPage": {
+    "title": "Email verification",
+    "loading": "Verifying...",
+    "success": "✅ Email successfully verified. You can now log in.",
+    "goToLogin": "Go to login",
+    "error": "❌ Invalid or expired link."
+  },
+  "loginPage": {
+    "title": "Login",
+    "email": "Email",
+    "password": "Password",
+    "forgot_password": "Forgot password",
+    "login": "Sign in",
+    "loading_ellipsis": "...",
+    "create_account": "Create Account",
+    "login_with_google": "Sign in with Google",
+    "terms_notice": "By continuing, you agree to our terms.",
+    "login_failed": "Login failed"
+  },
+  "profileMenu": {
+    "tooltip_profile": "Profile",
+    "aria_open_menu": "Open user menu",
+    "my_account": "My Account",
+    "create_account": "Create Account",
+    "my_classes": "My Classes",
+    "my_students": "My Students",
+    "grades_assessments": "Grades & Assessments",
+    "sign_out": "Sign out",
+    "sign_in": "Sign in"
+  },
+  "about": {
+    "title": "About Us",
+    "intro": "ScoreOn is a modern system for managing grades, classes, and school assessments. Our goal is to make teachers’ and administrators’ work easier by bringing practicality, security, and technology to the educational environment.",
+    "sections": {
+      "mission": {
+        "title": "Mission",
+        "text": "Democratize access to technology in education, making school management more efficient and human-centered."
+      },
+      "values": {
+        "title": "Values",
+        "text": "Innovation, transparency, respect, and commitment to everyone’s learning."
+      },
+      "team": {
+        "title": "Team",
+        "text": "Professionals passionate about education and technology, focused on delivering the best."
+      }
+    },
+    "team_title": "Meet our team",
+    "team": {
+      "gabriela": {
+        "name": "Gabriela Anjos",
+        "role": "Backend Dev",
+        "desc": "Specialist in scalable and secure solutions for the school environment."
+      },
+      "sara": {
+        "name": "Sara Sales",
+        "role": "UX/UI Designer",
+        "desc": "Responsible for ScoreOn’s visual experience and usability."
+      },
+      "sarah": {
+        "name": "Sarah Hernandes",
+        "role": "Founder & Frontend Dev",
+        "desc": "Passionate about technology and education, creator of ScoreOn."
+      }
+    }
+  }
+}

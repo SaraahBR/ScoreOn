@@ -13,8 +13,10 @@ import {
   Divider,
 } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
+  const { t } = useTranslation(); // usa common.json
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,7 +31,7 @@ export default function Page() {
         password,
       });
       if (res?.error) {
-        alert(res.error || "Falha no login");
+        alert(res.error || t("loginPage.login_failed"));
         return;
       }
       window.location.href = "/";
@@ -41,13 +43,13 @@ export default function Page() {
   return (
     <Container maxWidth="sm" sx={{ mt: 6, mb: 6 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Login
+        {t("loginPage.title")}
       </Typography>
 
       <Paper elevation={1} sx={{ p: 3 }}>
         <Box component="form" onSubmit={onSubmit}>
           <TextField
-            label="E-mail"
+            label={t("loginPage.email")}
             fullWidth
             margin="normal"
             type="email"
@@ -58,7 +60,7 @@ export default function Page() {
           />
 
           <TextField
-            label="Senha"
+            label={t("loginPage.password")}
             fullWidth
             margin="normal"
             type="password"
@@ -74,7 +76,7 @@ export default function Page() {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Typography variant="body2" sx={{ color: "#bfa14a" }}>
-                Esqueci a senha
+                {t("loginPage.forgot_password")}
               </Typography>
             </Link>
           </Box>
@@ -93,8 +95,10 @@ export default function Page() {
                 minWidth: "60px",
                 padding: 0,
               }}
+              aria-label={t("loginPage.login")}
+              title={t("loginPage.login")}
             >
-              {loading ? "..." : <LoginIcon fontSize="large" />}
+              {loading ? t("loginPage.loading_ellipsis") : <LoginIcon fontSize="large" />}
             </Button>
           </Box>
         </Box>
@@ -114,7 +118,7 @@ export default function Page() {
               borderRadius: "8px",
             }}
           >
-            Criar Conta
+            {t("loginPage.create_account")}
           </Button>
         </Box>
 
@@ -159,12 +163,12 @@ export default function Page() {
               </Box>
             }
           >
-            Login com Google
+            {t("loginPage.login_with_google")}
           </Button>
         </Box>
 
         <Typography variant="body2" sx={{ mt: 2 }}>
-          Ao continuar, você concorda com nossos termos.
+          {t("loginPage.terms_notice")}
         </Typography>
       </Paper>
     </Container>

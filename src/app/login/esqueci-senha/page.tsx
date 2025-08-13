@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { Button, Container, Paper, TextField, Typography, Box, Alert } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
+  const { t } = useTranslation();
+
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
@@ -23,11 +26,18 @@ export default function Page() {
         body: JSON.stringify({ email, code, password }),
       });
       const data = await res.json().catch(() => null);
+
       if (!res.ok) {
-        setErr(data?.error || "Não foi possível redefinir a senha.");
+        const maybeKey = String(data?.error || "");
+        const translated =
+          maybeKey && t(`api.errors.${maybeKey}`, maybeKey) !== `api.errors.${maybeKey}`
+            ? t(`api.errors.${maybeKey}`)
+            : (data?.error || t("reset.errors.generic"));
+        setErr(translated);
         return;
       }
-      setMsg("Senha atualizada com sucesso! Já pode fazer login.");
+
+      setMsg(t("reset.success"));
     } finally {
       setLoading(false);
     }
@@ -36,13 +46,12 @@ export default function Page() {
   return (
     <Container maxWidth="sm" sx={{ mt: 6 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Esqueci a senha
+        {t("reset.title")}
       </Typography>
 
       <Paper sx={{ p: 3 }}>
         <Alert severity="info" sx={{ mb: 2 }}>
-          O <strong>código de recuperação</strong> é o mesmo código que foi mostrado para você
-          no momento do cadastro. Guarde esse código para sempre — ele é necessário para redefinir sua senha.
+          {t("reset.info")}
         </Alert>
 
         {err && <Alert severity="error" sx={{ mb: 2 }}>{err}</Alert>}
@@ -50,7 +59,7 @@ export default function Page() {
 
         <Box component="form" onSubmit={onSubmit}>
           <TextField
-            label="E-mail"
+            label={t("reset.form.email")}
             type="email"
             fullWidth
             margin="normal"
@@ -60,7 +69,7 @@ export default function Page() {
           />
 
           <TextField
-            label="Código de recuperação"
+            label={t("reset.form.code")}
             fullWidth
             margin="normal"
             value={code}
@@ -70,7 +79,7 @@ export default function Page() {
           />
 
           <TextField
-            label="Nova senha"
+            label={t("reset.form.new_password")}
             type="password"
             fullWidth
             margin="normal"
@@ -81,7 +90,7 @@ export default function Page() {
 
           <Box sx={{ mt: 2 }}>
             <Button type="submit" variant="contained" disabled={loading}>
-              {loading ? "Salvando..." : "Salvar nova senha"}
+              {loading ? t("reset.saving") : t("reset.save")}
             </Button>
           </Box>
         </Box>
