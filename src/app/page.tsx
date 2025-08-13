@@ -16,7 +16,6 @@ export default function HomePage() {
           Gerencie turmas, cadastre alunos e registre avaliações com praticidade.
         </Typography>
 
-        {/* CTA rápido (opcional) */}
         <Stack direction="row" spacing={2} sx={{ mb: 6 }}>
           <Button variant="contained">Começar agora</Button>
           <Button variant="outlined">Documentação</Button>
