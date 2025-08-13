@@ -1,22 +1,27 @@
 "use client";
 
 import { ReactNode } from "react";
-import { CssBaseline, ThemeProvider, createTheme, StyledEngineProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
 
 const theme = createTheme({
-  palette: { mode: "light", primary: { main: "#1976d2" } },
+  palette: {
+    mode: "light",
+    primary: { main: "#1976d2" },
+    secondary: { main: "#9c27b0" },
+  },
+  typography: {
+    fontFamily: ["Inter", "Roboto", "Arial", "sans-serif"].join(","),
+  },
 });
 
 export default function ClientProviders({ children }: { children: ReactNode }) {
   return (
     <SessionProvider>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          {children}
-        </ThemeProvider>
-      </StyledEngineProvider>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
     </SessionProvider>
   );
 }
