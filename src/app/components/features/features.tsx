@@ -5,7 +5,7 @@ import { Paper, Typography, Stack } from "@mui/material";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import GroupIcon from "@mui/icons-material/Group";
 import SecurityIcon from "@mui/icons-material/Security";
-import styles from "./features.module.css";
+import styles from "./Features.module.css";
 
 const items = [
   { icon: <GroupIcon />, title: "Turmas e alunos", desc: "Gerencie turmas e perfis de alunos com facilidade." },

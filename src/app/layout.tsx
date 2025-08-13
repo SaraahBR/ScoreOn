@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientProviders from "./ClientProviders";
-import Navbar from "./components/navbar/navbar";
-import Footer from "./components/footer/footer";
+import Navbar from "./components/navbar/NavBar";
+import Footer from "./components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "ScoreOn",

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { AppBar, Toolbar, Typography, Stack, Button, Container } from "@mui/material";
-import styles from "./navbar.module.css";
+import styles from "./NavBar.module.css";
 
 export default function Navbar() {
   return (

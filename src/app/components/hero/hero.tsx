@@ -2,7 +2,7 @@
 
 import { Paper, Typography, Stack, Button, Box } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
-import styles from "./hero.module.css";
+import styles from "./Hero.module.css";
 
 export default function Hero() {
   return (

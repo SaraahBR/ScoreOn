@@ -1,8 +1,8 @@
 "use client";
 
 import { Container, Typography, Box, Button, Stack } from "@mui/material";
-import Hero from "./components/hero/hero";
-import Features from "./components/features/features";
+import Hero from "./components/hero/Hero";
+import Features from "./components/features/Features";
 
 export default function HomePage() {
   return (
