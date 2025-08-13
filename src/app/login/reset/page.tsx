@@ -1,12 +1,14 @@
-export const dynamic = "force-dynamic"; 
+export const dynamic = "force-dynamic";
 
 import ResetForm from "./reset-form";
 
-export default function Page({
+export default async function Page({
   searchParams,
 }: {
-  searchParams?: { [key: string]: string | string[] | undefined };
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const token = (searchParams?.token as string) || "";
+  const params = (await searchParams) ?? {};
+  const token = typeof params.token === "string" ? params.token : "";
+
   return <ResetForm token={token} />;
 }
