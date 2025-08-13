@@ -1,3 +1,4 @@
+// app/login/reset/reset-form.tsx
 "use client";
 
 import { useState } from "react";
@@ -22,14 +23,13 @@ export default function ResetForm({ token }: Props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, password }),
     });
-
     if (res.ok) {
       alert("Senha atualizada! Já pode entrar.");
-      window.location.href = "/login";
-      return;
+      // opcional: redirecionar
+      // window.location.href = "/login";
+    } else {
+      alert("Link inválido ou expirado.");
     }
-
-    alert("Link inválido ou expirado.");
   }
 
   return (
