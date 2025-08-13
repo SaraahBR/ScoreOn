@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { setUserImage } from "@/lib/user-repo";
 
+// Salva e Remove a Foto (do usuário)
 export async function POST(req: Request) {
   try {
     const { email, imageDataUrl } = await req.json().catch(() => ({}));

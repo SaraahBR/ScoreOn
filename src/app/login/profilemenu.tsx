@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import {
   IconButton,
@@ -14,18 +14,17 @@ import {
   Avatar,
 } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
+import LoginIcon from "@mui/icons-material/Login";
 
 export default function ProfileMenu() {
   const { data: session, status } = useSession();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleOpen = (e: React.MouseEvent<HTMLElement>) =>
-    setAnchorEl(e.currentTarget);
+  const handleOpen = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
   const user = session?.user;
@@ -73,32 +72,35 @@ export default function ProfileMenu() {
               <AccountCircleIcon fontSize="small" />
             )}
           </ListItemIcon>
-          <ListItemText primary={user?.name ?? "Minha Conta"} />
+          <ListItemText primary="Minha Conta" />
         </MenuItem>
 
         {/* Criar Conta */}
-        {status !== "authenticated" && (
-          <MenuItem component={Link} href="/login/criar-conta">
-            <ListItemIcon>
-              <PersonAddIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary="Criar Conta" />
-          </MenuItem>
-        )}
+        <MenuItem component={Link} href="/login/criar-conta">
+          <ListItemIcon>
+            <PersonAddIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Criar Conta" />
+        </MenuItem>
 
-        {/* Meus Pedidos */}
-        {status === "authenticated" && (
-          <MenuItem component={Link} href="/login/meus-pedidos">
-            <ListItemIcon>
-              <ReceiptLongIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary="Meus Pedidos" />
-          </MenuItem>
-        )}
+        {/* Minhas Turmas */}
+        <MenuItem component={Link} href="/login/minhas-turmas">
+          <ListItemIcon>
+            <ReceiptLongIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Minhas Turmas" />
+        </MenuItem>
+
+        {/* Meus Alunos */}
+        <MenuItem component={Link} href="/login/meus-alunos">
+          <ListItemIcon>
+            <ReceiptLongIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Meus Alunos" />
+        </MenuItem>
 
         <Divider />
 
-        {/* Login / Logout */}
         {status === "authenticated" ? (
           <MenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
             <ListItemIcon>
@@ -107,11 +109,12 @@ export default function ProfileMenu() {
             <ListItemText primary="Sair" />
           </MenuItem>
         ) : (
-          <MenuItem onClick={() => signIn("google", { callbackUrl: "/" })}>
+         
+          <MenuItem component={Link} href="/login">
             <ListItemIcon>
               <LoginIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Entrar com Google" />
+            <ListItemText primary="Entrar" />
           </MenuItem>
         )}
       </Menu>
