@@ -17,7 +17,7 @@ export default function HomePage() {
         </Typography>
 
         <Stack direction="row" spacing={2} sx={{ mb: 6 }}>
-          <Button variant="contained">Começar agora</Button>
+            <Button variant="contained" href="/login/criar-conta">Começar agora</Button>
           <Button variant="outlined">Documentação</Button>
         </Stack>
 

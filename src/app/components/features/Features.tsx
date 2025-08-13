@@ -1,7 +1,7 @@
 "use client";
 
-import Grid from "@mui/material/Grid"; // v1
-import { Paper, Typography, Stack } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { Paper, Typography, Stack, Box } from "@mui/material";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import GroupIcon from "@mui/icons-material/Group";
 import SecurityIcon from "@mui/icons-material/Security";
@@ -15,19 +15,22 @@ const items = [
 
 export default function Features() {
   return (
-    <Grid container spacing={3}>
-      {items.map((f) => (
-        <Grid key={f.title} item xs={12} md={4}>
-          <Paper elevation={0} className={styles.card}>
-            <Stack spacing={1}>
-              <Typography variant="h6" component="h3" className={styles.titleRow}>
-                {f.icon} {f.title}
-              </Typography>
-              <Typography className={styles.desc}>{f.desc}</Typography>
-            </Stack>
-          </Paper>
-        </Grid>
-      ))}
-    </Grid>
+    <Box className={styles.section}>
+      <Grid container spacing={3}>
+        {items.map((f) => (
+          <Grid key={f.title} item xs={12} md={4}>
+            <Paper elevation={0} className={styles.card}>
+              <Stack spacing={1}>
+                <Typography variant="h6" component="h3" className={styles.titleRow}>
+                  <span className={styles.iconWrap}>{f.icon}</span>
+                  {f.title}
+                </Typography>
+                <Typography className={styles.desc}>{f.desc}</Typography>
+              </Stack>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 }

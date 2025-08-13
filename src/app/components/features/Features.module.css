@@ -1,16 +1,44 @@
+.section {
+  padding: 8px 0 0;
+}
+
 .card {
-  padding: 24px;
+  padding: 22px;
   height: 100%;
-  border: 1px solid var(--mui-divider);
-  background-color: var(--mui-background-paper);
+  border: 1px solid rgba(0,0,0,0.06);
+  background: #fff;
+  border-radius: 14px;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  border-color: rgba(0,0,0,0.12);
 }
 
 .titleRow {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--graphite-900, #2f2e2b);
+}
+
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fff 0%, #f4ebdd 80%);
+  color: var(--graphite-900, #2f2e2b);
+  border: 1px solid rgba(0,0,0,0.06);
 }
 
 .desc {
-  color: var(--mui-text-secondary);
+  color: var(--graphite, #6e6a62);
+  line-height: 1.5;
 }

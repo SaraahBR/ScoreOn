@@ -12,6 +12,7 @@ import {
   Box,
   Divider,
 } from "@mui/material";
+import LoginIcon from "@mui/icons-material/Login";
 
 export default function Page() {
   const [email, setEmail] = useState("");
@@ -67,36 +68,50 @@ export default function Page() {
             required
           />
 
-          {/* Esqueci a senha */}
           <Box sx={{ mt: 0.5, mb: 1, textAlign: "right" }}>
             <Link
               href="/login/esqueci-senha"
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              <Typography variant="body2" color="primary">
+              <Typography variant="body2" sx={{ color: "#bfa14a" }}>
                 Esqueci a senha
               </Typography>
             </Link>
           </Box>
 
-          <Box sx={{ display: "flex", gap: 2, mt: 1 }}>
-            <Button type="submit" variant="contained" disabled={loading}>
-              {loading ? "Entrando..." : "Entrar"}
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              disabled={loading}
+              sx={{
+                backgroundColor: "#bfa14a",
+                "&:hover": { backgroundColor: "#a68f3d" },
+                borderRadius: "50%",
+                width: "60px",
+                height: "60px",
+                minWidth: "60px",
+                padding: 0,
+              }}
+            >
+              {loading ? "..." : <LoginIcon fontSize="large" />}
             </Button>
           </Box>
         </Box>
 
-        {/* Botão Criar Conta */}
-        <Box mt={1.5}>
+        <Box mt={2} sx={{ display: "flex", justifyContent: "center" }}>
           <Button
             component={Link}
             href="/login/criar-conta"
             variant="contained"
-            fullWidth
             sx={{
+              backgroundColor: "#bfa14a",
+              "&:hover": { backgroundColor: "#a68f3d" },
               textTransform: "none",
-              fontSize: "1rem",
-              py: 1,
+              fontSize: "0.9rem",
+              px: 3,
+              py: 0.8,
+              borderRadius: "8px",
             }}
           >
             Criar Conta
@@ -105,15 +120,14 @@ export default function Page() {
 
         <Divider sx={{ my: 2 }} />
 
-        {/* Botão Google */}
         <Box>
           <Button
             onClick={() => signIn("google", { callbackUrl: "/" })}
             fullWidth
             variant="contained"
             sx={{
-              backgroundColor: "#1a73e8",
-              "&:hover": { backgroundColor: "#1669c1" },
+              backgroundColor: "#bfa14a",
+              "&:hover": { backgroundColor: "#a68f3d" },
               textTransform: "none",
               py: 1.1,
             }}
@@ -136,8 +150,8 @@ export default function Page() {
                     fontWeight: 700,
                     fontSize: 16,
                     lineHeight: 1,
-                    color: "#1a73e8",
-                    transform: "translateY(0.5px)", 
+                    color: "#bfa14a",
+                    transform: "translateY(0.5px)",
                   }}
                 >
                   G
@@ -149,7 +163,6 @@ export default function Page() {
           </Button>
         </Box>
 
-        {/* Termos */}
         <Typography variant="body2" sx={{ mt: 2 }}>
           Ao continuar, você concorda com nossos termos.
         </Typography>

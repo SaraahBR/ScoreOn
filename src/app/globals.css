@@ -1,6 +1,38 @@
-html, body {
+:root {
+  --sand: #f4ebdd;
+  --graphite: #6e6a62;
+  --graphite-900: #2f2e2b;
+  --graphite-300: #bab4ac;
+  --white: #ffffff;
+}
+
+html,
+body {
+  height: 100%;            
   margin: 0;
   padding: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background-color: #f5f5f5;
+}
+
+body {
+  display: flex;           
+  flex-direction: column;
+  min-height: 100vh;       
+  font-family: Inter, Roboto, Arial, Helvetica, sans-serif;
+  background-color: var(--sand);
+  color: var(--graphite-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+}
+
+#site-main {
+  flex: 1 0 auto;          
+  display: block;
+}
+
+footer {
+  margin-top: auto;
 }
