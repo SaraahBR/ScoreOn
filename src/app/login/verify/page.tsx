@@ -7,7 +7,6 @@ import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 export default function VerifyPage() {
-  const { t } = useTranslation(); 
   const params = useSearchParams();
   const [status, setStatus] = useState<"ok" | "fail" | "loading">("loading");
 
@@ -16,7 +15,6 @@ export default function VerifyPage() {
     async function run() {
       const res = await fetch("/api/auth/verify", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token }),
       });
       setStatus(res.ok ? "ok" : "fail");
@@ -27,21 +25,16 @@ export default function VerifyPage() {
   return (
     <Container sx={{ mt: 6 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        {t("verifyPage.title")}
+        Verificação de e-mail
       </Typography>
-
-      {status === "loading" && <Typography>{t("verifyPage.loading")}</Typography>}
-
+      {status === "loading" && <Typography>Verificando...</Typography>}
       {status === "ok" && (
         <Box>
-          <Typography>{t("verifyPage.success")}</Typography>
-          <Button component={Link} href="/login" sx={{ mt: 2 }} variant="contained">
-            {t("verifyPage.goToLogin")}
-          </Button>
+          <Typography>✅ E-mail verificado com sucesso. Você já pode entrar.</Typography>
+          <Button component={Link} href="/login" sx={{ mt: 2 }} variant="contained">Ir para o login</Button>
         </Box>
       )}
-
-      {status === "fail" && <Typography>{t("verifyPage.error")}</Typography>}
+      {status === "fail" && <Typography>❌ Link inválido ou expirado.</Typography>}
     </Container>
   );
 }

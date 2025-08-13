@@ -1,0 +1,33 @@
+.docPaper {
+  background: linear-gradient(135deg, #f5f5f5 0%, #F2E2B6 100%);
+  box-shadow: 0 4px 24px 0 rgba(201, 162, 39, 0.08);
+  border-radius: 18px;
+}
+.docTitle {
+  font-weight: 700;
+  color: #C9A227;
+  margin-bottom: 16px;
+}
+.docSectionTitle {
+  color: #B38E1E;
+  font-weight: 600;
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+.docStep {
+  background: #fff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px 0 rgba(201, 162, 39, 0.04);
+}
+.docFaqTitle {
+  color: #C9A227;
+  font-weight: 600;
+}
+.docFaqItem {
+  background: #F2E2B6;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-bottom: 8px;
+}
