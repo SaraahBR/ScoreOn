@@ -29,7 +29,12 @@ export default function Hero() {
               >
                 Cadastrar turma
               </Button>
-              <Button variant="text" className={styles.ctaGhost}>
+              <Button
+                variant="text"
+                className={styles.ctaGhost}
+                component={Link}
+                href="/exemplos"
+              >
                 Ver exemplos
               </Button>
             </Stack>

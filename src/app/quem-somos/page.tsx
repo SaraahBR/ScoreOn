@@ -1,6 +1,5 @@
 "use client";
 import { Container, Typography, Box, Paper, Avatar, Stack } from "@mui/material";
-import styles from "../components/features/Features.module.css";
 
 import SchoolIcon from "@mui/icons-material/School";
 import EmojiObjectsIcon from "@mui/icons-material/EmojiObjects";
@@ -16,19 +15,19 @@ const equipe = [
     nome: "Gabriela Anjos",
     cargo: "Dev Backend",
     foto: "/Gabriela.webp",
-    descricao: "Especialista em soluções escaláveis e seguras para o ambiente escolar."
+    descricao: "Arquiteta de soluções backend, garantindo desempenho, segurança e escalabilidade no ambiente escolar."
   },
   {
     nome: "Sara Sales",
     cargo: "UX/UI Designer",
     foto: "/Sara.webp",
-    descricao: "Responsável pela experiência visual e usabilidade do ScoreOn."
+    descricao: "Líder de UX/UI que combina estética e funcionalidade para criar jornadas digitais intuitivas e marcantes."
   },
   {
     nome: "Sarah Hernandes",
     cargo: "Fundadora & Dev Frontend",
     foto: "/Sarah.webp",
-    descricao: "Apaixonada por tecnologia e educação, idealizadora do ScoreOn."
+    descricao: "Fundadora visionária que une inovação e código para transformar a experiência digital no ScoreOn."
   }
 ];
 
