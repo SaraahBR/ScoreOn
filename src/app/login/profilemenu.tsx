@@ -64,7 +64,7 @@ export default function ProfileMenu() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-
+        {/* Minha Conta */}
         <MenuItem component={Link} href="/login/minha-conta">
           <ListItemIcon>
             {user?.image ? (
@@ -73,25 +73,32 @@ export default function ProfileMenu() {
               <AccountCircleIcon fontSize="small" />
             )}
           </ListItemIcon>
-          <ListItemText primary="Minha Conta" />
+          <ListItemText primary={user?.name ?? "Minha Conta"} />
         </MenuItem>
 
-        <MenuItem component={Link} href="/login/criar-conta">
-          <ListItemIcon>
-            <PersonAddIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Criar Conta" />
-        </MenuItem>
+        {/* Criar Conta */}
+        {status !== "authenticated" && (
+          <MenuItem component={Link} href="/login/criar-conta">
+            <ListItemIcon>
+              <PersonAddIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Criar Conta" />
+          </MenuItem>
+        )}
 
-        <MenuItem component={Link} href="/login/meus-pedidos">
-          <ListItemIcon>
-            <ReceiptLongIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Meus Pedidos" />
-        </MenuItem>
+        {/* Meus Pedidos */}
+        {status === "authenticated" && (
+          <MenuItem component={Link} href="/login/meus-pedidos">
+            <ListItemIcon>
+              <ReceiptLongIcon fontSize="small" />
+            </ListItemIcon>
+            <ListItemText primary="Meus Pedidos" />
+          </MenuItem>
+        )}
 
         <Divider />
 
+        {/* Login / Logout */}
         {status === "authenticated" ? (
           <MenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
             <ListItemIcon>
@@ -100,11 +107,11 @@ export default function ProfileMenu() {
             <ListItemText primary="Sair" />
           </MenuItem>
         ) : (
-          <MenuItem onClick={() => signIn(undefined, { callbackUrl: "/" })}>
+          <MenuItem onClick={() => signIn("google", { callbackUrl: "/" })}>
             <ListItemIcon>
               <LoginIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Entrar" />
+            <ListItemText primary="Entrar com Google" />
           </MenuItem>
         )}
       </Menu>
