@@ -83,6 +83,7 @@ export default function ProfileMenu() {
           <ListItemText primary="Criar Conta" />
         </MenuItem>
 
+
         {/* Minhas Turmas */}
         <MenuItem component={Link} href="/login/minhas-turmas">
           <ListItemIcon>
@@ -97,6 +98,14 @@ export default function ProfileMenu() {
             <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Meus Alunos" />
+        </MenuItem>
+
+        {/* Notas e Avaliações */}
+        <MenuItem component={Link} href="/login/notas-avaliacoes">
+          <ListItemIcon>
+            <ReceiptLongIcon fontSize="small" />
+          </ListItemIcon>
+          <ListItemText primary="Notas e Avaliações" />
         </MenuItem>
 
         <Divider />

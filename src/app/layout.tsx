@@ -10,13 +10,18 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.ico" },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="pt-BR">
-      <body>
+      {/* body flex para manter o footer no rodapé */}
+      <body style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}>
         <ClientProviders>
           <Navbar />
-          {children}
+          <main id="site-main" style={{ flex: 1 }}>{children}</main>
           <Footer />
         </ClientProviders>
       </body>

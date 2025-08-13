@@ -3,7 +3,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styles from "./Turmas.module.css";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Box from "@mui/material/Box";
 import { useForm } from "react-hook-form";
 import {
   Container,
@@ -31,7 +32,7 @@ interface TurmaForm {
   ano: string;
 }
 
-function TurmasPage() {
+export default function TurmasPage() {
   const [turmas, setTurmas] = useState<Turma[]>([]);
   const [editId, setEditId] = useState<number | null>(null);
   const { register, handleSubmit, reset, setValue } = useForm<TurmaForm>({
@@ -42,7 +43,9 @@ function TurmasPage() {
     if (!data.nome || !data.ano) return;
     if (editId !== null) {
       setTurmas((prev) =>
-        prev.map((t) => (t.id === editId ? { ...t, nome: data.nome, ano: data.ano } : t))
+        prev.map((t) =>
+          t.id === editId ? { ...t, nome: data.nome, ano: data.ano } : t
+        )
       );
       setEditId(null);
     } else {
@@ -69,13 +72,13 @@ function TurmasPage() {
   };
 
   return (
-    <Container maxWidth="md" sx={{ mt: 6 }}>
-      <Typography variant="h4" gutterBottom>
+    <Container maxWidth="md" sx={{ mt: 8, mb: 8 }}>
+      <Typography component="h1" variant="h4" gutterBottom className={styles.tituloTurma}>
         Gerenciar Turmas
       </Typography>
-      <Paper sx={{ p: 3, mb: 4 }}>
+      <Paper className={styles.formTurma} elevation={3}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center">
             <TextField
               label="Nome da Turma"
               fullWidth
@@ -84,7 +87,23 @@ function TurmasPage() {
             <TextField
               label="Ano Letivo"
               fullWidth
-              {...register("ano", { required: true })}
+              {...register("ano", { 
+                required: true, 
+                pattern: {
+                  value: /^[0-9]{4}$/,
+                  message: "Digite um ano válido (4 dígitos)"
+                }
+              })}
+              inputProps={{ 
+                inputMode: "numeric", 
+                pattern: "[0-9]*", 
+                maxLength: 4 
+              }}
+              onChange={(e) => {
+                const onlyNums = e.target.value.replace(/[^0-9]/g, "").slice(0, 4);
+                e.target.value = onlyNums;
+                setValue("ano", onlyNums);
+              }}
             />
             <Button
               variant="contained"
@@ -97,10 +116,10 @@ function TurmasPage() {
           </Stack>
         </form>
       </Paper>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutterBottom className={styles.tituloTurma}>
         Turmas Cadastradas
       </Typography>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} className={styles.tabelaTurma}>
         <Table>
           <TableHead>
             <TableRow>
@@ -127,8 +146,11 @@ function TurmasPage() {
           </TableBody>
         </Table>
       </TableContainer>
+      {turmas.length === 0 && (
+        <Box sx={{ textAlign: 'center', color: '#bfa77a', mt: 3 }}>
+          Nenhuma turma cadastrada.
+        </Box>
+      )}
     </Container>
   );
 }
-
-export default TurmasPage;

@@ -15,9 +15,23 @@ export default function Page() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
+  function validarSenha(senha: string) {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+    return regex.test(senha);
+  }
+
   async function startRegister(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
+
+    if (!validarSenha(password)) {
+      setError(
+        "A senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula, número e caractere especial."
+      );
+      return;
+    }
+
     setLoading(true);
     try {
       const res = await fetch("/api/auth/register/start", {
@@ -72,7 +86,15 @@ export default function Page() {
             {error && <Alert severity="error" sx={{ mb: 2 }}>{String(error)}</Alert>}
             <TextField label="Nome" fullWidth margin="normal" value={name} onChange={(e) => setName(e.target.value)} required />
             <TextField label="E-mail" type="email" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <TextField label="Senha" type="password" fullWidth margin="normal" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <TextField
+              label="Senha"
+              type="password"
+              fullWidth
+              margin="normal"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
             <Box sx={{ mt: 2 }}>
               <Button type="submit" variant="contained" disabled={loading}>
                 {loading ? "Gerando código..." : "Continuar"}
@@ -84,6 +106,12 @@ export default function Page() {
         {step === "code" && (
           <Box component="form" onSubmit={confirmRegister}>
             {error && <Alert severity="error" sx={{ mb: 2 }}>{String(error)}</Alert>}
+
+            {/* Mensagem igual à de recuperação de senha */}
+            <Alert severity="info" sx={{ mb: 2 }}>
+              O <strong>código de confirmação</strong> mostrado abaixo é único e será necessário
+              para confirmar a criação da sua conta.
+            </Alert>
 
             <Typography sx={{ mb: 1 }}>
               Digite o código mostrado abaixo para confirmar seu cadastro:
