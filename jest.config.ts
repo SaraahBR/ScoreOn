@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
  * For a detailed explanation regarding each configuration property, visit:
  * https://jestjs.io/docs/configuration
@@ -199,3 +200,15 @@ const config: Config = {
 };
 
 export default config;
+=======
+import type { Config } from 'jest';
+
+const config: Config = {
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  transform: { '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.json' }] },
+  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+};
+
+export default config;
+>>>>>>> main
