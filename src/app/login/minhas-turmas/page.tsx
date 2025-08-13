@@ -1,4 +1,6 @@
 "use client";
+
+import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styles from "./Turmas.module.css";
@@ -35,7 +37,7 @@ interface TurmaForm {
 export default function TurmasPage() {
   const [turmas, setTurmas] = useState<Turma[]>([]);
   const [editId, setEditId] = useState<number | null>(null);
-  const { register, handleSubmit, reset, setValue } = useForm<TurmaForm>({
+  const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm<TurmaForm>({
     defaultValues: { nome: "", ano: "" },
   });
 
@@ -105,6 +107,12 @@ export default function TurmasPage() {
                 setValue("ano", onlyNums);
               }}
             />
+            {/* Exibe mensagem de erro de validação do ano */}
+            {typeof errors !== 'undefined' && errors.ano && (
+              <Typography color="error" sx={{ ml: 1, mt: 0.5 }}>
+                {errors.ano.message}
+              </Typography>
+            )}
             <Button
               variant="contained"
               type="submit"
@@ -134,10 +142,10 @@ export default function TurmasPage() {
                 <TableCell>{turma.nome}</TableCell>
                 <TableCell>{turma.ano}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleEdit(turma)}>
+                  <IconButton aria-label="editar" onClick={() => handleEdit(turma)}>
                     <EditIcon />
                   </IconButton>
-                  <IconButton onClick={() => handleDelete(turma.id)} color="error">
+                  <IconButton aria-label="excluir" onClick={() => handleDelete(turma.id)} color="error">
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
