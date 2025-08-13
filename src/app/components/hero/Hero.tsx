@@ -2,6 +2,7 @@
 
 import { Paper, Typography, Stack, Button, Box } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
+import Link from "next/link";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -17,7 +18,14 @@ export default function Hero() {
               Cadastre avaliações, acompanhe médias e gere relatórios com poucos cliques.
             </Typography>
             <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-              <Button variant="contained" startIcon={<SchoolIcon />}>Cadastrar turma</Button>
+              <Button
+                variant="contained"
+                startIcon={<SchoolIcon />}
+                component={Link}
+                href="/turmas"
+              >
+                Cadastrar turma
+              </Button>
               <Button variant="text">Ver exemplos</Button>
             </Stack>
           </Stack>
