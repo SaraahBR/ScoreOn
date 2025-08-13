@@ -1,9 +1,30 @@
 "use client";
+
 import { useState } from "react";
-import { Container, Typography, Paper, Stack, Button, TextField, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, IconButton, MenuItem, Select, FormControl, InputLabel, Box } from "@mui/material";
-import styles from "./MeusAlunos.module.css";
+import {
+  Container,
+  Typography,
+  Paper,
+  Stack,
+  Button,
+  TextField,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  IconButton,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+  Box,
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useTranslation } from "react-i18next";
+import styles from "./MeusAlunos.module.css";
 
 interface Turma {
   id: number;
@@ -23,6 +44,8 @@ const turmasExemplo: Turma[] = [
 ];
 
 export default function MeusAlunosPage() {
+  const { t } = useTranslation();
+
   const [alunos, setAlunos] = useState<Aluno[]>([]);
   const [turmaSelecionada, setTurmaSelecionada] = useState<number>(turmasExemplo[0].id);
   const [editId, setEditId] = useState<number | null>(null);
@@ -30,7 +53,6 @@ export default function MeusAlunosPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.name === "matricula") {
-      // Permite apenas números e máximo 9 dígitos
       const onlyNums = e.target.value.replace(/[^0-9]/g, "").slice(0, 9);
       setForm({ ...form, matricula: onlyNums });
     } else {
@@ -74,32 +96,43 @@ export default function MeusAlunosPage() {
     setForm({ nome: "", matricula: "" });
   };
 
+  const turmaNomeAtual = turmasExemplo.find((t) => t.id === turmaSelecionada)?.nome || "";
+
   return (
     <Container maxWidth="md" sx={{ mt: 8, mb: 8 }}>
       <Typography component="h1" variant="h4" gutterBottom className={styles.tituloAluno}>
-        Gestão de Alunos
+        {t("studentsPage.title")}
       </Typography>
+
       <Paper className={styles.formAluno} elevation={3}>
         <form onSubmit={handleSubmit}>
           <Stack direction={{ xs: "column", md: "row" }} spacing={2} alignItems="center">
             <FormControl sx={{ minWidth: 140 }}>
-              <InputLabel>Turma</InputLabel>
-              <Select value={turmaSelecionada} label="Turma" onChange={handleTurmaChange}>
+              <InputLabel>{t("studentsPage.form.class_label")}</InputLabel>
+              <Select
+                value={turmaSelecionada}
+                label={t("studentsPage.form.class_label")}
+                onChange={handleTurmaChange}
+              >
                 {turmasExemplo.map((turma) => (
-                  <MenuItem key={turma.id} value={turma.id}>{turma.nome}</MenuItem>
+                  <MenuItem key={turma.id} value={turma.id}>
+                    {turma.nome}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
+
             <TextField
-              label="Nome do Aluno"
+              label={t("studentsPage.form.student_name")}
               name="nome"
               value={form.nome}
               onChange={handleChange}
               fullWidth
               required
             />
+
             <TextField
-              label="Matrícula"
+              label={t("studentsPage.form.registration")}
               name="matricula"
               value={form.matricula}
               onChange={handleChange}
@@ -107,45 +140,60 @@ export default function MeusAlunosPage() {
               required
               inputProps={{ maxLength: 9, inputMode: "numeric", pattern: "[0-9]*" }}
             />
+
             <Button variant="contained" type="submit" size="large" className={styles.botaoCadastrar}>
-              {editId !== null ? "Salvar" : "Cadastrar"}
+              {editId !== null ? t("studentsPage.form.submit_save") : t("studentsPage.form.submit_new")}
             </Button>
           </Stack>
         </form>
       </Paper>
+
       <Typography variant="h6" gutterBottom className={styles.tituloAluno}>
-        Alunos da Turma {turmasExemplo.find(t => t.id === turmaSelecionada)?.nome}
+        {t("studentsPage.section_title_for_class", { className: turmaNomeAtual })}
       </Typography>
+
       <TableContainer component={Paper} className={styles.tabelaAluno}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Nome</TableCell>
-              <TableCell>Matrícula</TableCell>
-              <TableCell align="right">Ações</TableCell>
+              <TableCell>{t("studentsPage.table.header_name")}</TableCell>
+              <TableCell>{t("studentsPage.table.header_registration")}</TableCell>
+              <TableCell align="right">{t("studentsPage.table.header_actions")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {alunos.filter(a => a.turmaId === turmaSelecionada).map((aluno) => (
-              <TableRow key={aluno.id}>
-                <TableCell>{aluno.nome}</TableCell>
-                <TableCell>{aluno.matricula}</TableCell>
-                <TableCell align="right">
-                  <IconButton onClick={() => handleEdit(aluno)}>
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton onClick={() => handleDelete(aluno.id)} color="error">
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
+            {alunos
+              .filter((a) => a.turmaId === turmaSelecionada)
+              .map((aluno) => (
+                <TableRow key={aluno.id}>
+                  <TableCell>{aluno.nome}</TableCell>
+                  <TableCell>{aluno.matricula}</TableCell>
+                  <TableCell align="right">
+                    <IconButton
+                      onClick={() => handleEdit(aluno)}
+                      aria-label={t("studentsPage.actions.edit")}
+                      title={t("studentsPage.actions.edit")}
+                    >
+                      <EditIcon />
+                    </IconButton>
+                    <IconButton
+                      onClick={() => handleDelete(aluno.id)}
+                      color="error"
+                      aria-label={t("studentsPage.actions.delete")}
+                      title={t("studentsPage.actions.delete")}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
-      {alunos.filter(a => a.turmaId === turmaSelecionada).length === 0 && (
-        <Box sx={{ textAlign: 'center', color: '#bfa77a', mt: 3 }}>
-          Nenhum aluno cadastrado nesta turma.
+
+      {alunos.filter((a) => a.turmaId === turmaSelecionada).length === 0 && (
+        <Box sx={{ textAlign: "center", color: "#bfa77a", mt: 3 }}>
+          {t("studentsPage.table.empty_for_class")}
         </Box>
       )}
     </Container>

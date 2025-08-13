@@ -17,12 +17,14 @@ import {
   FormControl,
   Stack,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export default function MinhaConta() {
   const { data: session } = useSession();
+  const { t } = useTranslation();
   const [sexo, setSexo] = useState<string>("Não Informar");
 
-  // Foto de Perfil 
+  // Foto de Perfil
   const [avatarPreview, setAvatarPreview] = useState<string | null>(
     (session?.user?.image as string) || null
   );
@@ -30,7 +32,7 @@ export default function MinhaConta() {
   const [savingAvatar, setSavingAvatar] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  async function handlePickFile() {
+  function handlePickFile() {
     fileInputRef.current?.click();
   }
 
@@ -41,7 +43,6 @@ export default function MinhaConta() {
 
     const reader = new FileReader();
     reader.onload = () => {
-      
       setAvatarPreview(reader.result as string);
     };
     reader.readAsDataURL(file);
@@ -49,11 +50,11 @@ export default function MinhaConta() {
 
   async function handleSaveAvatar() {
     if (!session?.user?.email) {
-      alert("Faça login para alterar a foto.");
+      alert(t("accountPage.avatar.login_required"));
       return;
     }
     if (!avatarPreview) {
-      alert("Selecione uma imagem primeiro.");
+      alert(t("accountPage.avatar.select_first"));
       return;
     }
     setSavingAvatar(true);
@@ -63,16 +64,16 @@ export default function MinhaConta() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: session.user.email,
-          imageDataUrl: avatarPreview, 
+          imageDataUrl: avatarPreview,
         }),
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
-        throw new Error(data?.error || "Não foi possível salvar a foto.");
+        throw new Error(data?.error || t("api.errors.save_image_error"));
       }
-      alert("Foto atualizada com sucesso!");
+      alert(t("api.success.image_saved"));
     } catch (err: any) {
-      alert(err.message || "Erro ao salvar a foto.");
+      alert(err.message || t("api.errors.save_image_error"));
     } finally {
       setSavingAvatar(false);
     }
@@ -92,13 +93,13 @@ export default function MinhaConta() {
       });
       if (!res.ok) {
         const data = await res.json().catch(() => null);
-        throw new Error(data?.error || "Não foi possível remover a foto.");
+        throw new Error(data?.error || t("api.errors.save_image_error"));
       }
       setAvatarFile(null);
       setAvatarPreview(null);
-      alert("Foto removida.");
+      alert(t("api.success.image_removed"));
     } catch (err: any) {
-      alert(err.message || "Erro ao remover a foto.");
+      alert(err.message || t("api.errors.save_image_error"));
     } finally {
       setSavingAvatar(false);
     }
@@ -107,12 +108,12 @@ export default function MinhaConta() {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Informações da conta
+        {t("accountPage.title")}
       </Typography>
 
       {/* Meus dados */}
       <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>
-        Meus dados
+        {t("accountPage.my_data.title")}
       </Typography>
 
       <Paper elevation={1} sx={{ p: 3, mb: 4 }}>
@@ -125,24 +126,26 @@ export default function MinhaConta() {
         >
           <Avatar
             src={avatarPreview || undefined}
-            alt="Foto do perfil"
+            alt={t("accountPage.avatar.alt")}
             sx={{ width: 72, height: 72 }}
             imgProps={{ referrerPolicy: "no-referrer" }}
           />
           <Stack direction="row" spacing={1} flexWrap="wrap">
             <Button variant="outlined" onClick={handlePickFile}>
-              Escolher foto
+              {t("accountPage.avatar.choose")}
             </Button>
             <Button
               variant="contained"
               onClick={handleSaveAvatar}
               disabled={savingAvatar || !avatarPreview}
             >
-              {savingAvatar ? "Salvando..." : "Salvar foto"}
+              {savingAvatar
+                ? t("accountPage.avatar.saving")
+                : t("accountPage.avatar.save")}
             </Button>
             {avatarPreview && (
               <Button color="error" variant="text" onClick={handleRemoveAvatar}>
-                Remover
+                {t("accountPage.avatar.remove")}
               </Button>
             )}
           </Stack>
@@ -156,43 +159,42 @@ export default function MinhaConta() {
         </Stack>
 
         <TextField
-          label="E-mail"
+          label={t("accountPage.my_data.email")}
           fullWidth
           value={session?.user?.email || ""}
           margin="normal"
           InputProps={{ readOnly: true }}
         />
         <TextField
-          label="Nome"
+          label={t("accountPage.my_data.name")}
           fullWidth
           value={session?.user?.name || ""}
           margin="normal"
         />
         <TextField
-          label="CPF"
+          label={t("accountPage.my_data.cpf")}
           fullWidth
-          placeholder="Digite seu CPF"
+          placeholder={t("accountPage.my_data.cpf_placeholder")}
           margin="normal"
         />
 
-        {/* Sexo em dropdown */}
         <FormControl fullWidth margin="normal">
-          <InputLabel id="sexo-label">Sexo</InputLabel>
+          <InputLabel id="sexo-label">{t("accountPage.my_data.gender")}</InputLabel>
           <Select
             labelId="sexo-label"
             id="sexo"
             value={sexo}
-            label="Sexo"
+            label={t("accountPage.my_data.gender")}
             onChange={(e) => setSexo(e.target.value as string)}
           >
-            <MenuItem value="Feminino">Feminino</MenuItem>
-            <MenuItem value="Masculino">Masculino</MenuItem>
-            <MenuItem value="Não Informar">Não Informar</MenuItem>
+            <MenuItem value="Feminino">{t("accountPage.my_data.gender_female")}</MenuItem>
+            <MenuItem value="Masculino">{t("accountPage.my_data.gender_male")}</MenuItem>
+            <MenuItem value="Não Informar">{t("accountPage.my_data.gender_unspecified")}</MenuItem>
           </Select>
         </FormControl>
 
         <TextField
-          label="Data de nascimento"
+          label={t("accountPage.my_data.birth")}
           type="date"
           fullWidth
           margin="normal"
@@ -201,48 +203,48 @@ export default function MinhaConta() {
 
         <Box sx={{ mt: 2, display: "flex", gap: 2 }}>
           <Button variant="outlined" color="primary">
-            Salvar alterações
+            {t("accountPage.my_data.save_changes")}
           </Button>
           <Button variant="outlined" color="primary">
-            Mudar senha
+            {t("accountPage.my_data.change_password")}
           </Button>
         </Box>
       </Paper>
 
       {/* Endereço */}
       <Typography variant="h6" sx={{ mb: 2 }}>
-        Endereço
+        {t("accountPage.address.title")}
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Paper elevation={1} sx={{ p: 3 }}>
             <TextField
-              label="Endereço"
+              label={t("accountPage.address.address")}
               fullWidth
-              placeholder="Digite seu endereço"
+              placeholder={t("accountPage.address.address_placeholder")}
               margin="normal"
             />
             <TextField
-              label="Cidade"
+              label={t("accountPage.address.city")}
               fullWidth
-              placeholder="Digite sua cidade"
+              placeholder={t("accountPage.address.city_placeholder")}
               margin="normal"
             />
             <TextField
-              label="CEP"
+              label={t("accountPage.address.zip")}
               fullWidth
-              placeholder="Digite seu CEP"
+              placeholder={t("accountPage.address.zip_placeholder")}
               margin="normal"
             />
             <TextField
-              label="Telefone"
+              label={t("accountPage.address.phone")}
               fullWidth
-              placeholder="Digite seu telefone"
+              placeholder={t("accountPage.address.phone_placeholder")}
               margin="normal"
             />
             <Box sx={{ mt: 2 }}>
               <Button variant="outlined" color="primary">
-                Salvar endereço
+                {t("accountPage.address.save")}
               </Button>
             </Box>
           </Paper>

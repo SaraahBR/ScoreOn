@@ -1,4 +1,5 @@
 "use client";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styles from "./Turmas.module.css";
@@ -21,6 +22,7 @@ import {
   TableRow,
   IconButton,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 interface Turma {
   id: number;
@@ -33,6 +35,7 @@ interface TurmaForm {
 }
 
 export default function TurmasPage() {
+  const { t } = useTranslation();
   const [turmas, setTurmas] = useState<Turma[]>([]);
   const [editId, setEditId] = useState<number | null>(null);
   const { register, handleSubmit, reset, setValue } = useForm<TurmaForm>({
@@ -74,30 +77,31 @@ export default function TurmasPage() {
   return (
     <Container maxWidth="md" sx={{ mt: 8, mb: 8 }}>
       <Typography component="h1" variant="h4" gutterBottom className={styles.tituloTurma}>
-        Gerenciar Turmas
+        {t("classesPage.title")}
       </Typography>
+
       <Paper className={styles.formTurma} elevation={3}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center">
             <TextField
-              label="Nome da Turma"
+              label={t("classesPage.form.class_name")}
               fullWidth
               {...register("nome", { required: true })}
             />
             <TextField
-              label="Ano Letivo"
+              label={t("classesPage.form.school_year")}
               fullWidth
-              {...register("ano", { 
-                required: true, 
+              {...register("ano", {
+                required: true,
                 pattern: {
                   value: /^[0-9]{4}$/,
-                  message: "Digite um ano válido (4 dígitos)"
-                }
+                  message: t("classesPage.form.year_invalid"),
+                },
               })}
-              inputProps={{ 
-                inputMode: "numeric", 
-                pattern: "[0-9]*", 
-                maxLength: 4 
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+                maxLength: 4,
               }}
               onChange={(e) => {
                 const onlyNums = e.target.value.replace(/[^0-9]/g, "").slice(0, 4);
@@ -105,27 +109,24 @@ export default function TurmasPage() {
                 setValue("ano", onlyNums);
               }}
             />
-            <Button
-              variant="contained"
-              type="submit"
-              size="large"
-              className={styles.botaoCadastrar}
-            >
-              {editId !== null ? "Salvar" : "Cadastrar"}
+            <Button variant="contained" type="submit" size="large" className={styles.botaoCadastrar}>
+              {editId !== null ? t("classesPage.form.submit_save") : t("classesPage.form.submit_new")}
             </Button>
           </Stack>
         </form>
       </Paper>
+
       <Typography variant="h6" gutterBottom className={styles.tituloTurma}>
-        Turmas Cadastradas
+        {t("classesPage.list_title")}
       </Typography>
+
       <TableContainer component={Paper} className={styles.tabelaTurma}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Nome</TableCell>
-              <TableCell>Ano Letivo</TableCell>
-              <TableCell align="right">Ações</TableCell>
+              <TableCell>{t("classesPage.table.header_name")}</TableCell>
+              <TableCell>{t("classesPage.table.header_year")}</TableCell>
+              <TableCell align="right">{t("classesPage.table.header_actions")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -134,10 +135,19 @@ export default function TurmasPage() {
                 <TableCell>{turma.nome}</TableCell>
                 <TableCell>{turma.ano}</TableCell>
                 <TableCell align="right">
-                  <IconButton onClick={() => handleEdit(turma)}>
+                  <IconButton
+                    onClick={() => handleEdit(turma)}
+                    aria-label={t("classesPage.actions.edit")}
+                    title={t("classesPage.actions.edit")}
+                  >
                     <EditIcon />
                   </IconButton>
-                  <IconButton onClick={() => handleDelete(turma.id)} color="error">
+                  <IconButton
+                    onClick={() => handleDelete(turma.id)}
+                    color="error"
+                    aria-label={t("classesPage.actions.delete")}
+                    title={t("classesPage.actions.delete")}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -146,9 +156,10 @@ export default function TurmasPage() {
           </TableBody>
         </Table>
       </TableContainer>
+
       {turmas.length === 0 && (
-        <Box sx={{ textAlign: 'center', color: '#bfa77a', mt: 3 }}>
-          Nenhuma turma cadastrada.
+        <Box sx={{ textAlign: "center", color: "#bfa77a", mt: 3 }}>
+          {t("classesPage.table.empty")}
         </Box>
       )}
     </Container>

@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { Button, Container, Paper, TextField, Typography, Box, Alert } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
+  const { t } = useTranslation();
+
   const [step, setStep] = useState<"form" | "code">("form");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,9 +29,7 @@ export default function Page() {
     setError(null);
 
     if (!validarSenha(password)) {
-      setError(
-        "A senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula, número e caractere especial."
-      );
+      setError(t("register.password_rules"));
       return;
     }
 
@@ -40,12 +41,20 @@ export default function Page() {
         body: JSON.stringify({ name, email, password }),
       });
       const data = await res.json();
+
       if (!res.ok) {
-        setError(data?.error || "Erro ao iniciar cadastro");
+        
+        const maybeKey = String(data?.error || "");
+        const translated =
+          maybeKey && t(`api.errors.${maybeKey}`, maybeKey) !== `api.errors.${maybeKey}`
+            ? t(`api.errors.${maybeKey}`)
+            : (data?.error || t("register.errors.start_failed"));
+        setError(translated);
         return;
       }
+
       setPendingId(data.pendingId);
-      setServerCode(data.code);
+      setServerCode(data.code); 
       setStep("code");
     } finally {
       setLoading(false);
@@ -63,11 +72,18 @@ export default function Page() {
         body: JSON.stringify({ pendingId, code: inputCode }),
       });
       const data = await res.json();
+
       if (!res.ok) {
-        setError(data?.error || "Código inválido");
+        const maybeKey = String(data?.error || "");
+        const translated =
+          maybeKey && t(`api.errors.${maybeKey}`, maybeKey) !== `api.errors.${maybeKey}`
+            ? t(`api.errors.${maybeKey}`)
+            : (data?.error || t("register.errors.invalid_code"));
+        setError(translated);
         return;
       }
-      alert("Conta criada com sucesso! Agora você pode entrar com e-mail e senha.");
+
+      alert(t("register.success_created"));
       window.location.href = "/login";
     } finally {
       setLoading(false);
@@ -77,27 +93,51 @@ export default function Page() {
   return (
     <Container maxWidth="sm" sx={{ mt: 6 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Criar conta
+        {t("register.title")}
       </Typography>
 
       <Paper sx={{ p: 3 }}>
         {step === "form" && (
           <Box component="form" onSubmit={startRegister}>
-            {error && <Alert severity="error" sx={{ mb: 2 }}>{String(error)}</Alert>}
-            <TextField label="Nome" fullWidth margin="normal" value={name} onChange={(e) => setName(e.target.value)} required />
-            <TextField label="E-mail" type="email" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            {error && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {String(error)}
+              </Alert>
+            )}
+
             <TextField
-              label="Senha"
+              label={t("register.form.name")}
+              fullWidth
+              margin="normal"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+
+            <TextField
+              label={t("register.form.email")}
+              type="email"
+              fullWidth
+              margin="normal"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+
+            <TextField
+              label={t("register.form.password")}
               type="password"
               fullWidth
               margin="normal"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              helperText={t("register.password_hint")}
               required
             />
+
             <Box sx={{ mt: 2 }}>
               <Button type="submit" variant="contained" disabled={loading}>
-                {loading ? "Gerando código..." : "Continuar"}
+                {loading ? t("register.generating_code") : t("register.continue")}
               </Button>
             </Box>
           </Box>
@@ -105,17 +145,20 @@ export default function Page() {
 
         {step === "code" && (
           <Box component="form" onSubmit={confirmRegister}>
-            {error && <Alert severity="error" sx={{ mb: 2 }}>{String(error)}</Alert>}
+            {error && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {String(error)}
+              </Alert>
+            )}
 
-            {/* Mensagem igual à de recuperação de senha */}
             <Alert severity="info" sx={{ mb: 2 }}>
-              O <strong>código de confirmação</strong> mostrado abaixo é único e será necessário
-              para confirmar a criação da sua conta.
+              {/* Mensagem igual à de recuperação de senha */}
+              {t("register.code.info_html", {
+              })}
+              {t("register.code.info")}
             </Alert>
 
-            <Typography sx={{ mb: 1 }}>
-              Digite o código mostrado abaixo para confirmar seu cadastro:
-            </Typography>
+            <Typography sx={{ mb: 1 }}>{t("register.code.prompt")}</Typography>
 
             <Box
               sx={{
@@ -134,7 +177,7 @@ export default function Page() {
             </Box>
 
             <TextField
-              label="Código"
+              label={t("register.code.label")}
               fullWidth
               margin="normal"
               value={inputCode}
@@ -145,10 +188,15 @@ export default function Page() {
 
             <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
               <Button type="submit" variant="contained" disabled={loading}>
-                {loading ? "Confirmando..." : "Confirmar cadastro"}
+                {loading ? t("register.confirming") : t("register.confirm")}
               </Button>
-              <Button type="button" variant="text" onClick={() => setStep("form")} disabled={loading}>
-                Voltar
+              <Button
+                type="button"
+                variant="text"
+                onClick={() => setStep("form")}
+                disabled={loading}
+              >
+                {t("register.back")}
               </Button>
             </Box>
           </Box>

@@ -18,8 +18,10 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import LoginIcon from "@mui/icons-material/Login";
+import { useTranslation } from "react-i18next";
 
 export default function ProfileMenu() {
+  const { t } = useTranslation();
   const { data: session, status } = useSession();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -31,12 +33,12 @@ export default function ProfileMenu() {
 
   return (
     <>
-      <Tooltip title={user?.name ?? "Perfil"}>
+      <Tooltip title={user?.name ?? t("profileMenu.tooltip_profile")}>
         <IconButton
           onClick={handleOpen}
           size="large"
           color="inherit"
-          aria-label="Abrir menu do usuário"
+          aria-label={t("profileMenu.aria_open_menu")}
           aria-controls={open ? "profile-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
@@ -44,7 +46,7 @@ export default function ProfileMenu() {
           {user?.image ? (
             <Avatar
               src={user.image}
-              alt={user.name ?? "Usuário"}
+              alt={user.name ?? t("profileMenu.tooltip_profile")}
               sx={{ width: 32, height: 32 }}
               imgProps={{ referrerPolicy: "no-referrer" }}
             />
@@ -72,7 +74,7 @@ export default function ProfileMenu() {
               <AccountCircleIcon fontSize="small" />
             )}
           </ListItemIcon>
-          <ListItemText primary="Minha Conta" />
+          <ListItemText primary={t("profileMenu.my_account")} />
         </MenuItem>
 
         {/* Criar Conta */}
@@ -80,16 +82,15 @@ export default function ProfileMenu() {
           <ListItemIcon>
             <PersonAddIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Criar Conta" />
+          <ListItemText primary={t("profileMenu.create_account")} />
         </MenuItem>
-
 
         {/* Minhas Turmas */}
         <MenuItem component={Link} href="/login/minhas-turmas">
           <ListItemIcon>
             <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Minhas Turmas" />
+          <ListItemText primary={t("profileMenu.my_classes")} />
         </MenuItem>
 
         {/* Meus Alunos */}
@@ -97,7 +98,7 @@ export default function ProfileMenu() {
           <ListItemIcon>
             <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Meus Alunos" />
+          <ListItemText primary={t("profileMenu.my_students")} />
         </MenuItem>
 
         {/* Notas e Avaliações */}
@@ -105,7 +106,7 @@ export default function ProfileMenu() {
           <ListItemIcon>
             <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Notas e Avaliações" />
+          <ListItemText primary={t("profileMenu.grades_assessments")} />
         </MenuItem>
 
         <Divider />
@@ -115,15 +116,14 @@ export default function ProfileMenu() {
             <ListItemIcon>
               <LogoutIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Sair" />
+            <ListItemText primary={t("profileMenu.sign_out")} />
           </MenuItem>
         ) : (
-         
           <MenuItem component={Link} href="/login">
             <ListItemIcon>
               <LoginIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Entrar" />
+            <ListItemText primary={t("profileMenu.sign_in")} />
           </MenuItem>
         )}
       </Menu>
