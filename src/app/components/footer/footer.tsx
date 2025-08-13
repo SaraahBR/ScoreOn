@@ -2,18 +2,23 @@
 
 import { Box, Container, Typography, Link as MLink, Stack } from "@mui/material";
 import Link from "next/link";
+import styles from "./Footer.module.css";
 
 export default function Footer() {
   return (
-    <Box component="footer" sx={{ mt: 8, py: 4, borderTop: 1, borderColor: "divider", bgcolor: "background.paper" }}>
+    <Box component="footer" className={styles.footerBox}>
       <Container maxWidth="lg">
         <Stack direction={{ xs: "column", sm: "row" }} spacing={2} justifyContent="space-between" alignItems="center">
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" className={styles.footerText}>
             © {new Date().getFullYear()} ScoreOn. Todos os direitos reservados.
           </Typography>
-          <Stack direction="row" spacing={2}>
-            <MLink component={Link} href="/quem-somos" color="inherit" underline="hover">Quem somos</MLink>
-            <MLink component={Link} href="/login" color="inherit" underline="hover">Login</MLink>
+          <Stack direction="row" spacing={2} className={styles.footerLinks}>
+            <MLink component={Link} href="/quem-somos" className={styles.footerLink}>
+              Quem somos
+            </MLink>
+            <MLink component={Link} href="/login" className={styles.footerLink}>
+              Login
+            </MLink>
           </Stack>
         </Stack>
       </Container>

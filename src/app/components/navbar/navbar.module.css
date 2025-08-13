@@ -1,0 +1,13 @@
+.bar {
+  backdrop-filter: saturate(180%) blur(8px);
+}
+
+.brand {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 700;
+}
+
+.links {
+  gap: 8px;
+}

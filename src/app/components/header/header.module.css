@@ -1,0 +1,19 @@
+.headerBox {
+  padding: 24px 0; 
+  background-color: var(--mui-background-paper);
+  border-bottom: 1px solid var(--mui-divider);
+}
+
+.headerTitle {
+  font-size: 26px;
+}
+
+@media (min-width: 768px) {
+  .headerTitle {
+    font-size: 34px;
+  }
+}
+
+.headerSubtitle {
+  color: var(--mui-text-secondary);
+}
