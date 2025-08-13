@@ -1,3 +1,4 @@
+// src/lib/user-repo.ts
 import { randomUUID } from "crypto";
 
 export type User = {
@@ -7,22 +8,26 @@ export type User = {
   image?: string | null;
   passwordHash: string;
   emailVerified: boolean;
-  recoveryCode: string; 
+  recoveryCode: string; // <— mesmo código do cadastro; guarde para sempre
 };
 
+// ---- Persistência em globalThis para não perder dados em HMR (dev) ----
 type PendingReg = {
-  id: string;            
+  id: string;            // pendingId
   name: string;
   email: string;
   passwordHash: string;
-  code: string;         
-  expires: number;       
-  attempts: number;     
+  code: string;          // 6 dígitos (mostrado no cadastro e será o recoveryCode)
+  expires: number;       // TTL (10min)
+  attempts: number;      // limite de tentativas
 };
 
 declare global {
+  // eslint-disable-next-line no-var
   var __USERS__: Map<string, User> | undefined;
+  // eslint-disable-next-line no-var
   var __PENDINGS__: Map<string, PendingReg> | undefined;
+  // eslint-disable-next-line no-var
   var __PENDING_BY_EMAIL__: Map<string, string> | undefined;
 }
 
@@ -37,6 +42,8 @@ globalThis.__USERS__ = users;
 globalThis.__PENDINGS__ = pendings;
 globalThis.__PENDING_BY_EMAIL__ = byEmail;
 
+// ======================= API pública =======================
+
 export async function getUserByEmail(email: string) {
   return users.get(email.toLowerCase()) || null;
 }
@@ -46,7 +53,7 @@ export async function createUser(data: {
   email: string;
   passwordHash: string;
   image?: string | null;
-  recoveryCode: string; 
+  recoveryCode: string; // obrigatório agora
 }) {
   const key = data.email.toLowerCase();
   if (users.has(key)) throw new Error("E-mail já cadastrado");
@@ -56,7 +63,7 @@ export async function createUser(data: {
     email: key,
     image: data.image ?? null,
     passwordHash: data.passwordHash,
-    emailVerified: true, 
+    emailVerified: true, // verificação local concluída
     recoveryCode: data.recoveryCode,
   };
   users.set(key, user);
@@ -82,6 +89,10 @@ export async function resetPasswordWithRecoveryCode(
   return { ok: true };
 }
 
+export function generate6Digits() {
+  return String(Math.floor(100000 + Math.random() * 900000));
+}
+
 export async function setUserImage(email: string, image: string | null) {
   const u = users.get(email.toLowerCase());
   if (!u) return { ok: false, reason: "not_found" };
@@ -89,9 +100,6 @@ export async function setUserImage(email: string, image: string | null) {
   return { ok: true };
 }
 
-export function generate6Digits() {
-  return String(Math.floor(100000 + Math.random() * 900000));
-}
 
 export async function startPendingRegistration(
   name: string,
@@ -146,6 +154,7 @@ export async function confirmPendingRegistration(pendingId: string, code: string
     return { ok: false, reason: "mismatch" };
   }
 
+  // cria usuário definitivo — salva o code como recoveryCode
   await createUser({
     name: rec.name,
     email: rec.email,

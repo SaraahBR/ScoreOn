@@ -61,116 +61,71 @@ export default function Page() {
   }
 
   return (
-  <Container maxWidth="sm" sx={{ mt: 6 }}>
-    <Typography variant="h4" component="h1" gutterBottom>
-      Criar conta
-    </Typography>
+    <Container maxWidth="sm" sx={{ mt: 6 }}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Criar conta
+      </Typography>
 
-    <Paper sx={{ p: 3 }}>
-      {step === "form" && (
-        <Box component="form" onSubmit={startRegister}>
-          {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {String(error)}
-            </Alert>
-          )}
-
-          <TextField
-            label="Nome"
-            fullWidth
-            margin="normal"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <TextField
-            label="E-mail"
-            type="email"
-            fullWidth
-            margin="normal"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <TextField
-            label="Senha"
-            type="password"
-            fullWidth
-            margin="normal"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-
-          <Box sx={{ mt: 2 }}>
-            <Button type="submit" variant="contained" disabled={loading}>
-              {loading ? "Gerando código..." : "Continuar"}
-            </Button>
+      <Paper sx={{ p: 3 }}>
+        {step === "form" && (
+          <Box component="form" onSubmit={startRegister}>
+            {error && <Alert severity="error" sx={{ mb: 2 }}>{String(error)}</Alert>}
+            <TextField label="Nome" fullWidth margin="normal" value={name} onChange={(e) => setName(e.target.value)} required />
+            <TextField label="E-mail" type="email" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <TextField label="Senha" type="password" fullWidth margin="normal" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <Box sx={{ mt: 2 }}>
+              <Button type="submit" variant="contained" disabled={loading}>
+                {loading ? "Gerando código..." : "Continuar"}
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      )}
+        )}
 
-      {step === "code" && (
-        <Box component="form" onSubmit={confirmRegister}>
-          {error && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {String(error)}
-            </Alert>
-          )}
+        {step === "code" && (
+          <Box component="form" onSubmit={confirmRegister}>
+            {error && <Alert severity="error" sx={{ mb: 2 }}>{String(error)}</Alert>}
 
-          <Alert severity="warning" sx={{ mb: 2 }}>
-            <strong>Guarde este código!</strong> Ele será o seu{" "}
-            <em>código de recuperação</em> e será necessário para redefinir sua
-            senha no futuro (“Esqueci a senha”). Recomendamos anotar e guardar em
-            lugar seguro.
-          </Alert>
+            <Typography sx={{ mb: 1 }}>
+              Digite o código mostrado abaixo para confirmar seu cadastro:
+            </Typography>
 
-          <Typography sx={{ mb: 1 }}>
-            Digite o código mostrado abaixo para confirmar seu cadastro:
-          </Typography>
-
-          <Box
-            sx={{
-              fontSize: 28,
-              fontWeight: 700,
-              letterSpacing: "8px",
-              mb: 2,
-              p: 2,
-              textAlign: "center",
-              border: "1px solid #ddd",
-              borderRadius: 1,
-              userSelect: "none",
-            }}
-          >
-            {serverCode}
-          </Box>
-
-          <TextField
-            label="Código"
-            fullWidth
-            margin="normal"
-            value={inputCode}
-            onChange={(e) => setInputCode(e.target.value)}
-            inputProps={{ inputMode: "numeric", pattern: "[0-9]*", maxLength: 6 }}
-            required
-          />
-
-          <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-            <Button type="submit" variant="contained" disabled={loading}>
-              {loading ? "Confirmando..." : "Confirmar cadastro"}
-            </Button>
-            <Button
-              type="button"
-              variant="text"
-              onClick={() => setStep("form")}
-              disabled={loading}
+            <Box
+              sx={{
+                fontSize: 28,
+                fontWeight: 700,
+                letterSpacing: "8px",
+                mb: 2,
+                p: 2,
+                textAlign: "center",
+                border: "1px solid #ddd",
+                borderRadius: 1,
+                userSelect: "none",
+              }}
             >
-              Voltar
-            </Button>
+              {serverCode}
+            </Box>
+
+            <TextField
+              label="Código"
+              fullWidth
+              margin="normal"
+              value={inputCode}
+              onChange={(e) => setInputCode(e.target.value)}
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*", maxLength: 6 }}
+              required
+            />
+
+            <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+              <Button type="submit" variant="contained" disabled={loading}>
+                {loading ? "Confirmando..." : "Confirmar cadastro"}
+              </Button>
+              <Button type="button" variant="text" onClick={() => setStep("form")} disabled={loading}>
+                Voltar
+              </Button>
+            </Box>
           </Box>
-        </Box>
-      )}
-    </Paper>
-  </Container>
-);
+        )}
+      </Paper>
+    </Container>
+  );
 }
