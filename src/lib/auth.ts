@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { getUserByEmail } from "@/lib/user-repo";
+import { sql } from "@vercel/postgres";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -35,24 +36,51 @@ export const authOptions: NextAuthOptions = {
         const ok = await compare(password, user.passwordHash);
         if (!ok) return null;
 
-        return { id: user.id, name: user.name, email: user.email, image: user.image || null };
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image || null, 
+        };
       },
     }),
   ],
+
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
+
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
         token.email = user.email!;
         token.name = user.name || null;
+        if ((user as any).image) token.picture = (user as any).image;
       }
       return token;
     },
+
     async session({ session, token }) {
       if (token?.email) {
-        session.user = { ...(session.user || {}), email: token.email as string, name: (token.name as string) || undefined } as any;
+        session.user = {
+          ...(session.user || {}),
+          email: token.email as string,
+          name: (token.name as string) || undefined,
+          image: (token.picture as string) || (session.user?.image as string | undefined) || null,
+        } as any;
       }
+
+      try {
+        if (session?.user?.email) {
+          const { rows } =
+            await sql`select avatar_url from users where email = ${session.user.email}`;
+          const dbAvatar = rows?.[0]?.avatar_url as string | null | undefined;
+          if (dbAvatar) {
+            session.user.image = dbAvatar; 
+          }
+        }
+      } catch {
+    }
+
       return session;
     },
   },

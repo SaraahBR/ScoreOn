@@ -28,6 +28,14 @@ export default function ProfileMenu() {
   const handleClose = () => setAnchorEl(null);
 
   const user = session?.user;
+  const avatarSrc = typeof user?.image === "string" && user.image ? user.image : null;
+
+  const ariaLabel =
+    status === "loading"
+      ? "Carregando perfil..."
+      : user?.name
+      ? `Perfil de ${user.name}`
+      : "Perfil";
 
   return (
     <>
@@ -36,15 +44,16 @@ export default function ProfileMenu() {
           onClick={handleOpen}
           size="large"
           color="inherit"
-          aria-label="Abrir menu do usuário"
+          aria-label={ariaLabel}
           aria-controls={open ? "profile-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
+          disabled={status === "loading"}
         >
-          {user?.image ? (
+          {avatarSrc ? (
             <Avatar
-              src={user.image}
-              alt={user.name ?? "Usuário"}
+              src={avatarSrc}
+              alt={user?.name ?? "Usuário"}
               sx={{ width: 32, height: 32 }}
               imgProps={{ referrerPolicy: "no-referrer" }}
             />
@@ -62,12 +71,13 @@ export default function ProfileMenu() {
         onClick={handleClose}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        keepMounted
       >
         {/* Minha Conta */}
-        <MenuItem component={Link} href="/login/minha-conta">
+        <MenuItem component={Link} href="/login/minha-conta" prefetch={false}>
           <ListItemIcon>
-            {user?.image ? (
-              <Avatar src={user.image} sx={{ width: 24, height: 24 }} />
+            {avatarSrc ? (
+              <Avatar src={avatarSrc} sx={{ width: 24, height: 24 }} imgProps={{ referrerPolicy: "no-referrer" }} />
             ) : (
               <AccountCircleIcon fontSize="small" />
             )}
@@ -76,16 +86,15 @@ export default function ProfileMenu() {
         </MenuItem>
 
         {/* Criar Conta */}
-        <MenuItem component={Link} href="/login/criar-conta">
+        <MenuItem component={Link} href="/login/criar-conta" prefetch={false}>
           <ListItemIcon>
             <PersonAddIcon fontSize="small" />
           </ListItemIcon>
           <ListItemText primary="Criar Conta" />
         </MenuItem>
 
-
         {/* Minhas Turmas */}
-        <MenuItem component={Link} href="/login/minhas-turmas">
+        <MenuItem component={Link} href="/login/minhas-turmas" prefetch={false}>
           <ListItemIcon>
             <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
@@ -93,7 +102,7 @@ export default function ProfileMenu() {
         </MenuItem>
 
         {/* Meus Alunos */}
-        <MenuItem component={Link} href="/login/meus-alunos">
+        <MenuItem component={Link} href="/login/meus-alunos" prefetch={false}>
           <ListItemIcon>
             <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
@@ -101,7 +110,7 @@ export default function ProfileMenu() {
         </MenuItem>
 
         {/* Notas e Avaliações */}
-        <MenuItem component={Link} href="/login/notas-avaliacoes">
+        <MenuItem component={Link} href="/login/notas-avaliacoes" prefetch={false}>
           <ListItemIcon>
             <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
@@ -118,8 +127,7 @@ export default function ProfileMenu() {
             <ListItemText primary="Sair" />
           </MenuItem>
         ) : (
-         
-          <MenuItem component={Link} href="/login">
+          <MenuItem component={Link} href="/login" prefetch={false}>
             <ListItemIcon>
               <LoginIcon fontSize="small" />
             </ListItemIcon>
