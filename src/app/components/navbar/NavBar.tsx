@@ -322,7 +322,7 @@ export default function Navbar() {
             {/* Ícone de perfil */}
             <ProfileMenu />
 
-            {/* Bandeiras à direita do perfil */}
+            {/* Bandeiras à direita do perfil! */}
             <LangButtonsInline />
 
             {isMdDown && (
