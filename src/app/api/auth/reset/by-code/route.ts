@@ -2,10 +2,7 @@ import { NextResponse } from "next/server";
 import { resetPasswordWithRecoveryCode } from "@/lib/user-repo";
 import { hash } from "bcryptjs";
 
-type ApiErrorKey =
-  | "invalid_data"
-  | "not_found"
-  | "mismatch";
+type ApiErrorKey = "invalid_data" | "not_found" | "mismatch";
 
 const STATUS_BY_REASON: Record<ApiErrorKey, number> = {
   invalid_data: 400,
@@ -47,3 +44,17 @@ export async function POST(req: Request) {
       status,
       headers: {
         "content-type": "application/json; charset=utf-8",
+        "content-language": lang,
+      },
+    });
+  }
+
+  const body = { ok: true, lang };
+  return new NextResponse(JSON.stringify(body), {
+    status: 200,
+    headers: {
+      "content-type": "application/json; charset=utf-8",
+      "content-language": lang,
+    },
+  });
+}
