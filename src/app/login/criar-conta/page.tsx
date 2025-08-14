@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useState } from "react";
 import { Button, Container, Paper, TextField, Typography, Box, Alert } from "@mui/material";
 
@@ -109,8 +110,8 @@ export default function Page() {
 
             {/* Mensagem igual à de recuperação de senha */}
             <Alert severity="info" sx={{ mb: 2 }}>
-              O <strong>código de confirmação</strong> mostrado abaixo é único e será necessário
-              para confirmar a criação da sua conta.
+              Atenção! O <strong>código de confirmação</strong> abaixo é <strong>único</strong> e necessário para completar seu cadastro.
+              Guarde-o com cuidado, pois não poderá ser recuperado depois.
             </Alert>
 
             <Typography sx={{ mb: 1 }}>
