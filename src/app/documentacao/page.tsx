@@ -2,76 +2,92 @@
 
 import { Container, Typography, Paper, Stack } from "@mui/material";
 import styles from "./Documentacao.module.css";
+import { useTranslation } from "react-i18next";
 
 export default function DocumentacaoPage() {
+  const { t } = useTranslation("common");
+
   return (
     <Container maxWidth="md" sx={{ mt: 6, mb: 6 }}>
       <Paper className={styles.docPaper} sx={{ p: 4 }}>
         <Typography variant="h3" gutterBottom className={styles.docTitle}>
-          Documentação do ScoreOn
+          {t("docs.title")}
         </Typography>
+
         <Typography variant="body1" paragraph>
-          O ScoreOn é um sistema para gestão de notas, turmas e alunos, pensado para facilitar o controle acadêmico de escolas e professores.
+          {t("docs.intro")}
         </Typography>
+
         <Typography variant="h5" gutterBottom className={styles.docSectionTitle}>
-          Como usar o sistema
+          {t("docs.howToUse")}
         </Typography>
+
         <Stack spacing={2}>
           <div className={styles.docStep}>
-            <Typography variant="h6">1. Cadastro e Login</Typography>
-            <Typography variant="body2">
-              - Clique em "Começar agora" e crie sua conta usando Google ou e-mail.<br />
-              - Após o login, você terá acesso ao painel principal.
-            </Typography>
+            <Typography variant="h6">{t("docs.steps.one.title")}</Typography>
+            <Typography
+              variant="body2"
+              dangerouslySetInnerHTML={{ __html: t("docs.steps.one.text") }}
+            />
           </div>
+
           <div className={styles.docStep}>
-            <Typography variant="h6">2. Gerenciar Turmas</Typography>
-            <Typography variant="body2">
-              - No menu ou na tela inicial, clique em "Cadastrar turma".<br />
-              - Preencha o nome da turma e o ano letivo.<br />
-              - As turmas cadastradas aparecerão em uma lista, onde você pode editar ou excluir.
-            </Typography>
+            <Typography variant="h6">{t("docs.steps.two.title")}</Typography>
+            <Typography
+              variant="body2"
+              dangerouslySetInnerHTML={{ __html: t("docs.steps.two.text") }}
+            />
           </div>
+
           <div className={styles.docStep}>
-            <Typography variant="h6">3. Gerenciar Alunos</Typography>
-            <Typography variant="body2">
-              - Acesse a seção "Meus Alunos".<br />
-              - Cadastre novos alunos vinculando-os a uma turma.<br />
-              - Edite ou remova alunos conforme necessário.
-            </Typography>
+            <Typography variant="h6">{t("docs.steps.three.title")}</Typography>
+            <Typography
+              variant="body2"
+              dangerouslySetInnerHTML={{ __html: t("docs.steps.three.text") }}
+            />
           </div>
+
           <div className={styles.docStep}>
-            <Typography variant="h6">4. Lançar Notas e Avaliações</Typography>
-            <Typography variant="body2">
-              - Vá até "Notas e Avaliações".<br />
-              - Selecione a turma e o aluno desejado.<br />
-              - Registre as notas das avaliações e salve.<br />
-              - O sistema calcula médias automaticamente.
-            </Typography>
+            <Typography variant="h6">{t("docs.steps.four.title")}</Typography>
+            <Typography
+              variant="body2"
+              dangerouslySetInnerHTML={{ __html: t("docs.steps.four.text") }}
+            />
           </div>
+
           <div className={styles.docStep}>
-            <Typography variant="h6">5. Consultar Relatórios</Typography>
-            <Typography variant="body2">
-              - Gere relatórios de desempenho por aluno, turma ou disciplina.<br />
-              - Exporte relatórios em PDF ou Excel, se necessário.
-            </Typography>
+            <Typography variant="h6">{t("docs.steps.five.title")}</Typography>
+            <Typography
+              variant="body2"
+              dangerouslySetInnerHTML={{ __html: t("docs.steps.five.text") }}
+            />
           </div>
         </Stack>
+
         <Typography variant="h5" gutterBottom className={styles.docSectionTitle} sx={{ mt: 4 }}>
-          Dúvidas Frequentes
+          {t("docs.faqTitle")}
         </Typography>
+
         <Stack spacing={1}>
           <div className={styles.docFaqItem}>
-            <Typography variant="subtitle1" className={styles.docFaqTitle}>Preciso pagar para usar?</Typography>
-            <Typography variant="body2">Não, o ScoreOn é gratuito para uso escolar.</Typography>
+            <Typography variant="subtitle1" className={styles.docFaqTitle}>
+              {t("docs.faq.q1")}
+            </Typography>
+            <Typography variant="body2">{t("docs.faq.a1")}</Typography>
           </div>
+
           <div className={styles.docFaqItem}>
-            <Typography variant="subtitle1" className={styles.docFaqTitle}>Posso cadastrar várias turmas?</Typography>
-            <Typography variant="body2">Sim, não há limite de turmas ou alunos.</Typography>
+            <Typography variant="subtitle1" className={styles.docFaqTitle}>
+              {t("docs.faq.q2")}
+            </Typography>
+            <Typography variant="body2">{t("docs.faq.a2")}</Typography>
           </div>
+
           <div className={styles.docFaqItem}>
-            <Typography variant="subtitle1" className={styles.docFaqTitle}>Meus dados estão seguros?</Typography>
-            <Typography variant="body2">Sim, usamos autenticação segura e seus dados não são compartilhados.</Typography>
+            <Typography variant="subtitle1" className={styles.docFaqTitle}>
+              {t("docs.faq.q3")}
+            </Typography>
+            <Typography variant="body2">{t("docs.faq.a3")}</Typography>
           </div>
         </Stack>
       </Paper>

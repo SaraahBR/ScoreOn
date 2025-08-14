@@ -1,91 +1,141 @@
 "use client";
 
+import { useMemo } from "react";
 import { Box, Typography, Paper, TextField, Button, Stack } from "@mui/material";
 import RoomIcon from "@mui/icons-material/Room";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
-import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-import { useMemo } from 'react';
+import { useTranslation } from "react-i18next";
 import styles from "./FaleConosco.module.css";
 
 export default function ContatoPage() {
-    // Coordenadas do endereço fornecido
-    const mapCenter = useMemo(() => ({ lat: -23.004166, lng: -51.20138 }), []);
-    const mapContainerStyle = useMemo(() => ({
-        width: '100%',
-        height: '220px',
-        borderRadius: '10px',
-        overflow: 'hidden',
-        boxShadow: '0 2px 16px rgba(0,0,0,0.10)',
-        marginTop: 12,
-        marginBottom: 8,
-    }), []);
-    const GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-    });
+  const { t } = useTranslation("common");
 
-    return (
-        <Box sx={{ mt: { xs: 4, md: 8 }, mb: 8, display: 'flex', justifyContent: 'center' }}>
-            <Paper elevation={2} sx={{ p: { xs: 2, md: 4 }, maxWidth: 900, width: '100%', display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4 }}>
-                {/* Lateral: Endereço, contatos e mapa */}
-                <Box sx={{ minWidth: 260, maxWidth: 320, flex: '0 0 260px', bgcolor: '#f9fafb', borderRadius: 2, p: 3, display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'flex-start', mb: { xs: 2, md: 0 } }}>
-                    <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: 'primary.main' }}>Contato</Typography>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                        <RoomIcon color="action" />
-                        <Typography variant="body2">
-                            Calle de la Paz, 42<br />
-                            Ciutat Vella, Valencia, Espanha
-                        </Typography>
-                    </Stack>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                        <EmailIcon color="action" />
-                        <Typography variant="body2">GirlsOfCode@gmail.com</Typography>
-                    </Stack>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                        <PhoneIcon color="action" />
-                        <Typography variant="body2">+34 612 345 678</Typography>
-                    </Stack>
+  const mapContainerStyle = useMemo(
+    () => ({
+      width: "100%",
+      height: "220px",
+      borderRadius: "10px",
+      overflow: "hidden",
+      boxShadow: "0 2px 16px rgba(0,0,0,0.10)",
+      marginTop: 12,
+      marginBottom: 8
+    }),
+    []
+  );
 
-                    <Typography variant="subtitle2" sx={{ mt: 2, mb: 0.5, fontWeight: 600 }}>Nos Encontre Aqui:</Typography>
-                    <div style={mapContainerStyle}>
-                        {isLoaded ? (
-                            <GoogleMap
-                                mapContainerStyle={{ width: '100%', height: '100%', borderRadius: '10px' }}
-                                center={mapCenter}
-                                zoom={16}
-                                options={{
-                                    disableDefaultUI: true,
-                                    zoomControl: true,
-                                    mapTypeControl: false,
-                                    streetViewControl: false,
-                                }}
-                            >
-                                <Marker position={mapCenter} />
-                            </GoogleMap>
-                        ) : (
-                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f5f5', borderRadius: 10 }}>
-                                Carregando mapa...
-                            </div>
-                        )}
-                    </div>
-                </Box>
-                {/* Formulário */}
-                <Box sx={{ flex: 1, minWidth: 260 }}>
-                    <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>Fale conosco</Typography>
-                    <form className={styles.formulario}>
-                        <Stack spacing={2}>
-                            <TextField label="Nome" name="nome" required fullWidth />
-                            <TextField label="E-mail" name="email" type="email" required fullWidth />
-                            <TextField label="Mensagem" name="mensagem" required fullWidth multiline minRows={4} />
-                            <Button type="submit" variant="contained" size="large" sx={{ alignSelf: 'flex-end', minWidth: 140 }}>
-                                Enviar
-                            </Button>
-                        </Stack>
-                    </form>
-                </Box>
-            </Paper>
+  return (
+    <Box sx={{ mt: { xs: 4, md: 8 }, mb: 8, display: "flex", justifyContent: "center" }}>
+      <Paper
+        elevation={2}
+        sx={{
+          p: { xs: 2, md: 4 },
+          maxWidth: 900,
+          width: "100%",
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 4
+        }}
+      >
+        {/* Lateral: Endereço, contatos e mapa */}
+        <Box
+          sx={{
+            minWidth: 260,
+            maxWidth: 320,
+            flex: "0 0 260px",
+            bgcolor: "#f9fafb",
+            borderRadius: 2,
+            p: 3,
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            alignItems: "flex-start",
+            mb: { xs: 2, md: 0 }
+          }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: 700, mb: 1, color: "primary.main" }}>
+            {t("contactPage.sidebar.title")}
+          </Typography>
+
+          <Stack direction="row" spacing={1} alignItems="center">
+            <RoomIcon color="action" />
+            <Typography
+              variant="body2"
+              component="div"
+              dangerouslySetInnerHTML={{ __html: t("contactPage.sidebar.address_html") }}
+            />
+          </Stack>
+
+          <Stack direction="row" spacing={1} alignItems="center">
+            <EmailIcon color="action" />
+            <Typography variant="body2">{t("contactPage.sidebar.email")}</Typography>
+          </Stack>
+
+          <Stack direction="row" spacing={1} alignItems="center">
+            <PhoneIcon color="action" />
+            <Typography variant="body2">{t("contactPage.sidebar.phone")}</Typography>
+          </Stack>
+
+          <Typography variant="subtitle2" sx={{ mt: 2, mb: 0.5, fontWeight: 600 }}>
+            {t("contactPage.sidebar.find_us")}
+          </Typography>
+
+          {/* Mapa via iframe */}
+          <div style={mapContainerStyle as React.CSSProperties}>
+            <iframe
+              title="Mapa - Instituto Caldeira"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3455.4082647506166!2d-51.203875523558885!3d-29.99643142905315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x951979e0c5d78685%3A0x48abb378377374b3!2sInstituto%20Caldeira!5e0!3m2!1spt-BR!2sbr!4v1755193596623!5m2!1spt-BR!2sbr"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
         </Box>
-    );
+
+        {/* Formulário */}
+        <Box sx={{ flex: 1, minWidth: 260 }}>
+          <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
+            {t("contactPage.form.title")}
+          </Typography>
+
+          <form className={styles.formulario}>
+            <Stack spacing={2}>
+              <TextField
+                label={t("contactPage.form.fields.name")}
+                name="nome"
+                required
+                fullWidth
+              />
+              <TextField
+                label={t("contactPage.form.fields.email")}
+                name="email"
+                type="email"
+                required
+                fullWidth
+              />
+              <TextField
+                label={t("contactPage.form.fields.message")}
+                name="mensagem"
+                required
+                fullWidth
+                multiline
+                minRows={4}
+              />
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                sx={{ alignSelf: "flex-end", minWidth: 140 }}
+              >
+                {t("contactPage.form.submit")}
+              </Button>
+            </Stack>
+          </form>
+        </Box>
+      </Paper>
+    </Box>
+  );
 }
