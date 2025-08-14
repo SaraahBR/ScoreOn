@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { TooltipProps, LegendProps } from "recharts";
 import dynamic from "next/dynamic";
 import {
   Container,
@@ -34,7 +35,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { useSession } from "next-auth/react";
 
-// Recharts 
+// Recharts
 const ResponsiveContainer = dynamic(
   () => import("recharts").then((m) => m.ResponsiveContainer),
   { ssr: false }
@@ -51,18 +52,29 @@ const XAxis = dynamic(() => import("recharts").then((m) => m.XAxis), {
 const YAxis = dynamic(() => import("recharts").then((m) => m.YAxis), {
   ssr: false,
 });
-const TooltipC = dynamic(
-  () => import("recharts").then((m: any) => m.Tooltip as any),
-  { ssr: false }
-);
 const CartesianGrid = dynamic(
   () => import("recharts").then((m) => m.CartesianGrid),
   { ssr: false }
 );
-const LegendC = dynamic(
-  () => import("recharts").then((m: any) => m.Legend as any),
+
+const TooltipC = dynamic(
+  () =>
+    import("recharts").then(
+      (m) =>
+        m.Tooltip as unknown as React.ComponentType<
+          TooltipProps<number, string>
+        >
+    ),
   { ssr: false }
-);
+) as React.ComponentType<TooltipProps<number, string>>;
+
+const LegendC = dynamic(
+  () =>
+    import("recharts").then(
+      (m) => m.Legend as unknown as React.ComponentType<LegendProps>
+    ),
+  { ssr: false }
+) as React.ComponentType<LegendProps>;
 
 // Tipos
 interface Turma {
@@ -109,8 +121,19 @@ type Snack = {
 };
 
 export default function NotasAvaliacoesPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data: session } = useSession();
+
+  // idioma + formatador numérico
+  const lang = (i18n.resolvedLanguage || i18n.language || "pt").split("-")[0];
+  const nf = useMemo(
+    () =>
+      new Intl.NumberFormat(lang, {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      }),
+    [lang]
+  );
 
   const [turmas, setTurmas] = useState<Turma[]>([]);
   const [turmaSelecionada, setTurmaSelecionada] = useState<number | null>(null);
@@ -147,7 +170,7 @@ export default function NotasAvaliacoesPage() {
     setSnack({ open: true, msg, sev });
   const closeSnack = () => setSnack((s) => ({ ...s, open: false }));
 
-  // Carregamentos 
+  // Carregamentos
   async function loadTurmas() {
     if (!session?.user?.email) return;
     setBusy(true);
@@ -229,7 +252,7 @@ export default function NotasAvaliacoesPage() {
     setEditRow(null);
   }, [turmaSelecionada]);
 
-  // Filtro 
+  // Filtro
   const avaliacoesFiltradas = useMemo(() => {
     const base = (avaliacoes || []).filter(
       (a) => a.class_id === turmaSelecionada
@@ -238,7 +261,7 @@ export default function NotasAvaliacoesPage() {
     return base.filter((a) => (a.term ?? "Geral") === termFilter);
   }, [avaliacoes, turmaSelecionada, termFilter]);
 
-  //  CRUD Avaliações 
+  // CRUD Avaliações
   const handleAvaliacaoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!session?.user?.email || !turmaSelecionada) return;
@@ -362,76 +385,97 @@ export default function NotasAvaliacoesPage() {
     }
   };
 
-  // Notas (inline + debounce + enter + blur) 
+  // Notas (inline + debounce + enter + blur)
   const saveGrade = async (
-  alunoId: number,
-  avaliacaoId: number,
-  rawValue: string
-) => {
-  if (!session?.user?.email || !turmaSelecionada) return;
+    alunoId: number,
+    avaliacaoId: number,
+    rawValue: string
+  ) => {
+    if (!session?.user?.email || !turmaSelecionada) return;
 
-  const cleaned = (rawValue || "").replace(/[^\d.,]/g, "").replaceAll(",", ".");
-  const normalized = cleaned.split(".").slice(0, 2).join(".");
-  let num = Number(normalized);
+    const cleaned = (rawValue || "")
+      .replace(/[^\d.,]/g, "")
+      .replaceAll(",", ".");
+    const normalized = cleaned.split(".").slice(0, 2).join(".");
+    let num = Number(normalized);
 
-  if (!Number.isFinite(num)) {
-    openSnack("Nota inválida", "error");
-    return;
-  }
+    if (!Number.isFinite(num)) {
+      openSnack("Nota inválida", "error");
+      return;
+    }
 
-  if (num > GRADE_MAX) num = GRADE_MAX;
-  if (num < GRADE_MIN) num = GRADE_MIN;
-  num = Number(num.toFixed(DECIMALS)); 
+    if (num > GRADE_MAX) num = GRADE_MAX;
+    if (num < GRADE_MIN) num = GRADE_MIN;
+    num = Number(num.toFixed(DECIMALS));
 
-  try {
-    const r = await fetch("/api/grades", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: session.user.email,
-        assessment_id: avaliacaoId,
-        student_id: alunoId,
-        value: num, 
-      }),
-    });
-    const j = await r.json();
-    if (!r.ok) throw new Error(j?.error || "Erro ao salvar nota");
-    await loadGrades(turmaSelecionada);
-  } catch (e: any) {
-    openSnack(e?.message || "Erro", "error");
-  }
-};
+    try {
+      const r = await fetch("/api/grades", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: session.user.email,
+          assessment_id: avaliacaoId,
+          student_id: alunoId,
+          value: num,
+        }),
+      });
+      const j = await r.json();
+      if (!r.ok) throw new Error(j?.error || "Erro ao salvar nota");
+      await loadGrades(turmaSelecionada);
+    } catch (e: any) {
+      openSnack(e?.message || "Erro", "error");
+    }
+  };
 
-const handleNotaChange = (
-  alunoId: number,
-  avaliacaoId: number,
-  valor: string
-) => {
-  const key = `${alunoId}-${avaliacaoId}`;
+  const handleNotaChange = (
+    alunoId: number,
+    avaliacaoId: number,
+    valor: string
+  ) => {
+    const key = `${alunoId}-${avaliacaoId}`;
 
-  const cleaned = valor.replace(/[^\d.,]/g, "").replaceAll(",", ".");
-  const normalized = cleaned.split(".").slice(0, 2).join(".");
+    const cleaned = valor.replace(/[^\d.,]/g, "").replaceAll(",", ".");
+    const normalized = cleaned.split(".").slice(0, 2).join(".");
 
-  setFormNota((s) => ({ ...s, [key]: normalized }));
+    setFormNota((s) => ({ ...s, [key]: normalized }));
 
-  if (normalized === "" || normalized === ".") return;
+    if (normalized === "" || normalized === ".") return;
 
-  const timers = debounceTimers.current;
-  if (timers.has(key)) clearTimeout(timers.get(key));
-  const t = setTimeout(() => {
-    saveGrade(alunoId, avaliacaoId, normalized);
-    timers.delete(key);
-  }, 800);
-  timers.set(key, t);
-};
+    const timers = debounceTimers.current;
+    if (timers.has(key)) clearTimeout(timers.get(key));
+    const tmo = setTimeout(() => {
+      saveGrade(alunoId, avaliacaoId, normalized);
+      timers.delete(key);
+    }, 800);
+    timers.set(key, tmo);
+  };
 
-const handleNotaKeyDown = (
-  alunoId: number,
-  avaliacaoId: number,
-  e: React.KeyboardEvent
-) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
+  const handleNotaKeyDown = (
+    alunoId: number,
+    avaliacaoId: number,
+    e: React.KeyboardEvent
+  ) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const key = `${alunoId}-${avaliacaoId}`;
+      const timers = debounceTimers.current;
+      if (timers.has(key)) {
+        clearTimeout(timers.get(key));
+        timers.delete(key);
+      }
+      const val =
+        formNota[key] ??
+        grades.find(
+          (g) => g.student_id === alunoId && g.assessment_id === avaliacaoId
+        )?.value ??
+        "";
+      if (val !== "" && val !== ".") {
+        saveGrade(alunoId, avaliacaoId, String(val));
+      }
+    }
+  };
+
+  const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
     const key = `${alunoId}-${avaliacaoId}`;
     const timers = debounceTimers.current;
     if (timers.has(key)) {
@@ -444,27 +488,10 @@ const handleNotaKeyDown = (
         (g) => g.student_id === alunoId && g.assessment_id === avaliacaoId
       )?.value ??
       "";
-    saveGrade(alunoId, avaliacaoId, String(val));
-  }
-};
-
-const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
-  const key = `${alunoId}-${avaliacaoId}`;
-  const timers = debounceTimers.current;
-  if (timers.has(key)) {
-    clearTimeout(timers.get(key));
-    timers.delete(key);
-  }
-  const val =
-    formNota[key] ??
-    grades.find(
-      (g) => g.student_id === alunoId && g.assessment_id === avaliacaoId
-    )?.value ??
-    "";
-  if (val !== "" && val !== ".") {
-    saveGrade(alunoId, avaliacaoId, String(val));
-  }
-};
+    if (val !== "" && val !== ".") {
+      saveGrade(alunoId, avaliacaoId, String(val));
+    }
+  };
 
   const getValor = (alunoId: number, avaliacaoId: number) => {
     const key = `${alunoId}-${avaliacaoId}`;
@@ -524,7 +551,7 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
     return out;
   }, [avaliacoesFiltradas, grades]);
 
-  // Exportações CSV 
+  // Exportações CSV
   function toCSV(lines: string[][]) {
     const escape = (s: string) => `"${(s ?? "").replace(/"/g, '""')}"`;
     return lines
@@ -547,7 +574,11 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
     const header = [
       "Aluno",
       ...avaliacoesFiltradas.map(
-        (a) => `${a.name} (w=${Number(a.weight ?? 1)}|${a.term || "Geral"})`
+        (a) =>
+          `${a.name} (${t(
+            "gradesPage.assessments.weight_short",
+            "peso"
+          )}=${Number(a.weight ?? 1)}|${a.term || "Geral"})`
       ),
       "Média (ponderada)",
     ];
@@ -597,18 +628,23 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
     );
   };
 
-  // Dados para gráficos 
+  // Dados para gráficos — internacionalizados
   const chartAlunos = useMemo(
     () => alunos.map((a) => ({ name: a.name, media: mediasAluno[a.id] ?? 0 })),
     [alunos, mediasAluno]
   );
+
   const chartAvaliacoes = useMemo(
     () =>
-      avaliacoesFiltradas.map((av) => ({
-        name: `${av.name} (w=${Number(av.weight ?? 1)})`,
-        media: mediasAvaliacao[av.id] ?? 0,
-      })),
-    [avaliacoesFiltradas, mediasAvaliacao]
+      avaliacoesFiltradas.map((av) => {
+        const wShort = t("gradesPage.assessments.weight_short", "peso");
+        const wVal = nf.format(Number(av.weight ?? 1));
+        return {
+          name: `${av.name} (${wShort}=${wVal})`,
+          media: mediasAvaliacao[av.id] ?? 0,
+        };
+      }),
+    [avaliacoesFiltradas, mediasAvaliacao, nf, t]
   );
 
   return (
@@ -938,7 +974,7 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
                           }
                           onBlur={() => handleNotaBlur(aluno.id, avaliacao.id)}
                           inputProps={{
-                            maxLength: 5,
+                            maxLength: 6,
                             inputMode: "decimal",
                             pattern: "[0-9.,]*",
                           }}
@@ -1035,14 +1071,50 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
         >
           {t("gradesPage.charts.by_student", "Gráfico: média por aluno")}
         </Typography>
+
         <Box sx={{ width: "100%", height: 300, mb: 4 }}>
           <ResponsiveContainer>
-            <BarChart data={chartAlunos}>
+            <BarChart
+              data={chartAlunos}
+              margin={{ top: 24, right: 16, bottom: 44, left: 16 }} // mais espaço embaixo p/ eixo X
+            >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis domain={[0, 10]} />
-              <TooltipC />
-              <LegendC />
+              <XAxis
+                dataKey="name"
+                label={{
+                  value: t("gradesPage.charts.student", "Aluno"),
+                  position: "insideBottomRight",
+                  offset: -5,
+                }}
+                interval="preserveEnd"
+                tick={{ fontSize: 12 }}
+              />
+              <YAxis
+                domain={[0, 10]}
+                tickFormatter={(v: number) => nf.format(v)}
+                label={{
+                  value: t("gradesPage.summary.header_avg", "Média"),
+                  angle: -90,
+                  position: "insideLeft",
+                  offset: 10,
+                }}
+                tick={{ fontSize: 12 }}
+              />
+              <LegendC
+                verticalAlign="top"
+                align="right"
+                wrapperStyle={{ paddingBottom: 8 }}
+                formatter={() => t("gradesPage.summary.header_avg", "Média")}
+              />
+              <TooltipC
+                formatter={(value: number) => [
+                  nf.format(Number(value)),
+                  t("gradesPage.summary.header_avg", "Média"),
+                ]}
+                labelFormatter={(label: string) =>
+                  `${t("gradesPage.charts.student", "Aluno")}: ${label}`
+                }
+              />
               <Bar
                 dataKey="media"
                 name={t("gradesPage.summary.header_avg", "Média")}
@@ -1068,7 +1140,9 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
                 <TableCell>
                   {t("gradesPage.assessments.weight", "Peso")}
                 </TableCell>
-                <TableCell>Período/Etapa</TableCell>
+                <TableCell>
+                  {t("gradesPage.term.label", "Período/Etapa")}
+                </TableCell>
                 <TableCell>
                   {t("gradesPage.summary.header_avg", "Média")}
                 </TableCell>
@@ -1080,11 +1154,11 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
                 return (
                   <TableRow key={av.id}>
                     <TableCell>{av.name}</TableCell>
-                    <TableCell>{Number(av.weight ?? 1).toString()}</TableCell>
-                    <TableCell>{av.term || "Geral"}</TableCell>
+                    <TableCell>{nf.format(Number(av.weight ?? 1))}</TableCell>
                     <TableCell>
-                      {m == null ? "-" : m.toFixed(DECIMALS)}
+                      {av.term || t("gradesPage.term.general", "Geral")}
                     </TableCell>
+                    <TableCell>{m == null ? "-" : nf.format(m)}</TableCell>
                   </TableRow>
                 );
               })}
@@ -1095,12 +1169,50 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
         {/* Gráfico: médias por avaliação */}
         <Box sx={{ width: "100%", height: 300 }}>
           <ResponsiveContainer>
-            <BarChart data={chartAvaliacoes}>
+            <BarChart
+              data={chartAvaliacoes}
+              margin={{ top: 24, right: 16, bottom: 44, left: 16 }} // idem
+            >
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis domain={[0, 10]} />
-              <TooltipC />
-              <LegendC />
+              <XAxis
+                dataKey="name"
+                label={{
+                  value: t("gradesPage.assessments.header_name", "Avaliação"),
+                  position: "insideBottomRight",
+                  offset: -5,
+                }}
+                interval="preserveEnd"
+                tick={{ fontSize: 12 }}
+              />
+              <YAxis
+                domain={[0, 10]}
+                tickFormatter={(v: number) => nf.format(v)}
+                label={{
+                  value: t("gradesPage.summary.header_avg", "Média"),
+                  angle: -90,
+                  position: "insideLeft",
+                  offset: 10,
+                }}
+                tick={{ fontSize: 12 }}
+              />
+              <LegendC
+                verticalAlign="top"
+                align="right"
+                wrapperStyle={{ paddingBottom: 8 }}
+                formatter={() => t("gradesPage.summary.header_avg", "Média")}
+              />
+              <TooltipC
+                formatter={(value: number) => [
+                  nf.format(Number(value)),
+                  t("gradesPage.summary.header_avg", "Média"),
+                ]}
+                labelFormatter={(label: string) =>
+                  `${t(
+                    "gradesPage.assessments.header_name",
+                    "Avaliação"
+                  )}: ${label}`
+                }
+              />
               <Bar
                 dataKey="media"
                 name={t("gradesPage.summary.header_avg", "Média")}
