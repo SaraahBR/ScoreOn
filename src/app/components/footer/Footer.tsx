@@ -18,7 +18,9 @@ import { useTranslation } from "react-i18next";
 import styles from "./Footer.module.css";
 
 export default function Footer() {
-  const { t } = useTranslation();
+  const { t, ready } = useTranslation("common");
+  if (!ready) return null;
+
   const year = new Date().getFullYear();
 
   return (
@@ -53,44 +55,19 @@ export default function Footer() {
           </Stack>
 
           <Stack direction="row" className={styles.social}>
-            <IconButton
-              aria-label={t("footer.social.instagram")}
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.iconButton}
-            >
+            <IconButton aria-label={t("footer.social.instagram")} href="#" target="_blank" rel="noopener noreferrer" className={styles.iconButton}>
               <InstagramIcon fontSize="small" />
             </IconButton>
-            <IconButton
-              aria-label={t("footer.social.facebook")}
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.iconButton}
-            >
+            <IconButton aria-label={t("footer.social.facebook")} href="#" target="_blank" rel="noopener noreferrer" className={styles.iconButton}>
               <FacebookIcon fontSize="small" />
             </IconButton>
-            <IconButton
-              aria-label={t("footer.social.linkedin")}
-              href="#"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.iconButton}
-            >
+            <IconButton aria-label={t("footer.social.linkedin")} href="#" target="_blank" rel="noopener noreferrer" className={styles.iconButton}>
               <LinkedInIcon fontSize="small" />
             </IconButton>
           </Stack>
         </Stack>
 
-        <Divider
-          className={styles.footerDivider}
-          sx={{
-            my: { xs: 4, sm: 5 },
-            height: 1,
-            bgcolor: "rgba(0,0,0,0.10)",
-          }}
-        />
+        <Divider className={styles.footerDivider} sx={{ my: { xs: 4, sm: 5 }, height: 1, bgcolor: "rgba(0,0,0,0.10)" }} />
 
         <Typography variant="body2" className={styles.footerTextBottom}>
           {t("footer.copyright", { year })}

@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
-  const { t } = useTranslation();
+  const { t, ready } = useTranslation("common");
+  if (!ready) return null;
 
   return (
     <div className={styles.wrapper}>
