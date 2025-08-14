@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Container, Typography, Button, Box } from "@mui/material";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export default function VerifyPage() {
   const params = useSearchParams();

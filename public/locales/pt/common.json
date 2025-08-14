@@ -1,0 +1,248 @@
+{
+  "appName": "ScoreOn",
+  "api": {
+    "errors": {
+      "invalid_data": "Dados inválidos.",
+      "not_found": "Registro não encontrado.",
+      "expired": "Código expirado.",
+      "mismatch": "Código não confere.",
+      "too_many_attempts": "Muitas tentativas, tente novamente mais tarde.",
+      "email_in_use": "E-mail já cadastrado.",
+      "email_required": "E-mail obrigatório.",
+      "invalid_image_format": "Formato de imagem inválido.",
+      "save_image_error": "Erro ao salvar a foto."
+    },
+    "success": {
+      "verify_ok": "Cadastro confirmado com sucesso!",
+      "registration_started": "Cadastro iniciado. Verifique seu e-mail.",
+      "image_saved": "Foto atualizada com sucesso.",
+      "image_removed": "Foto removida com sucesso."
+    }
+  },
+  "features": {
+    "students": { "title": "Turmas e alunos", "desc": "Gerencie turmas e perfis de alunos com facilidade." },
+    "grades": { "title": "Avaliações e médias", "desc": "Registre notas, calcule médias e acompanhe evolução." },
+    "trust": { "title": "Confiável", "desc": "Padrões de acessibilidade e boas práticas." }
+  },
+  "footer": {
+    "links": { "home": "Início", "about": "Quem Somos" },
+    "social": { "instagram": "Instagram", "facebook": "Facebook", "linkedin": "LinkedIn" },
+    "copyright": "© {{year}} Todos os direitos reservados."
+  },
+  "headers": {
+    "home": { "title": "Bem-vindo ao ScoreOn", "subtitle": "Gerencie notas e turmas com eficiência." },
+    "about": { "title": "Sobre Nós", "subtitle": "Conheça mais sobre nossa missão e valores." }
+  },
+  "hero": {
+    "title": "Centralize as notas dos seus alunos",
+    "subtitle": "Cadastre avaliações, acompanhe médias e gere relatórios com poucos cliques.",
+    "cta_primary": "Cadastrar turma",
+    "cta_secondary": "Ver exemplos"
+  },
+  "navbar": { "home": "Início", "about": "Quem Somos" },
+  "landing": {
+    "title": "ScoreOn — Sistema de Controle de Notas",
+    "subtitle": "Gerencie turmas, cadastre alunos e registre avaliações com praticidade.",
+    "cta_start": "Começar agora",
+    "cta_docs": "Documentação"
+  },
+  "register": {
+    "title": "Criar conta",
+    "form": { "name": "Nome", "email": "E-mail", "password": "Senha" },
+    "password_hint": "Mín. 8 caracteres, com maiúscula, minúscula, número e caractere especial.",
+    "password_rules": "A senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula, número e caractere especial.",
+    "continue": "Continuar",
+    "generating_code": "Gerando código...",
+    "errors": { "start_failed": "Erro ao iniciar cadastro", "invalid_code": "Código inválido" },
+    "code": {
+      "info": "O código de confirmação mostrado abaixo é único e será necessário para confirmar a criação da sua conta.",
+      "prompt": "Digite o código mostrado abaixo para confirmar seu cadastro:",
+      "label": "Código"
+    },
+    "confirm": "Confirmar cadastro",
+    "confirming": "Confirmando...",
+    "back": "Voltar",
+    "success_created": "Conta criada com sucesso! Agora você pode entrar com e-mail e senha."
+  },
+  "reset": {
+    "title": "Esqueci a senha",
+    "info": "O código de recuperação é o mesmo código mostrado para você no momento do cadastro. Guarde esse código — ele é necessário para redefinir sua senha.",
+    "form": { "email": "E-mail", "code": "Código de recuperação", "new_password": "Nova senha" },
+    "save": "Salvar nova senha",
+    "saving": "Salvando...",
+    "success": "Senha atualizada com sucesso! Já pode fazer login.",
+    "errors": { "generic": "Não foi possível redefinir a senha." }
+  },
+  "studentsPage": {
+    "title": "Gestão de Alunos",
+    "form": {
+      "class_label": "Turma",
+      "student_name": "Nome do Aluno",
+      "registration": "Matrícula",
+      "submit_new": "Cadastrar",
+      "submit_save": "Salvar"
+    },
+    "section_title_for_class": "Alunos da Turma {{className}}",
+    "table": {
+      "header_name": "Nome",
+      "header_registration": "Matrícula",
+      "header_actions": "Ações",
+      "empty_for_class": "Nenhum aluno cadastrado nesta turma."
+    },
+    "actions": { "edit": "Editar", "delete": "Excluir" }
+  },
+  "accountPage": {
+    "title": "Informações da conta",
+    "my_data": {
+      "title": "Meus dados",
+      "email": "E-mail",
+      "name": "Nome",
+      "cpf": "CPF",
+      "cpf_placeholder": "Digite seu CPF",
+      "gender": "Sexo",
+      "gender_female": "Feminino",
+      "gender_male": "Masculino",
+      "gender_unspecified": "Não Informar",
+      "birth": "Data de nascimento",
+      "save_changes": "Salvar alterações",
+      "change_password": "Mudar senha"
+    },
+    "avatar": {
+      "alt": "Foto do perfil",
+      "choose": "Escolher foto",
+      "save": "Salvar foto",
+      "saving": "Salvando...",
+      "remove": "Remover",
+      "login_required": "Faça login para alterar a foto.",
+      "select_first": "Selecione uma imagem primeiro."
+    },
+    "address": {
+      "title": "Endereço",
+      "address": "Endereço",
+      "address_placeholder": "Digite seu endereço",
+      "city": "Cidade",
+      "city_placeholder": "Digite sua cidade",
+      "zip": "CEP",
+      "zip_placeholder": "Digite seu CEP",
+      "phone": "Telefone",
+      "phone_placeholder": "Digite seu telefone",
+      "save": "Salvar endereço"
+    }
+  },
+  "classesPage": {
+    "title": "Gerenciar Turmas",
+    "form": {
+      "class_name": "Nome da Turma",
+      "school_year": "Ano Letivo",
+      "year_invalid": "Digite um ano válido (4 dígitos)",
+      "submit_new": "Cadastrar",
+      "submit_save": "Salvar"
+    },
+    "list_title": "Turmas Cadastradas",
+    "table": {
+      "header_name": "Nome",
+      "header_year": "Ano Letivo",
+      "header_actions": "Ações",
+      "empty": "Nenhuma turma cadastrada."
+    },
+    "actions": { "edit": "Editar", "delete": "Excluir" }
+  },
+  "gradesPage": {
+    "title": "Gestão de Notas e Avaliações",
+    "form": {
+      "class_label": "Turma",
+      "assessment_name": "Nome da Avaliação",
+      "create_assessment": "Criar Avaliação"
+    },
+    "assessments": {
+      "title": "Avaliações da Turma",
+      "header_name": "Nome",
+      "header_actions": "Ações",
+      "empty": "Nenhuma avaliação cadastrada para esta turma."
+    },
+    "grades": {
+      "title": "Registro de Notas",
+      "header_student": "Aluno",
+      "save": "Salvar"
+    },
+    "view": {
+      "title": "Visualização de Notas",
+      "header_student": "Aluno"
+    },
+    "actions": { "delete": "Excluir" }
+  },
+  "resetConfirm": {
+    "title": "Redefinir senha",
+    "new_password": "Nova senha",
+    "save": "Salvar nova senha",
+    "saving": "Salvando...",
+    "success": "Senha atualizada! Já pode entrar.",
+    "error_link": "Link inválido ou expirado."
+  },
+  "verifyPage": {
+    "title": "Verificação de e-mail",
+    "loading": "Verificando...",
+    "success": "✅ E-mail verificado com sucesso. Você já pode entrar.",
+    "goToLogin": "Ir para o login",
+    "error": "❌ Link inválido ou expirado."
+  },
+  "loginPage": {
+    "title": "Login",
+    "email": "E-mail",
+    "password": "Senha",
+    "forgot_password": "Esqueci a senha",
+    "login": "Entrar",
+    "loading_ellipsis": "...",
+    "create_account": "Criar Conta",
+    "login_with_google": "Login com Google",
+    "terms_notice": "Ao continuar, você concorda com nossos termos.",
+    "login_failed": "Falha no login"
+  },
+  "profileMenu": {
+    "tooltip_profile": "Perfil",
+    "aria_open_menu": "Abrir menu do usuário",
+    "my_account": "Minha Conta",
+    "create_account": "Criar Conta",
+    "my_classes": "Minhas Turmas",
+    "my_students": "Meus Alunos",
+    "grades_assessments": "Notas e Avaliações",
+    "sign_out": "Sair",
+    "sign_in": "Entrar"
+  },
+  "about": {
+    "title": "Quem Somos",
+    "intro": "O ScoreOn é um sistema moderno para gestão de notas, turmas e avaliações escolares. Nosso objetivo é facilitar o trabalho de professores e gestores, trazendo praticidade, segurança e tecnologia para o ambiente educacional.",
+    "sections": {
+      "mission": {
+        "title": "Missão",
+        "text": "Democratizar o acesso à tecnologia na educação, tornando a gestão escolar mais eficiente e humana."
+      },
+      "values": {
+        "title": "Valores",
+        "text": "Inovação, transparência, respeito e compromisso com o aprendizado de todos."
+      },
+      "team": {
+        "title": "Equipe",
+        "text": "Profissionais apaixonados por educação e tecnologia, focados em entregar o melhor."
+      }
+    },
+    "team_title": "Conheça nosso time",
+    "team": {
+      "gabriela": {
+        "name": "Gabriela Anjos",
+        "role": "Dev Backend",
+        "desc": "Especialista em soluções escaláveis e seguras para o ambiente escolar."
+      },
+      "sara": {
+        "name": "Sara Sales",
+        "role": "UX/UI Designer",
+        "desc": "Responsável pela experiência visual e usabilidade do ScoreOn."
+      },
+      "sarah": {
+        "name": "Sarah Hernandes",
+        "role": "Fundadora & Dev Frontend",
+        "desc": "Apaixonada por tecnologia e educação, idealizadora do ScoreOn."
+      }
+    }
+  }
+}

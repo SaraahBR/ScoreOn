@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import {
   Button,
@@ -13,14 +14,21 @@ import {
   Divider,
 } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
+import { useTranslation } from "react-i18next";
 
 export default function Page() {
+  const { t, ready } = useTranslation("common");
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  if (!ready) return null;
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
     try {
       const res = await signIn("credentials", {
@@ -29,10 +37,10 @@ export default function Page() {
         password,
       });
       if (res?.error) {
-        alert(res.error || "Falha no login");
+        alert(res.error || t("loginPage.login_failed"));
         return;
       }
-      window.location.href = "/";
+      router.push("/");
     } finally {
       setLoading(false);
     }
@@ -41,13 +49,13 @@ export default function Page() {
   return (
     <Container maxWidth="sm" sx={{ mt: 6, mb: 6 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Login
+        {t("loginPage.title")}
       </Typography>
 
       <Paper elevation={1} sx={{ p: 3 }}>
         <Box component="form" onSubmit={onSubmit}>
           <TextField
-            label="E-mail"
+            label={t("loginPage.email")}
             fullWidth
             margin="normal"
             type="email"
@@ -55,10 +63,11 @@ export default function Page() {
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             required
+            disabled={loading}
           />
 
           <TextField
-            label="Senha"
+            label={t("loginPage.password")}
             fullWidth
             margin="normal"
             type="password"
@@ -66,6 +75,7 @@ export default function Page() {
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
             required
+            disabled={loading}
           />
 
           <Box sx={{ mt: 0.5, mb: 1, textAlign: "right" }}>
@@ -74,7 +84,7 @@ export default function Page() {
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <Typography variant="body2" sx={{ color: "#bfa14a" }}>
-                Esqueci a senha
+                {t("loginPage.forgot_password")}
               </Typography>
             </Link>
           </Box>
@@ -88,13 +98,15 @@ export default function Page() {
                 backgroundColor: "#bfa14a",
                 "&:hover": { backgroundColor: "#a68f3d" },
                 borderRadius: "50%",
-                width: "60px",
-                height: "60px",
-                minWidth: "60px",
-                padding: 0,
+                width: 60,
+                height: 60,
+                minWidth: 60,
+                p: 0,
               }}
+              aria-label={t("loginPage.login")}
+              title={t("loginPage.login")}
             >
-              {loading ? "..." : <LoginIcon fontSize="large" />}
+              {loading ? t("loginPage.loading_ellipsis") : <LoginIcon fontSize="large" />}
             </Button>
           </Box>
         </Box>
@@ -104,6 +116,7 @@ export default function Page() {
             component={Link}
             href="/login/criar-conta"
             variant="contained"
+            disabled={loading}
             sx={{
               backgroundColor: "#bfa14a",
               "&:hover": { backgroundColor: "#a68f3d" },
@@ -114,7 +127,7 @@ export default function Page() {
               borderRadius: "8px",
             }}
           >
-            Criar Conta
+            {t("loginPage.create_account")}
           </Button>
         </Box>
 
@@ -122,9 +135,10 @@ export default function Page() {
 
         <Box>
           <Button
-            onClick={() => signIn("google", { callbackUrl: "/" })}
+            onClick={() => !loading && signIn("google", { callbackUrl: "/" })}
             fullWidth
             variant="contained"
+            disabled={loading}
             sx={{
               backgroundColor: "#bfa14a",
               "&:hover": { backgroundColor: "#a68f3d" },
@@ -159,12 +173,12 @@ export default function Page() {
               </Box>
             }
           >
-            Login com Google
+            {t("loginPage.login_with_google")}
           </Button>
         </Box>
 
         <Typography variant="body2" sx={{ mt: 2 }}>
-          Ao continuar, você concorda com nossos termos.
+          {t("loginPage.terms_notice")}
         </Typography>
       </Paper>
     </Container>

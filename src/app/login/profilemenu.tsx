@@ -18,36 +18,53 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import LoginIcon from "@mui/icons-material/Login";
+import { useTranslation } from "react-i18next";
 
 export default function ProfileMenu() {
   const { data: session, status } = useSession();
+  const { t, ready } = useTranslation("common");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const handleOpen = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+  if (!ready) return null;
 
   const user = session?.user;
+  const avatarSrc = typeof user?.image === "string" && user.image ? user.image : null;
+
+  const isLoading = status === "loading";
+
+  const ariaLabel =
+    isLoading
+      ? t("profileMenu.loading", "Carregando perfil…")
+      : user?.name
+      ? t("profileMenu.aria_profile_of", "Perfil de {{name}}", { name: user.name })
+      : t("profileMenu.profile", "Perfil");
+
+  const handleOpen = (e: React.MouseEvent<HTMLElement>) => {
+    if (isLoading) return;
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => setAnchorEl(null);
 
   return (
     <>
-      <Tooltip title={user?.name ?? "Perfil"}>
+      <Tooltip title={user?.name ?? t("profileMenu.tooltip_profile", "Perfil")}>
         <IconButton
           onClick={handleOpen}
           size="large"
           color="inherit"
-          aria-label="Abrir menu do usuário"
+          aria-label={ariaLabel}
           aria-controls={open ? "profile-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={open ? "true" : undefined}
+          aria-disabled={isLoading}
+          tabIndex={isLoading ? -1 : 0}
+          disableRipple={isLoading}
+          sx={{ opacity: isLoading ? 0.5 : 1, cursor: isLoading ? "not-allowed" : "pointer" }}
+          onMouseDownCapture={isLoading ? (e) => e.preventDefault() : undefined}
         >
-          {user?.image ? (
-            <Avatar
-              src={user.image}
-              alt={user.name ?? "Usuário"}
-              sx={{ width: 32, height: 32 }}
-              imgProps={{ referrerPolicy: "no-referrer" }}
-            />
+          {avatarSrc ? (
+            <Avatar src={avatarSrc} alt={user?.name ?? t("profileMenu.user", "Usuário")} sx={{ width: 32, height: 32 }} imgProps={{ referrerPolicy: "no-referrer" }} />
           ) : (
             <AccountCircleIcon />
           )}
@@ -62,68 +79,46 @@ export default function ProfileMenu() {
         onClick={handleClose}
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+        keepMounted
       >
-        {/* Minha Conta */}
-        <MenuItem component={Link} href="/login/minha-conta">
+        <MenuItem component={Link} href="/login/minha-conta" prefetch={false}>
           <ListItemIcon>
-            {user?.image ? (
-              <Avatar src={user.image} sx={{ width: 24, height: 24 }} />
-            ) : (
-              <AccountCircleIcon fontSize="small" />
-            )}
+            {avatarSrc ? <Avatar src={avatarSrc} sx={{ width: 24, height: 24 }} imgProps={{ referrerPolicy: "no-referrer" }} /> : <AccountCircleIcon fontSize="small" />}
           </ListItemIcon>
-          <ListItemText primary="Minha Conta" />
+          <ListItemText primary={t("profileMenu.my_account", "Minha Conta")} />
         </MenuItem>
 
-        {/* Criar Conta */}
-        <MenuItem component={Link} href="/login/criar-conta">
-          <ListItemIcon>
-            <PersonAddIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Criar Conta" />
+        <MenuItem component={Link} href="/login/criar-conta" prefetch={false}>
+          <ListItemIcon><PersonAddIcon fontSize="small" /></ListItemIcon>
+          <ListItemText primary={t("profileMenu.create_account", "Criar Conta")} />
         </MenuItem>
 
-
-        {/* Minhas Turmas */}
-        <MenuItem component={Link} href="/login/minhas-turmas">
-          <ListItemIcon>
-            <ReceiptLongIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Minhas Turmas" />
+        <MenuItem component={Link} href="/login/minhas-turmas" prefetch={false}>
+          <ListItemIcon><ReceiptLongIcon fontSize="small" /></ListItemIcon>
+          <ListItemText primary={t("profileMenu.my_classes", "Minhas Turmas")} />
         </MenuItem>
 
-        {/* Meus Alunos */}
-        <MenuItem component={Link} href="/login/meus-alunos">
-          <ListItemIcon>
-            <ReceiptLongIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Meus Alunos" />
+        <MenuItem component={Link} href="/login/meus-alunos" prefetch={false}>
+          <ListItemIcon><ReceiptLongIcon fontSize="small" /></ListItemIcon>
+          <ListItemText primary={t("profileMenu.my_students", "Meus Alunos")} />
         </MenuItem>
 
-        {/* Notas e Avaliações */}
-        <MenuItem component={Link} href="/login/notas-avaliacoes">
-          <ListItemIcon>
-            <ReceiptLongIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Notas e Avaliações" />
+        <MenuItem component={Link} href="/login/notas-avaliacoes" prefetch={false}>
+          <ListItemIcon><ReceiptLongIcon fontSize="small" /></ListItemIcon>
+          <ListItemText primary={t("profileMenu.grades", "Notas e Avaliações")} />
         </MenuItem>
 
         <Divider />
 
         {status === "authenticated" ? (
           <MenuItem onClick={() => signOut({ callbackUrl: "/login" })}>
-            <ListItemIcon>
-              <LogoutIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary="Sair" />
+            <ListItemIcon><LogoutIcon fontSize="small" /></ListItemIcon>
+            <ListItemText primary={t("profileMenu.logout", "Sair")} />
           </MenuItem>
         ) : (
-         
-          <MenuItem component={Link} href="/login">
-            <ListItemIcon>
-              <LoginIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText primary="Entrar" />
+          <MenuItem component={Link} href="/login" prefetch={false}>
+            <ListItemIcon><LoginIcon fontSize="small" /></ListItemIcon>
+            <ListItemText primary={t("profileMenu.login", "Entrar")} />
           </MenuItem>
         )}
       </Menu>

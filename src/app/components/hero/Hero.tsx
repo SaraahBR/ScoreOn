@@ -3,20 +3,24 @@
 import { Paper, Typography, Stack, Button, Box } from "@mui/material";
 import SchoolIcon from "@mui/icons-material/School";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
+  const { t, ready } = useTranslation("common");
+  if (!ready) return null;
+
   return (
     <div className={styles.wrapper}>
       <Paper elevation={0} className={styles.paper}>
         <div className={styles.row}>
           <Stack spacing={1.5} className={styles.copy}>
             <Typography variant="h3" component="h2" className={styles.title}>
-              Centralize as notas dos seus alunos
+              {t("hero.title")}
             </Typography>
 
             <Typography className={styles.subtitle}>
-              Cadastre avaliações, acompanhe médias e gere relatórios com poucos cliques.
+              {t("hero.subtitle")}
             </Typography>
 
             <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
@@ -27,15 +31,16 @@ export default function Hero() {
                 href="/login/minhas-turmas"
                 className={styles.ctaPrimary}
               >
-                Cadastrar turma
+                {t("hero.cta_primary")}
               </Button>
+
               <Button
                 variant="text"
-                className={styles.ctaGhost}
                 component={Link}
                 href="/exemplos"
+                className={styles.ctaGhost}
               >
-                Ver exemplos
+                {t("hero.cta_secondary")}
               </Button>
             </Stack>
           </Stack>

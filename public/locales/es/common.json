@@ -1,0 +1,248 @@
+{
+  "appName": "ScoreOn",
+  "api": {
+    "errors": {
+      "invalid_data": "Datos inválidos.",
+      "not_found": "Registro no encontrado.",
+      "expired": "Código expirado.",
+      "mismatch": "El código no coincide.",
+      "too_many_attempts": "Demasiados intentos, inténtalo de nuevo más tarde.",
+      "email_in_use": "Correo ya registrado.",
+      "email_required": "El correo es obligatorio.",
+      "invalid_image_format": "Formato de imagen no válido.",
+      "save_image_error": "Error al guardar la foto."
+    },
+    "success": {
+      "verify_ok": "¡Registro confirmado con éxito!",
+      "registration_started": "Registro iniciado. Revisa tu correo.",
+      "image_saved": "Foto actualizada con éxito.",
+      "image_removed": "Foto eliminada con éxito."
+    }
+  },
+  "features": {
+    "students": { "title": "Clases y estudiantes", "desc": "Gestiona clases y perfiles de estudiantes con facilidad." },
+    "grades": { "title": "Evaluaciones y promedios", "desc": "Registra notas, calcula promedios y acompaña la evolución." },
+    "trust": { "title": "Confiable", "desc": "Estándares de accesibilidad y buenas prácticas." }
+  },
+  "footer": {
+    "links": { "home": "Inicio", "about": "Quiénes Somos" },
+    "social": { "instagram": "Instagram", "facebook": "Facebook", "linkedin": "LinkedIn" },
+    "copyright": "© {{year}} Todos los derechos reservados."
+  },
+  "headers": {
+    "home": { "title": "Bienvenido a ScoreOn", "subtitle": "Administra calificaciones y clases de forma eficiente." },
+    "about": { "title": "Sobre Nosotros", "subtitle": "Conoce más sobre nuestra misión y valores." }
+  },
+  "hero": {
+    "title": "Centraliza las calificaciones de tus alumnos",
+    "subtitle": "Registra evaluaciones, sigue promedios y genera informes con pocos clics.",
+    "cta_primary": "Crear clase",
+    "cta_secondary": "Ver ejemplos"
+  },
+  "navbar": { "home": "Inicio", "about": "Quiénes Somos" },
+  "landing": {
+    "title": "ScoreOn — Sistema de Control de Calificaciones",
+    "subtitle": "Gestiona clases, registra estudiantes y anota evaluaciones con facilidad.",
+    "cta_start": "Empezar ahora",
+    "cta_docs": "Documentación"
+  },
+  "register": {
+    "title": "Crear cuenta",
+    "form": { "name": "Nombre", "email": "Correo", "password": "Contraseña" },
+    "password_hint": "Mín. 8 caracteres, con mayúscula, minúscula, número y carácter especial.",
+    "password_rules": "La contraseña debe tener al menos 8 caracteres e incluir mayúscula, minúscula, número y carácter especial.",
+    "continue": "Continuar",
+    "generating_code": "Generando código...",
+    "errors": { "start_failed": "Error al iniciar el registro", "invalid_code": "Código inválido" },
+    "code": {
+      "info": "El código de confirmación que se muestra a continuación es único y será necesario para confirmar la creación de tu cuenta.",
+      "prompt": "Introduce el código mostrado a continuación para confirmar tu registro:",
+      "label": "Código"
+    },
+    "confirm": "Confirmar registro",
+    "confirming": "Confirmando...",
+    "back": "Volver",
+    "success_created": "¡Cuenta creada con éxito! Ahora puedes iniciar sesión con correo y contraseña."
+  },
+  "reset": {
+    "title": "Olvidé mi contraseña",
+    "info": "El código de recuperación es el mismo que se mostró al registrarte. Guárdalo — es necesario para restablecer tu contraseña.",
+    "form": { "email": "Correo", "code": "Código de recuperación", "new_password": "Nueva contraseña" },
+    "save": "Guardar nueva contraseña",
+    "saving": "Guardando...",
+    "success": "¡Contraseña actualizada con éxito! Ya puedes iniciar sesión.",
+    "errors": { "generic": "No fue posible restablecer la contraseña." }
+  },
+  "studentsPage": {
+    "title": "Gestión de Estudiantes",
+    "form": {
+      "class_label": "Clase",
+      "student_name": "Nombre del Estudiante",
+      "registration": "Matrícula",
+      "submit_new": "Registrar",
+      "submit_save": "Guardar"
+    },
+    "section_title_for_class": "Estudiantes de {{className}}",
+    "table": {
+      "header_name": "Nombre",
+      "header_registration": "Matrícula",
+      "header_actions": "Acciones",
+      "empty_for_class": "No hay estudiantes registrados en esta clase."
+    },
+    "actions": { "edit": "Editar", "delete": "Eliminar" }
+  },
+  "accountPage": {
+    "title": "Información de la cuenta",
+    "my_data": {
+      "title": "Mis datos",
+      "email": "Correo",
+      "name": "Nombre",
+      "cpf": "CPF",
+      "cpf_placeholder": "Ingresa tu CPF",
+      "gender": "Sexo",
+      "gender_female": "Femenino",
+      "gender_male": "Masculino",
+      "gender_unspecified": "No informar",
+      "birth": "Fecha de nacimiento",
+      "save_changes": "Guardar cambios",
+      "change_password": "Cambiar contraseña"
+    },
+    "avatar": {
+      "alt": "Foto de perfil",
+      "choose": "Elegir foto",
+      "save": "Guardar foto",
+      "saving": "Guardando...",
+      "remove": "Eliminar",
+      "login_required": "Inicia sesión para cambiar tu foto.",
+      "select_first": "Selecciona una imagen primero."
+    },
+    "address": {
+      "title": "Dirección",
+      "address": "Dirección",
+      "address_placeholder": "Ingresa tu dirección",
+      "city": "Ciudad",
+      "city_placeholder": "Ingresa tu ciudad",
+      "zip": "Código postal",
+      "zip_placeholder": "Ingresa tu código postal",
+      "phone": "Teléfono",
+      "phone_placeholder": "Ingresa tu teléfono",
+      "save": "Guardar dirección"
+    }
+  },
+  "classesPage": {
+    "title": "Gestionar Clases",
+    "form": {
+      "class_name": "Nombre de la Clase",
+      "school_year": "Año Lectivo",
+      "year_invalid": "Introduce un año válido (4 dígitos)",
+      "submit_new": "Registrar",
+      "submit_save": "Guardar"
+    },
+    "list_title": "Clases Registradas",
+    "table": {
+      "header_name": "Nombre",
+      "header_year": "Año Lectivo",
+      "header_actions": "Acciones",
+      "empty": "No hay clases registradas."
+    },
+    "actions": { "edit": "Editar", "delete": "Eliminar" }
+  },
+  "gradesPage": {
+    "title": "Gestión de Notas y Evaluaciones",
+    "form": {
+      "class_label": "Clase",
+      "assessment_name": "Nombre de la evaluación",
+      "create_assessment": "Crear evaluación"
+    },
+    "assessments": {
+      "title": "Evaluaciones de la Clase",
+      "header_name": "Nombre",
+      "header_actions": "Acciones",
+      "empty": "No hay evaluaciones para esta clase."
+    },
+    "grades": {
+      "title": "Registro de Notas",
+      "header_student": "Estudiante",
+      "save": "Guardar"
+    },
+    "view": {
+      "title": "Visualización de Notas",
+      "header_student": "Estudiante"
+    },
+    "actions": { "delete": "Eliminar" }
+  },
+  "resetConfirm": {
+    "title": "Restablecer contraseña",
+    "new_password": "Nueva contraseña",
+    "save": "Guardar nueva contraseña",
+    "saving": "Guardando...",
+    "success": "¡Contraseña actualizada! Ya puedes iniciar sesión.",
+    "error_link": "Enlace inválido o expirado."
+  },
+  "verifyPage": {
+    "title": "Verificación de correo",
+    "loading": "Verificando...",
+    "success": "✅ Correo verificado con éxito. Ya puedes iniciar sesión.",
+    "goToLogin": "Ir al inicio de sesión",
+    "error": "❌ Enlace inválido o expirado."
+  },
+  "loginPage": {
+    "title": "Iniciar sesión",
+    "email": "Correo",
+    "password": "Contraseña",
+    "forgot_password": "Olvidé mi contraseña",
+    "login": "Iniciar sesión",
+    "loading_ellipsis": "...",
+    "create_account": "Crear cuenta",
+    "login_with_google": "Iniciar sesión con Google",
+    "terms_notice": "Al continuar, aceptas nuestros términos.",
+    "login_failed": "Fallo al iniciar sesión"
+  },
+  "profileMenu": {
+    "tooltip_profile": "Perfil",
+    "aria_open_menu": "Abrir menú de usuario",
+    "my_account": "Mi Cuenta",
+    "create_account": "Crear Cuenta",
+    "my_classes": "Mis Clases",
+    "my_students": "Mis Estudiantes",
+    "grades_assessments": "Notas y Evaluaciones",
+    "sign_out": "Cerrar sesión",
+    "sign_in": "Iniciar sesión"
+  },
+  "about": {
+    "title": "Quiénes Somos",
+    "intro": "ScoreOn es un sistema moderno para la gestión de calificaciones, clases y evaluaciones escolares. Nuestro objetivo es facilitar el trabajo de docentes y gestores, aportando practicidad, seguridad y tecnología al entorno educativo.",
+    "sections": {
+      "mission": {
+        "title": "Misión",
+        "text": "Democratizar el acceso a la tecnología en la educación, haciendo la gestión escolar más eficiente y humana."
+      },
+      "values": {
+        "title": "Valores",
+        "text": "Innovación, transparencia, respeto y compromiso con el aprendizaje de todos."
+      },
+      "team": {
+        "title": "Equipo",
+        "text": "Profesionales apasionados por la educación y la tecnología, enfocados en entregar lo mejor."
+      }
+    },
+    "team_title": "Conoce a nuestro equipo",
+    "team": {
+      "gabriela": {
+        "name": "Gabriela Anjos",
+        "role": "Dev Backend",
+        "desc": "Especialista en soluciones escalables y seguras para el entorno escolar."
+      },
+      "sara": {
+        "name": "Sara Sales",
+        "role": "UX/UI Designer",
+        "desc": "Responsable de la experiencia visual y la usabilidad de ScoreOn."
+      },
+      "sarah": {
+        "name": "Sarah Hernandes",
+        "role": "Fundadora y Dev Frontend",
+        "desc": "Apasionada por la tecnología y la educación, idealizadora de ScoreOn."
+      }
+    }
+  }
+}
