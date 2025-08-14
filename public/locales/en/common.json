@@ -20,9 +20,18 @@
     }
   },
   "features": {
-    "students": { "title": "Classes and students", "desc": "Manage classes and student profiles with ease." },
-    "grades": { "title": "Assessments and averages", "desc": "Record grades, calculate averages, and track progress." },
-    "trust": { "title": "Reliable", "desc": "Accessibility standards and best practices." }
+    "students": {
+      "title": "Classes and students",
+      "desc": "Manage classes and student profiles with ease."
+    },
+    "grades": {
+      "title": "Assessments and averages",
+      "desc": "Record grades, calculate averages, and track progress."
+    },
+    "trust": {
+      "title": "Reliable",
+      "desc": "Accessibility standards and best practices."
+    }
   },
   "footer": {
     "links": {
@@ -38,8 +47,14 @@
     "copyright": "© {{year}} ScoreOn. All rights reserved."
   },
   "headers": {
-    "home": { "title": "Welcome to ScoreOn", "subtitle": "Manage grades and classes efficiently." },
-    "about": { "title": "About Us", "subtitle": "Learn more about our mission and values." }
+    "home": {
+      "title": "Welcome to ScoreOn",
+      "subtitle": "Manage grades and classes efficiently."
+    },
+    "about": {
+      "title": "About Us",
+      "subtitle": "Learn more about our mission and values."
+    }
   },
   "hero": {
     "title": "Centralize your students' grades",
@@ -47,7 +62,10 @@
     "cta_primary": "Create class",
     "cta_secondary": "See examples"
   },
-  "navbar": { "home": "Home", "about": "About" },
+  "navbar": {
+    "home": "Home",
+    "about": "About"
+  },
   "landing": {
     "title": "ScoreOn — Grade Management System",
     "subtitle": "Manage classes, enroll students, and record assessments with ease.",
@@ -56,12 +74,19 @@
   },
   "register": {
     "title": "Create account",
-    "form": { "name": "Name", "email": "Email", "password": "Password" },
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "password": "Password"
+    },
     "password_hint": "Min. 8 characters, with uppercase, lowercase, number, and special character.",
     "password_rules": "Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.",
     "continue": "Continue",
     "generating_code": "Generating code...",
-    "errors": { "start_failed": "Failed to start registration", "invalid_code": "Invalid code" },
+    "errors": {
+      "start_failed": "Failed to start registration",
+      "invalid_code": "Invalid code"
+    },
     "code": {
       "info": "The confirmation code shown below is unique and will be required to confirm your account creation.",
       "prompt": "Enter the code shown below to confirm your registration:",
@@ -75,11 +100,17 @@
   "reset": {
     "title": "Forgot password",
     "info": "The recovery code is the same code shown to you when registering. Keep this code — it is required to reset your password.",
-    "form": { "email": "Email", "code": "Recovery code", "new_password": "New password" },
+    "form": {
+      "email": "Email",
+      "code": "Recovery code",
+      "new_password": "New password"
+    },
     "save": "Save new password",
     "saving": "Saving...",
     "success": "Password updated successfully! You can log in now.",
-    "errors": { "generic": "Could not reset the password." }
+    "errors": {
+      "generic": "Could not reset the password."
+    }
   },
   "studentsPage": {
     "title": "Student Management",
@@ -97,7 +128,10 @@
       "header_actions": "Actions",
       "empty_for_class": "No students in this class yet."
     },
-    "actions": { "edit": "Edit", "delete": "Delete" }
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    }
   },
   "accountPage": {
     "title": "Account information",
@@ -153,7 +187,10 @@
       "header_actions": "Actions",
       "empty": "No classes registered."
     },
-    "actions": { "edit": "Edit", "delete": "Delete" }
+    "actions": {
+      "edit": "Edit",
+      "delete": "Delete"
+    }
   },
   "gradesPage": {
     "title": "Grades and Assessments",
@@ -245,15 +282,36 @@
     "title": "About Us",
     "intro": "ScoreOn is a modern system for managing grades, classes, and school assessments. Our goal is to make teachers’ and administrators’ work easier by bringing practicality, security, and technology to the educational environment.",
     "sections": {
-      "mission": { "title": "Mission", "text": "Democratize access to technology in education, making school management more efficient and human-centered." },
-      "values": { "title": "Values", "text": "Innovation, transparency, respect, and commitment to everyone’s learning." },
-      "team": { "title": "Team", "text": "Professionals passionate about education and technology, focused on delivering the best." }
+      "mission": {
+        "title": "Mission",
+        "text": "Democratize access to technology in education, making school management more efficient and human-centered."
+      },
+      "values": {
+        "title": "Values",
+        "text": "Innovation, transparency, respect, and commitment to everyone’s learning."
+      },
+      "team": {
+        "title": "Team",
+        "text": "Professionals passionate about education and technology, focused on delivering the best."
+      }
     },
     "team_title": "Meet our team",
     "team": {
-      "gabriela": { "name": "Gabriela Anjos", "role": "Backend Dev", "desc": "Specialist in scalable and secure solutions for the school environment." },
-      "sara": { "name": "Sara Sales", "role": "UX/UI Designer", "desc": "Responsible for ScoreOn’s visual experience and usability." },
-      "sarah": { "name": "Sarah Hernandes", "role": "Founder & Frontend Dev", "desc": "Passionate about technology and education, creator of ScoreOn." }
+      "gabriela": {
+        "name": "Gabriela Anjos",
+        "role": "Backend Dev",
+        "desc": "Specialist in scalable and secure solutions for the school environment."
+      },
+      "sara": {
+        "name": "Sara Sales",
+        "role": "UX/UI Designer",
+        "desc": "Responsible for ScoreOn’s visual experience and usability."
+      },
+      "sarah": {
+        "name": "Sarah Hernandes",
+        "role": "Founder & Frontend Dev",
+        "desc": "Passionate about technology and education, creator of ScoreOn."
+      }
     }
   },
   "docs": {
@@ -261,11 +319,26 @@
     "intro": "ScoreOn is a system for managing grades, classes, and students, designed to make academic control easier for schools and teachers.",
     "howToUse": "How to use the system",
     "steps": {
-      "one": { "title": "1. Sign Up and Log In", "text": "- Click \"Get started\" and create your account using Google or email.<br />- After logging in, you will access the main dashboard." },
-      "two": { "title": "2. Manage Classes", "text": "- From the menu or home screen, click \"Create class\".<br />- Fill in the class name and the school year.<br />- Registered classes appear in a list where you can edit or delete them." },
-      "three": { "title": "3. Manage Students", "text": "- Go to \"My Students\".<br />- Add new students and link them to a class.<br />- Edit or delete whenever needed." },
-      "four": { "title": "4. Enter Grades and Assessments", "text": "- Open \"Grades & Assessments\".<br />- Select the class and the desired student.<br />- Enter grades and save.<br />- The system automatically calculates averages." },
-      "five": { "title": "5. View Reports", "text": "- Generate performance reports by student, class, or subject.<br />- Export to PDF or Excel if needed." }
+      "one": {
+        "title": "1. Sign Up and Log In",
+        "text": "- Click \"Get started\" and create your account using Google or email.<br />- After logging in, you will access the main dashboard."
+      },
+      "two": {
+        "title": "2. Manage Classes",
+        "text": "- From the menu or home screen, click \"Create class\".<br />- Fill in the class name and the school year.<br />- Registered classes appear in a list where you can edit or delete them."
+      },
+      "three": {
+        "title": "3. Manage Students",
+        "text": "- Go to \"My Students\".<br />- Add new students and link them to a class.<br />- Edit or delete whenever needed."
+      },
+      "four": {
+        "title": "4. Enter Grades and Assessments",
+        "text": "- Open \"Grades & Assessments\".<br />- Select the class and the desired student.<br />- Enter grades and save.<br />- The system automatically calculates averages."
+      },
+      "five": {
+        "title": "5. View Reports",
+        "text": "- Generate performance reports by student, class, or subject.<br />- Export to PDF or Excel if needed."
+      }
     },
     "faqTitle": "Frequently Asked Questions",
     "faq": {
@@ -280,11 +353,28 @@
   "exemplos": {
     "titulo": "ScoreOn Usage Examples",
     "introducao": "See in practice how to register classes, students, and record grades in ScoreOn. Follow the step-by-step guide below to understand the full process:",
-    "passo1": { "titulo": "1. Registering a Class", "texto": "- Access the menu or click \"Register class\" on the home screen.<br />- Fill in the class name (e.g., 3rd Year A) and the school year (e.g., 2025).<br />- Click \"Register\". Your class will appear in the class list." },
-    "passo2": { "titulo": "2. Adding Students", "texto": "- Open the desired class and click \"Add student\".<br />- Provide the student's name, email, and other details.<br />- Save to link the student to the class." },
-    "passo3": { "titulo": "3. Recording Grades", "texto": "- Select the class and the student.<br />- Click \"Record grade\" and fill in the assessment fields.<br />- Save to register the grade. The system automatically calculates the average." },
-    "passo4": { "titulo": "4. Generating Reports", "texto": "- Go to the reports section.<br />- Choose the report type (by student, class, or subject).<br />- Export to PDF or Excel if desired." },
-    "dicas": { "titulo": "Quick Tips", "lista1": "Use the search to quickly find classes or students.", "lista2": "Edit or delete records by clicking the action icons next to each item.", "lista3": "All data is saved automatically and can be accessed from any device." }
+    "passo1": {
+      "titulo": "1. Registering a Class",
+      "texto": "- Access the menu or click \"Register class\" on the home screen.<br />- Fill in the class name (e.g., 3rd Year A) and the school year (e.g., 2025).<br />- Click \"Register\". Your class will appear in the class list."
+    },
+    "passo2": {
+      "titulo": "2. Adding Students",
+      "texto": "- Open the desired class and click \"Add student\".<br />- Provide the student's name, email, and other details.<br />- Save to link the student to the class."
+    },
+    "passo3": {
+      "titulo": "3. Recording Grades",
+      "texto": "- Select the class and the student.<br />- Click \"Record grade\" and fill in the assessment fields.<br />- Save to register the grade. The system automatically calculates the average."
+    },
+    "passo4": {
+      "titulo": "4. Generating Reports",
+      "texto": "- Go to the reports section.<br />- Choose the report type (by student, class, or subject).<br />- Export to PDF or Excel if desired."
+    },
+    "dicas": {
+      "titulo": "Quick Tips",
+      "lista1": "Use the search to quickly find classes or students.",
+      "lista2": "Edit or delete records by clicking the action icons next to each item.",
+      "lista3": "All data is saved automatically and can be accessed from any device."
+    }
   },
   "contactPage": {
     "sidebar": {
@@ -296,19 +386,34 @@
     },
     "form": {
       "title": "Contact us",
-      "fields": { "name": "Name", "email": "Email", "message": "Message" },
+      "fields": {
+        "name": "Name",
+        "email": "Email",
+        "message": "Message"
+      },
       "submit": "Send"
     },
-    "map": { "loading": "Loading map..." }
+    "map": {
+      "loading": "Loading map..."
+    }
   },
   "homePage": {
     "lead": "Manage classes, enroll students, and record assessments with ease.",
     "benefits": {
       "title": "Why use ScoreOn?",
       "items": {
-        "time": { "title": "Time savings", "text": "Automate repetitive tasks and focus on what matters: teaching." },
-        "security": { "title": "Data security", "text": "Your data is protected with top-tier technology and automatic backups." },
-        "ease": { "title": "Ease of use", "text": "An intuitive, hassle-free interface. Anyone can learn it in minutes." }
+        "time": {
+          "title": "Time savings",
+          "text": "Automate repetitive tasks and focus on what matters: teaching."
+        },
+        "security": {
+          "title": "Data security",
+          "text": "Your data is protected with top-tier technology and automatic backups."
+        },
+        "ease": {
+          "title": "Ease of use",
+          "text": "An intuitive, hassle-free interface. Anyone can learn it in minutes."
+        }
       }
     },
     "mission": "Our mission is to simplify school management, making student performance tracking more efficient and transparent for teachers, administrators, and families.",
@@ -316,11 +421,26 @@
       "title": "What our users say",
       "pause_hint": "Hover to pause the carousel now",
       "cards": [
-        { "text": "ScoreOn has made my routine much easier. I can track students’ performance in real time!", "author": "Prof. Ana Paula" },
-        { "text": "Simple, fast, and secure. I recommend it to all my colleagues!", "author": "Prof. Carlos Silva" },
-        { "text": "The platform is very intuitive. My students and parents love the reports!", "author": "Prof. Mariana Souza" },
-        { "text": "Support is excellent and always helped me quickly. Congrats to the team!", "author": "Prof. João Mendes" },
-        { "text": "I’ve used ScoreOn from the beginning. It has evolved a lot and is even better now!", "author": "Prof. Sandra Lima" }
+        {
+          "text": "ScoreOn has made my routine much easier. I can track students’ performance in real time!",
+          "author": "Prof. Ana Paula"
+        },
+        {
+          "text": "Simple, fast, and secure. I recommend it to all my colleagues!",
+          "author": "Prof. Carlos Silva"
+        },
+        {
+          "text": "The platform is very intuitive. My students and parents love the reports!",
+          "author": "Prof. Mariana Souza"
+        },
+        {
+          "text": "Support is excellent and always helped me quickly. Congrats to the team!",
+          "author": "Prof. João Mendes"
+        },
+        {
+          "text": "I’ve used ScoreOn from the beginning. It has evolved a lot and is even better now!",
+          "author": "Prof. Sandra Lima"
+        }
       ]
     }
   }

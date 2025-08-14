@@ -35,7 +35,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { useSession } from "next-auth/react";
 
-// Recharts
+// Recharts (SSR-safe)
 const ResponsiveContainer = dynamic(
   () => import("recharts").then((m) => m.ResponsiveContainer),
   { ssr: false }
@@ -56,7 +56,6 @@ const CartesianGrid = dynamic(
   () => import("recharts").then((m) => m.CartesianGrid),
   { ssr: false }
 );
-
 const TooltipC = dynamic(
   () =>
     import("recharts").then(
@@ -67,7 +66,6 @@ const TooltipC = dynamic(
     ),
   { ssr: false }
 ) as React.ComponentType<TooltipProps<number, string>>;
-
 const LegendC = dynamic(
   () =>
     import("recharts").then(
@@ -105,14 +103,9 @@ const GRADE_MIN = 0;
 const GRADE_MAX = 10;
 const PASSING_GRADE = 7.0;
 const DECIMALS = 2;
-const TERMS = [
-  "Todas",
-  "Geral",
-  "1º Bimestre",
-  "2º Bimestre",
-  "3º Bimestre",
-  "4º Bimestre",
-];
+
+const ALL_TERMS_KEY = "gradesPage.term.all";
+const GENERAL_TERM_KEY = "gradesPage.term.general";
 
 type Snack = {
   open: boolean;
@@ -121,7 +114,7 @@ type Snack = {
 };
 
 export default function NotasAvaliacoesPage() {
-  const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation("common");
   const { data: session } = useSession();
 
   // idioma + formatador numérico
@@ -135,6 +128,19 @@ export default function NotasAvaliacoesPage() {
     [lang]
   );
 
+  // Opções de períodos (traduzidas)
+  const TERMS = useMemo(
+    () => [
+      t(ALL_TERMS_KEY, "Todas"),
+      t(GENERAL_TERM_KEY, "Geral"),
+      t("gradesPage.term.1st", "1º Bimestre"),
+      t("gradesPage.term.2nd", "2º Bimestre"),
+      t("gradesPage.term.3rd", "3º Bimestre"),
+      t("gradesPage.term.4th", "4º Bimestre"),
+    ],
+    [t]
+  );
+
   const [turmas, setTurmas] = useState<Turma[]>([]);
   const [turmaSelecionada, setTurmaSelecionada] = useState<number | null>(null);
 
@@ -142,12 +148,14 @@ export default function NotasAvaliacoesPage() {
   const [avaliacoes, setAvaliacoes] = useState<Avaliacao[]>([]);
   const [grades, setGrades] = useState<Nota[]>([]);
 
-  const [termFilter, setTermFilter] = useState<string>("Todas");
+  const [termFilter, setTermFilter] = useState<string>(() =>
+    t(ALL_TERMS_KEY, "Todas")
+  );
 
   const [formAvaliacao, setFormAvaliacao] = useState({
     nome: "",
     peso: "1",
-    term: "Geral",
+    term: t(GENERAL_TERM_KEY, "Geral"),
   });
   const [formNota, setFormNota] = useState<Record<string, string>>({});
 
@@ -169,6 +177,12 @@ export default function NotasAvaliacoesPage() {
   const openSnack = (msg: string, sev: Snack["sev"] = "success") =>
     setSnack({ open: true, msg, sev });
   const closeSnack = () => setSnack((s) => ({ ...s, open: false }));
+
+  // Recarregar termos quando mudar o idioma
+  useEffect(() => {
+    setTermFilter(t(ALL_TERMS_KEY, "Todas"));
+    setFormAvaliacao((s) => ({ ...s, term: t(GENERAL_TERM_KEY, "Geral") }));
+  }, [t]);
 
   // Carregamentos
   async function loadTurmas() {
@@ -241,6 +255,7 @@ export default function NotasAvaliacoesPage() {
 
   useEffect(() => {
     loadTurmas();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user?.email]);
 
   useEffect(() => {
@@ -252,14 +267,16 @@ export default function NotasAvaliacoesPage() {
     setEditRow(null);
   }, [turmaSelecionada]);
 
-  // Filtro
+  // Filtro (comparando por texto traduzido do período)
   const avaliacoesFiltradas = useMemo(() => {
     const base = (avaliacoes || []).filter(
       (a) => a.class_id === turmaSelecionada
     );
-    if (termFilter === "Todas") return base;
-    return base.filter((a) => (a.term ?? "Geral") === termFilter);
-  }, [avaliacoes, turmaSelecionada, termFilter]);
+    const all = t(ALL_TERMS_KEY, "Todas");
+    const general = t(GENERAL_TERM_KEY, "Geral");
+    if (termFilter === all) return base;
+    return base.filter((a) => (a.term ?? general) === termFilter);
+  }, [avaliacoes, turmaSelecionada, termFilter, t]);
 
   // CRUD Avaliações
   const handleAvaliacaoSubmit = async (e: React.FormEvent) => {
@@ -276,7 +293,7 @@ export default function NotasAvaliacoesPage() {
       );
       return;
     }
-    const term = formAvaliacao.term || "Geral";
+    const term = formAvaliacao.term || t(GENERAL_TERM_KEY, "Geral");
 
     setBusy(true);
     try {
@@ -293,7 +310,11 @@ export default function NotasAvaliacoesPage() {
       });
       const j = await r.json();
       if (!r.ok) throw new Error(j?.error || "Erro");
-      setFormAvaliacao({ nome: "", peso: "1", term: "Geral" });
+      setFormAvaliacao({
+        nome: "",
+        peso: "1",
+        term: t(GENERAL_TERM_KEY, "Geral"),
+      });
       openSnack(
         t("gradesPage.assessments.created", "Avaliação criada!"),
         "success"
@@ -336,7 +357,7 @@ export default function NotasAvaliacoesPage() {
       id: av.id,
       nome: av.name,
       peso: String(av.weight ?? 1),
-      term: av.term ?? "Geral",
+      term: av.term ?? t(GENERAL_TERM_KEY, "Geral"),
     });
   };
   const cancelEdit = () => setEditRow(null);
@@ -346,7 +367,7 @@ export default function NotasAvaliacoesPage() {
     const id = editRow.id;
     const nome = editRow.nome.trim();
     const w = Number((editRow.peso || "1").replace(",", "."));
-    const term = editRow.term || "Geral";
+    const term = editRow.term || t(GENERAL_TERM_KEY, "Geral");
     if (!nome || !Number.isFinite(w) || w <= 0) {
       openSnack(
         t(
@@ -385,7 +406,7 @@ export default function NotasAvaliacoesPage() {
     }
   };
 
-  // Notas (inline + debounce + enter + blur)
+  // Notas
   const saveGrade = async (
     alunoId: number,
     avaliacaoId: number,
@@ -400,7 +421,7 @@ export default function NotasAvaliacoesPage() {
     let num = Number(normalized);
 
     if (!Number.isFinite(num)) {
-      openSnack("Nota inválida", "error");
+      openSnack(t("gradesPage.grades.invalid", "Nota inválida"), "error");
       return;
     }
 
@@ -420,10 +441,16 @@ export default function NotasAvaliacoesPage() {
         }),
       });
       const j = await r.json();
-      if (!r.ok) throw new Error(j?.error || "Erro ao salvar nota");
+      if (!r.ok)
+        throw new Error(
+          j?.error || t("gradesPage.grades.save_error", "Erro ao salvar nota")
+        );
       await loadGrades(turmaSelecionada);
     } catch (e: any) {
-      openSnack(e?.message || "Erro", "error");
+      openSnack(
+        e?.message || t("gradesPage.grades.save_error", "Erro"),
+        "error"
+      );
     }
   };
 
@@ -551,7 +578,7 @@ export default function NotasAvaliacoesPage() {
     return out;
   }, [avaliacoesFiltradas, grades]);
 
-  // Exportações CSV
+  // CSV
   function toCSV(lines: string[][]) {
     const escape = (s: string) => `"${(s ?? "").replace(/"/g, '""')}"`;
     return lines
@@ -572,15 +599,14 @@ export default function NotasAvaliacoesPage() {
 
   const exportMatrixCSV = () => {
     const header = [
-      "Aluno",
-      ...avaliacoesFiltradas.map(
-        (a) =>
-          `${a.name} (${t(
-            "gradesPage.assessments.weight_short",
-            "peso"
-          )}=${Number(a.weight ?? 1)}|${a.term || "Geral"})`
-      ),
-      "Média (ponderada)",
+      t("gradesPage.summary.header_student", "Aluno"),
+      ...avaliacoesFiltradas.map((a) => {
+        const wShort = t("gradesPage.assessments.weight_short", "peso");
+        const general = t(GENERAL_TERM_KEY, "Geral");
+        const term = a.term || general;
+        return `${a.name} (${wShort}=${Number(a.weight ?? 1)}|${term})`;
+      }),
+      t("gradesPage.summary.weighted_avg", "Média (ponderada)"),
     ];
     const lines: string[][] = [header];
     for (const a of alunos) {
@@ -594,38 +620,53 @@ export default function NotasAvaliacoesPage() {
       row.push(mediasAluno[a.id] != null ? String(mediasAluno[a.id]) : "");
       lines.push(row);
     }
-    downloadCSV(
-      `notas_${turmaNome || "turma"}_${termFilter}.csv`,
-      toCSV(lines)
-    );
+    const file = `notas_${turmaNome || t("gradesPage.form.class_label", "Turma")}_${termFilter}.csv`;
+    downloadCSV(file, toCSV(lines));
   };
 
   const exportSummaryCSV = () => {
     const lines: string[][] = [];
-    lines.push([`Resumo por aluno (média ponderada) — Termo: ${termFilter}`]);
-    lines.push(["Aluno", "Média", "Situação"]);
+    lines.push([
+      `${t(
+        "gradesPage.summary.by_student_title",
+        "Resumo por aluno (média ponderada)"
+      )} — ${t("gradesPage.term.label", "Período/Etapa")}: ${termFilter}`,
+    ]);
+    lines.push([
+      t("gradesPage.summary.header_student", "Aluno"),
+      t("gradesPage.summary.header_avg", "Média"),
+      t("gradesPage.summary.header_status", "Situação"),
+    ]);
     for (const a of alunos) {
       const m = mediasAluno[a.id];
       const sit =
-        m == null ? "-" : m >= PASSING_GRADE ? "Aprovado" : "Reprovado";
+        m == null
+          ? "-"
+          : m >= PASSING_GRADE
+          ? t("gradesPage.summary.approved", "Aprovado")
+          : t("gradesPage.summary.failed", "Reprovado");
       lines.push([a.name, m == null ? "" : String(m), sit]);
     }
     lines.push([]);
-    lines.push(["Médias por avaliação (média simples)"]);
-    lines.push(["Avaliação", "Peso", "Termo", "Média"]);
+    lines.push([t("gradesPage.summary.per_assessment", "Médias por avaliação")]);
+    lines.push([
+      t("gradesPage.assessments.header_name", "Avaliação"),
+      t("gradesPage.assessments.weight", "Peso"),
+      t("gradesPage.term.label", "Período/Etapa"),
+      t("gradesPage.summary.header_avg", "Média"),
+    ]);
+    const general = t(GENERAL_TERM_KEY, "Geral");
     for (const av of avaliacoesFiltradas) {
       const m = mediasAvaliacao[av.id];
       lines.push([
         av.name,
         String(av.weight ?? 1),
-        av.term || "Geral",
+        av.term || general,
         m == null ? "" : String(m),
       ]);
     }
-    downloadCSV(
-      `resumo_${turmaNome || "turma"}_${termFilter}.csv`,
-      toCSV(lines)
-    );
+    const file = `resumo_${turmaNome || t("gradesPage.form.class_label", "Turma")}_${termFilter}.csv`;
+    downloadCSV(file, toCSV(lines));
   };
 
   // Dados para gráficos — internacionalizados
@@ -648,7 +689,7 @@ export default function NotasAvaliacoesPage() {
   );
 
   return (
-    <Container maxWidth="md" sx={{ mt: 8, mb: 8 }}>
+    <Container maxWidth="md">
       <Backdrop
         open={busy}
         sx={{ color: "#fff", zIndex: (t) => t.zIndex.modal + 1 }}
@@ -695,18 +736,17 @@ export default function NotasAvaliacoesPage() {
             >
               {turmas.map((turma) => (
                 <MenuItem key={turma.id} value={turma.id}>
-                  {turma.name}{" "}
-                  {turma.school_year ? `(${turma.school_year})` : ""}
+                  {turma.name} {turma.school_year ? `(${turma.school_year})` : ""}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
-            <InputLabel>Filtrar por</InputLabel>
+            <InputLabel>{t("gradesPage.term.filter", "Filtrar por")}</InputLabel>
             <Select
               value={termFilter}
-              label="Filtrar por"
+              label={t("gradesPage.term.filter", "Filtrar por")}
               onChange={(e) => setTermFilter(String(e.target.value))}
             >
               {TERMS.map((term) => (
@@ -717,9 +757,9 @@ export default function NotasAvaliacoesPage() {
             </Select>
           </FormControl>
 
-          {termFilter !== "Todas" && (
+          {termFilter !== t(ALL_TERMS_KEY, "Todas") && (
             <Chip
-              label={`Filtrando: ${termFilter}`}
+              label={`${t("gradesPage.term.filtering", "Filtrando")}: ${termFilter}`}
               sx={{ alignSelf: "center" }}
             />
           )}
@@ -755,10 +795,10 @@ export default function NotasAvaliacoesPage() {
               required
             />
             <FormControl sx={{ minWidth: 180 }}>
-              <InputLabel>Período/Etapa</InputLabel>
+              <InputLabel>{t("gradesPage.term.label", "Período/Etapa")}</InputLabel>
               <Select
                 value={formAvaliacao.term}
-                label="Período/Etapa"
+                label={t("gradesPage.term.label", "Período/Etapa")}
                 onChange={(e) =>
                   setFormAvaliacao((s) => ({
                     ...s,
@@ -766,11 +806,13 @@ export default function NotasAvaliacoesPage() {
                   }))
                 }
               >
-                {TERMS.filter((x) => x !== "Todas").map((term) => (
-                  <MenuItem key={term} value={term}>
-                    {term}
-                  </MenuItem>
-                ))}
+                {TERMS.filter((x) => x !== t(ALL_TERMS_KEY, "Todas")).map(
+                  (term) => (
+                    <MenuItem key={term} value={term}>
+                      {term}
+                    </MenuItem>
+                  )
+                )}
               </Select>
             </FormControl>
             <Button variant="contained" type="submit" size="large">
@@ -785,7 +827,7 @@ export default function NotasAvaliacoesPage() {
           gutterBottom
           sx={{ fontWeight: 600, color: "#2f2e2b" }}
         >
-          {t("gradesPage.assessments.title", "Avaliações")}
+          {t("gradesPage.assessments.title", "Avaliações da turma")}
         </Typography>
         <TableContainer component={Paper} sx={{ borderRadius: 4, mb: 4 }}>
           <Table>
@@ -797,7 +839,9 @@ export default function NotasAvaliacoesPage() {
                 <TableCell sx={{ width: 120 }}>
                   {t("gradesPage.assessments.weight", "Peso")}
                 </TableCell>
-                <TableCell sx={{ width: 200 }}>Período/Etapa</TableCell>
+                <TableCell sx={{ width: 200 }}>
+                  {t("gradesPage.term.label", "Período/Etapa")}
+                </TableCell>
                 <TableCell align="right">
                   {t("gradesPage.assessments.header_actions", "Ações")}
                 </TableCell>
@@ -864,7 +908,9 @@ export default function NotasAvaliacoesPage() {
                               )
                             }
                           >
-                            {TERMS.filter((x) => x !== "Todas").map((term) => (
+                            {TERMS.filter(
+                              (x) => x !== t(ALL_TERMS_KEY, "Todas")
+                            ).map((term) => (
                               <MenuItem key={term} value={term}>
                                 {term}
                               </MenuItem>
@@ -872,7 +918,7 @@ export default function NotasAvaliacoesPage() {
                           </Select>
                         </FormControl>
                       ) : (
-                        av.term || "Geral"
+                        av.term || t(GENERAL_TERM_KEY, "Geral")
                       )}
                     </TableCell>
                     <TableCell align="right">
@@ -885,15 +931,18 @@ export default function NotasAvaliacoesPage() {
                           <IconButton
                             color="primary"
                             onClick={saveEdit}
-                            aria-label="Salvar"
-                            title="Salvar"
+                            aria-label={t("gradesPage.actions.save", "Salvar")}
+                            title={t("gradesPage.actions.save", "Salvar")}
                           >
                             <SaveIcon />
                           </IconButton>
                           <IconButton
                             onClick={cancelEdit}
-                            aria-label="Cancelar"
-                            title="Cancelar"
+                            aria-label={t(
+                              "gradesPage.actions.cancel",
+                              "Cancelar"
+                            )}
+                            title={t("gradesPage.actions.cancel", "Cancelar")}
                           >
                             <CloseIcon />
                           </IconButton>
@@ -906,8 +955,8 @@ export default function NotasAvaliacoesPage() {
                         >
                           <IconButton
                             onClick={() => startEdit(av)}
-                            aria-label="Editar"
-                            title="Editar"
+                            aria-label={t("gradesPage.actions.edit", "Editar")}
+                            title={t("gradesPage.actions.edit", "Editar")}
                           >
                             <EditIcon />
                           </IconButton>
@@ -1076,7 +1125,7 @@ export default function NotasAvaliacoesPage() {
           <ResponsiveContainer>
             <BarChart
               data={chartAlunos}
-              margin={{ top: 24, right: 16, bottom: 44, left: 16 }} // mais espaço embaixo p/ eixo X
+              margin={{ top: 24, right: 16, bottom: 44, left: 16 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis
@@ -1156,7 +1205,7 @@ export default function NotasAvaliacoesPage() {
                     <TableCell>{av.name}</TableCell>
                     <TableCell>{nf.format(Number(av.weight ?? 1))}</TableCell>
                     <TableCell>
-                      {av.term || t("gradesPage.term.general", "Geral")}
+                      {av.term || t(GENERAL_TERM_KEY, "Geral")}
                     </TableCell>
                     <TableCell>{m == null ? "-" : nf.format(m)}</TableCell>
                   </TableRow>
@@ -1171,7 +1220,7 @@ export default function NotasAvaliacoesPage() {
           <ResponsiveContainer>
             <BarChart
               data={chartAvaliacoes}
-              margin={{ top: 24, right: 16, bottom: 44, left: 16 }} // idem
+              margin={{ top: 24, right: 16, bottom: 44, left: 16 }}
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis

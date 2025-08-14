@@ -62,7 +62,10 @@
     "cta_primary": "Cadastrar turma",
     "cta_secondary": "Ver exemplos"
   },
-  "navbar": { "home": "Início", "about": "Quem Somos" },
+  "navbar": {
+    "home": "Início",
+    "about": "Quem Somos"
+  },
   "landing": {
     "title": "ScoreOn — Sistema de Controle de Notas",
     "subtitle": "Gerencie turmas, cadastre alunos e registre avaliações com praticidade.",
@@ -71,7 +74,11 @@
   },
   "register": {
     "title": "Criar conta",
-    "form": { "name": "Nome", "email": "E-mail", "password": "Senha" },
+    "form": {
+      "name": "Nome",
+      "email": "E-mail",
+      "password": "Senha"
+    },
     "password_hint": "Mín. 8 caracteres, com maiúscula, minúscula, número e caractere especial.",
     "password_rules": "A senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula, número e caractere especial.",
     "continue": "Continuar",
@@ -101,7 +108,9 @@
     "save": "Salvar nova senha",
     "saving": "Salvando...",
     "success": "Senha atualizada com sucesso! Já pode fazer login.",
-    "errors": { "generic": "Não foi possível redefinir a senha." }
+    "errors": {
+      "generic": "Não foi possível redefinir a senha."
+    }
   },
   "studentsPage": {
     "title": "Gestão de Alunos",
@@ -119,7 +128,10 @@
       "header_actions": "Ações",
       "empty_for_class": "Nenhum aluno cadastrado nesta turma."
     },
-    "actions": { "edit": "Editar", "delete": "Excluir" }
+    "actions": {
+      "edit": "Editar",
+      "delete": "Excluir"
+    }
   },
   "accountPage": {
     "title": "Informações da conta",
@@ -175,7 +187,10 @@
       "header_actions": "Ações",
       "empty": "Nenhuma turma cadastrada."
     },
-    "actions": { "edit": "Editar", "delete": "Excluir" }
+    "actions": {
+      "edit": "Editar",
+      "delete": "Excluir"
+    }
   },
   "gradesPage": {
     "title": "Notas e Avaliações",
@@ -371,10 +386,16 @@
     },
     "form": {
       "title": "Fale conosco",
-      "fields": { "name": "Nome", "email": "E-mail", "message": "Mensagem" },
+      "fields": {
+        "name": "Nome",
+        "email": "E-mail",
+        "message": "Mensagem"
+      },
       "submit": "Enviar"
     },
-    "map": { "loading": "Carregando mapa..." }
+    "map": {
+      "loading": "Carregando mapa..."
+    }
   },
   "homePage": {
     "lead": "Gerencie turmas, cadastre alunos e registre avaliações com praticidade.",

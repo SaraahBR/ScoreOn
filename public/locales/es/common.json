@@ -62,7 +62,10 @@
     "cta_primary": "Crear clase",
     "cta_secondary": "Ver ejemplos"
   },
-  "navbar": { "home": "Inicio", "about": "Quiénes Somos" },
+  "navbar": {
+    "home": "Inicio",
+    "about": "Quiénes Somos"
+  },
   "landing": {
     "title": "ScoreOn — Sistema de Control de Calificaciones",
     "subtitle": "Gestiona clases, registra estudiantes y anota evaluaciones con facilidad.",
@@ -71,7 +74,11 @@
   },
   "register": {
     "title": "Crear cuenta",
-    "form": { "name": "Nombre", "email": "Correo", "password": "Contraseña" },
+    "form": {
+      "name": "Nombre",
+      "email": "Correo",
+      "password": "Contraseña"
+    },
     "password_hint": "Mín. 8 caracteres, con mayúscula, minúscula, número y carácter especial.",
     "password_rules": "La contraseña debe tener al menos 8 caracteres e incluir mayúscula, minúscula, número y carácter especial.",
     "continue": "Continuar",
@@ -101,7 +108,9 @@
     "save": "Guardar nueva contraseña",
     "saving": "Guardando...",
     "success": "¡Contraseña actualizada con éxito! Ya puedes iniciar sesión.",
-    "errors": { "generic": "No fue posible restablecer la contraseña." }
+    "errors": {
+      "generic": "No fue posible restablecer la contraseña."
+    }
   },
   "studentsPage": {
     "title": "Gestión de Estudiantes",
@@ -119,7 +128,10 @@
       "header_actions": "Acciones",
       "empty_for_class": "No hay estudiantes registrados en esta clase."
     },
-    "actions": { "edit": "Editar", "delete": "Eliminar" }
+    "actions": {
+      "edit": "Editar",
+      "delete": "Eliminar"
+    }
   },
   "accountPage": {
     "title": "Información de la cuenta",
@@ -175,9 +187,32 @@
       "header_actions": "Acciones",
       "empty": "No hay clases registradas."
     },
-    "actions": { "edit": "Editar", "delete": "Eliminar" }
+    "actions": {
+      "edit": "Editar",
+      "delete": "Eliminar"
+    }
   },
   "gradesPage": {
+    "title": "Notas y Evaluaciones",
+    "form": {
+      "class_label": "Clase",
+      "assessment_name": "Nombre de la evaluación",
+      "weight": "Peso",
+      "create_assessment": "Crear evaluación"
+    },
+    "charts": {
+      "by_student": "Gráfico: promedio por estudiante",
+      "student": "Estudiante"
+    },
+    "assessments": {
+      "title": "Evaluaciones de la clase",
+      "header_name": "Nombre",
+      "weight": "Peso",
+      "weight_short": "peso",
+      "header_actions": "Acciones",
+      "empty": "No hay evaluaciones."
+    },
+    "gradesPage": {
     "title": "Notas y Evaluaciones",
     "form": {
       "class_label": "Clase",
@@ -220,6 +255,7 @@
       "general": "General",
       "all": "Todas"
     }
+  }
   },
   "resetConfirm": {
     "title": "Restablecer contraseña",
@@ -378,7 +414,9 @@
       },
       "submit": "Enviar"
     },
-    "map": { "loading": "Cargando mapa..." }
+    "map": {
+      "loading": "Cargando mapa..."
+    }
   },
   "homePage": {
     "lead": "Gestiona clases, registra estudiantes y anota evaluaciones con facilidad.",
