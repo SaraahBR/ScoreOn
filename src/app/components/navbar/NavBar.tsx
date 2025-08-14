@@ -45,7 +45,10 @@ export default function Navbar() {
       localStorage.setItem("i18nextLng", code);
       document.cookie = `i18next=${code};path=/;max-age=31536000`;
     } catch {}
-    document.documentElement.setAttribute("lang", code === "pt" ? "pt-BR" : code);
+    document.documentElement.setAttribute(
+      "lang",
+      code === "pt" ? "pt-BR" : code
+    );
   };
 
   const flagButtonSx = (isActive: boolean) =>
@@ -64,7 +67,8 @@ export default function Navbar() {
           : alpha(theme.palette.text.primary, 0.35)
       }`,
       opacity: isActive ? 1 : 0.95,
-      transition: "transform .15s ease, opacity .15s ease, border-color .15s ease",
+      transition:
+        "transform .15s ease, opacity .15s ease, border-color .15s ease",
       boxShadow: "none",
       "&:hover": {
         transform: "scale(1.04)",
@@ -99,7 +103,13 @@ export default function Navbar() {
             sx={flagButtonSx(active === code)}
             aria-label={`Mudar idioma para ${label}`}
           >
-            <Image src={src} alt={label} width={32} height={22} style={flagImgStyle} />
+            <Image
+              src={src}
+              alt={label}
+              width={32}
+              height={22}
+              style={flagImgStyle}
+            />
           </IconButton>
         </Tooltip>
       ))}
@@ -117,7 +127,12 @@ export default function Navbar() {
         height: "100%",
       }}
     >
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1 }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ mb: 1 }}
+      >
         <Stack direction="row" alignItems="center" spacing={1.25}>
           <Image
             src="/logo.png"
@@ -142,14 +157,26 @@ export default function Navbar() {
 
       <Divider sx={{ mb: 1.5 }} />
 
-      <nav aria-label={t("navbar.navigation", { defaultValue: "Navegação principal" })}>
+      <nav
+        aria-label={t("navbar.navigation", {
+          defaultValue: "Navegação principal",
+        })}
+      >
         <List>
           <ListItemButton component={Link} href="/" onClick={() => setOpen(false)}>
-            <ListItemText primary={t("navbar.home", { defaultValue: "Início" })} />
+            <ListItemText
+              primary={t("navbar.home", { defaultValue: "Início" })}
+            />
           </ListItemButton>
 
-          <ListItemButton component={Link} href="/quem-somos" onClick={() => setOpen(false)}>
-            <ListItemText primary={t("navbar.about", { defaultValue: "Quem Somos" })} />
+          <ListItemButton
+            component={Link}
+            href="/quem-somos"
+            onClick={() => setOpen(false)}
+          >
+            <ListItemText
+              primary={t("navbar.about", { defaultValue: "Quem Somos" })}
+            />
           </ListItemButton>
         </List>
       </nav>
@@ -178,7 +205,13 @@ export default function Navbar() {
                 sx={flagButtonSx(active === code)}
                 aria-label={`Mudar idioma para ${map.label}`}
               >
-                <Image src={map.src} alt={map.label} width={32} height={22} style={flagImgStyle} />
+                <Image
+                  src={map.src}
+                  alt={map.label}
+                  width={32}
+                  height={22}
+                  style={flagImgStyle}
+                />
               </IconButton>
             );
           })}
@@ -189,7 +222,9 @@ export default function Navbar() {
 
       <Divider sx={{ my: 1.5 }} />
       <Typography variant="body2" sx={{ opacity: 0.6 }}>
-        {t("navbar.tagline", { defaultValue: "Aprenda e evolua com o ScoreOn" })}
+        {t("navbar.tagline", {
+          defaultValue: "Aprenda e evolua com o ScoreOn",
+        })}
       </Typography>
     </Box>
   );
@@ -199,7 +234,8 @@ export default function Navbar() {
       position="sticky"
       elevation={0}
       sx={{
-        background: "linear-gradient(135deg, #fff 0%, #f4ebdd 60%, #efe6d8 100%)",
+        background:
+          "linear-gradient(135deg, #fff 0%, #f4ebdd 60%, #efe6d8 100%)",
         color: "var(--graphite-900)",
         backdropFilter: "saturate(160%) blur(8px)",
         borderBottom: "1px solid rgba(0,0,0,0.08)",
@@ -215,7 +251,10 @@ export default function Navbar() {
           }}
         >
           {/* Logo + Nome */}
-          <Link href="/" style={{ textDecoration: "none", color: "inherit" }}>
+          <Link
+            href="/"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
               <Image
                 src="/logo.png"
@@ -227,14 +266,23 @@ export default function Navbar() {
               />
               <Typography
                 variant={isMobile ? "subtitle1" : "h6"}
-                sx={{ fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1 }}
+                sx={{
+                  fontWeight: 600,
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1,
+                }}
               >
                 {t("appName", { defaultValue: "ScoreOn" })}
               </Typography>
             </Box>
           </Link>
 
-          <Stack direction="row" spacing={1} alignItems="center" sx={{ flexShrink: 0 }}>
+          <Stack
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            sx={{ flexShrink: 0 }}
+          >
             {!isMdDown && (
               <>
                 <Button
@@ -268,12 +316,14 @@ export default function Navbar() {
                 >
                   {t("navbar.about", { defaultValue: "Quem Somos" })}
                 </Button>
-
-                <LangButtonsInline />
               </>
             )}
 
+            {/* Ícone de perfil */}
             <ProfileMenu />
+
+            {/* Bandeiras à direita do perfil */}
+            <LangButtonsInline />
 
             {isMdDown && (
               <IconButton

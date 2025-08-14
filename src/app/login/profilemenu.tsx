@@ -18,8 +18,10 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import LoginIcon from "@mui/icons-material/Login";
+import { useTranslation } from "react-i18next";
 
 export default function ProfileMenu() {
+  const { t } = useTranslation();
   const { data: session, status } = useSession();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -32,14 +34,14 @@ export default function ProfileMenu() {
 
   const ariaLabel =
     status === "loading"
-      ? "Carregando perfil..."
+      ? t("profileMenu.loading_profile", "Carregando perfil...")
       : user?.name
-      ? `Perfil de ${user.name}`
-      : "Perfil";
+      ? t("profileMenu.aria_user_profile", { defaultValue: "Perfil de {{name}}", name: user.name })
+      : t("profileMenu.tooltip_profile", "Perfil");
 
   return (
     <>
-      <Tooltip title={user?.name ?? "Perfil"}>
+      <Tooltip title={user?.name ?? t("profileMenu.tooltip_profile", "Perfil")}>
         <IconButton
           onClick={handleOpen}
           size="large"
@@ -53,7 +55,7 @@ export default function ProfileMenu() {
           {avatarSrc ? (
             <Avatar
               src={avatarSrc}
-              alt={user?.name ?? "Usuário"}
+              alt={user?.name ?? t("profileMenu.tooltip_profile", "Usuário")}
               sx={{ width: 32, height: 32 }}
               imgProps={{ referrerPolicy: "no-referrer" }}
             />
@@ -77,12 +79,16 @@ export default function ProfileMenu() {
         <MenuItem component={Link} href="/login/minha-conta" prefetch={false}>
           <ListItemIcon>
             {avatarSrc ? (
-              <Avatar src={avatarSrc} sx={{ width: 24, height: 24 }} imgProps={{ referrerPolicy: "no-referrer" }} />
+              <Avatar
+                src={avatarSrc}
+                sx={{ width: 24, height: 24 }}
+                imgProps={{ referrerPolicy: "no-referrer" }}
+              />
             ) : (
               <AccountCircleIcon fontSize="small" />
             )}
           </ListItemIcon>
-          <ListItemText primary="Minha Conta" />
+          <ListItemText primary={t("profileMenu.my_account", "Minha Conta")} />
         </MenuItem>
 
         {/* Criar Conta */}
@@ -90,7 +96,7 @@ export default function ProfileMenu() {
           <ListItemIcon>
             <PersonAddIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Criar Conta" />
+          <ListItemText primary={t("profileMenu.create_account", "Criar Conta")} />
         </MenuItem>
 
         {/* Minhas Turmas */}
@@ -98,7 +104,7 @@ export default function ProfileMenu() {
           <ListItemIcon>
             <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Minhas Turmas" />
+            <ListItemText primary={t("profileMenu.my_classes", "Minhas Turmas")} />
         </MenuItem>
 
         {/* Meus Alunos */}
@@ -106,7 +112,7 @@ export default function ProfileMenu() {
           <ListItemIcon>
             <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Meus Alunos" />
+          <ListItemText primary={t("profileMenu.my_students", "Meus Alunos")} />
         </MenuItem>
 
         {/* Notas e Avaliações */}
@@ -114,7 +120,7 @@ export default function ProfileMenu() {
           <ListItemIcon>
             <ReceiptLongIcon fontSize="small" />
           </ListItemIcon>
-          <ListItemText primary="Notas e Avaliações" />
+          <ListItemText primary={t("profileMenu.grades_assessments", "Notas e Avaliações")} />
         </MenuItem>
 
         <Divider />
@@ -124,14 +130,14 @@ export default function ProfileMenu() {
             <ListItemIcon>
               <LogoutIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Sair" />
+            <ListItemText primary={t("profileMenu.sign_out", "Sair")} />
           </MenuItem>
         ) : (
           <MenuItem component={Link} href="/login" prefetch={false}>
             <ListItemIcon>
               <LoginIcon fontSize="small" />
             </ListItemIcon>
-            <ListItemText primary="Entrar" />
+            <ListItemText primary={t("profileMenu.sign_in", "Entrar")} />
           </MenuItem>
         )}
       </Menu>

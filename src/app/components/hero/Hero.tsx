@@ -32,7 +32,13 @@ export default function Hero() {
               >
                 {t("hero.cta_primary")}
               </Button>
-              <Button variant="text" className={styles.ctaGhost}>
+
+              <Button
+                variant="text"
+                component={Link}
+                href="/exemplos"
+                className={styles.ctaGhost}
+              >
                 {t("hero.cta_secondary")}
               </Button>
             </Stack>

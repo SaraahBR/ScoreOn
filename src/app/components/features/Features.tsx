@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import styles from "./Features.module.css";
 
 type FeatureItem = {
-  icon: JSX.Element;
+  icon: React.ReactNode;
   titleKey: string;
   descKey: string;
 };

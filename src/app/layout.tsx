@@ -11,8 +11,15 @@ export const metadata: Metadata = {
   icons: { icon: "/favicon.ico" },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const lng = cookies().get("i18next")?.value ?? "pt";
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const cookieStore = await cookies();
+  const raw = cookieStore.get("i18next")?.value ?? "pt";
+  const lng = raw.split("-")[0]; // ex.: "pt-BR" -> "pt"
+
   return (
     <html lang={lng} suppressHydrationWarning>
       <body style={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}>

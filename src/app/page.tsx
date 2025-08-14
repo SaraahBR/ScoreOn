@@ -3,6 +3,7 @@
 import { Container, Typography, Box, Button, Stack } from "@mui/material";
 import Hero from "./components/hero/Hero";
 import Features from "./components/features/Features";
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
 export default function HomePage() {
@@ -27,10 +28,19 @@ export default function HomePage() {
         </Typography>
 
         <Stack direction="row" spacing={2} sx={{ mb: 6 }}>
-          <Button variant="contained" href="/login/criar-conta">
+          <Button
+            variant="contained"
+            component={Link}
+            href="/login/criar-conta"
+          >
             {t("landing.cta_start", { defaultValue: "Começar agora" })}
           </Button>
-          <Button variant="outlined">
+
+          <Button
+            variant="outlined"
+            component={Link}
+            href="/documentacao"
+          >
             {t("landing.cta_docs", { defaultValue: "Documentação" })}
           </Button>
         </Stack>

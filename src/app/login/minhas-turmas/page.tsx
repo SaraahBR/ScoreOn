@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import styles from "./Turmas.module.css";
@@ -23,6 +22,7 @@ import {
   TableRow,
   IconButton,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 interface Turma {
   id: number;
@@ -35,9 +35,17 @@ interface TurmaForm {
 }
 
 export default function TurmasPage() {
+  const { t } = useTranslation();
   const [turmas, setTurmas] = useState<Turma[]>([]);
   const [editId, setEditId] = useState<number | null>(null);
-  const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm<TurmaForm>({
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm<TurmaForm>({
     defaultValues: { nome: "", ano: "" },
   });
 
@@ -75,65 +83,92 @@ export default function TurmasPage() {
 
   return (
     <Container maxWidth="md" sx={{ mt: 8, mb: 8 }}>
-      <Typography component="h1" variant="h4" gutterBottom className={styles.tituloTurma}>
-        Gerenciar Turmas
+      <Typography
+        component="h1"
+        variant="h4"
+        gutterBottom
+        className={styles.tituloTurma}
+      >
+        {t("classesPage.title", "Gerenciar Turmas")}
       </Typography>
+
       <Paper className={styles.formTurma} elevation={3}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center">
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={2}
+            alignItems="center"
+          >
             <TextField
-              label="Nome da Turma"
+              label={t("classesPage.form.class_name", "Nome da Turma")}
               fullWidth
               {...register("nome", { required: true })}
             />
             <TextField
-              label="Ano Letivo"
+              label={t("classesPage.form.school_year", "Ano Letivo")}
               fullWidth
-              {...register("ano", { 
-                required: true, 
+              {...register("ano", {
+                required: true,
                 pattern: {
                   value: /^[0-9]{4}$/,
-                  message: "Digite um ano válido (4 dígitos)"
-                }
+                  message: t(
+                    "classesPage.form.year_invalid",
+                    "Digite um ano válido (4 dígitos)"
+                  ),
+                },
               })}
-              inputProps={{ 
-                inputMode: "numeric", 
-                pattern: "[0-9]*", 
-                maxLength: 4 
+              inputProps={{
+                inputMode: "numeric",
+                pattern: "[0-9]*",
+                maxLength: 4,
               }}
               onChange={(e) => {
-                const onlyNums = e.target.value.replace(/[^0-9]/g, "").slice(0, 4);
+                const onlyNums = e.target.value
+                  .replace(/[^0-9]/g, "")
+                  .slice(0, 4);
                 e.target.value = onlyNums;
                 setValue("ano", onlyNums);
               }}
             />
-            {/* Exibe mensagem de erro de validação do ano */}
-            {typeof errors !== 'undefined' && errors.ano && (
+
+            {/* Mensagem de erro do ano (i18n-aware) */}
+            {errors?.ano && (
               <Typography color="error" sx={{ ml: 1, mt: 0.5 }}>
-                {errors.ano.message}
+                {errors.ano.message as string}
               </Typography>
             )}
+
             <Button
               variant="contained"
               type="submit"
               size="large"
               className={styles.botaoCadastrar}
             >
-              {editId !== null ? "Salvar" : "Cadastrar"}
+              {editId !== null
+                ? t("classesPage.form.submit_save", "Salvar")
+                : t("classesPage.form.submit_new", "Cadastrar")}
             </Button>
           </Stack>
         </form>
       </Paper>
+
       <Typography variant="h6" gutterBottom className={styles.tituloTurma}>
-        Turmas Cadastradas
+        {t("classesPage.list_title", "Turmas Cadastradas")}
       </Typography>
+
       <TableContainer component={Paper} className={styles.tabelaTurma}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Nome</TableCell>
-              <TableCell>Ano Letivo</TableCell>
-              <TableCell align="right">Ações</TableCell>
+              <TableCell>
+                {t("classesPage.table.header_name", "Nome")}
+              </TableCell>
+              <TableCell>
+                {t("classesPage.table.header_year", "Ano Letivo")}
+              </TableCell>
+              <TableCell align="right">
+                {t("classesPage.table.header_actions", "Ações")}
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -142,10 +177,19 @@ export default function TurmasPage() {
                 <TableCell>{turma.nome}</TableCell>
                 <TableCell>{turma.ano}</TableCell>
                 <TableCell align="right">
-                  <IconButton aria-label="editar" onClick={() => handleEdit(turma)}>
+                  <IconButton
+                    onClick={() => handleEdit(turma)}
+                    aria-label={t("classesPage.actions.edit", "Editar")}
+                    title={t("classesPage.actions.edit", "Editar")}
+                  >
                     <EditIcon />
                   </IconButton>
-                  <IconButton aria-label="excluir" onClick={() => handleDelete(turma.id)} color="error">
+                  <IconButton
+                    onClick={() => handleDelete(turma.id)}
+                    color="error"
+                    aria-label={t("classesPage.actions.delete", "Excluir")}
+                    title={t("classesPage.actions.delete", "Excluir")}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -154,9 +198,10 @@ export default function TurmasPage() {
           </TableBody>
         </Table>
       </TableContainer>
+
       {turmas.length === 0 && (
-        <Box sx={{ textAlign: 'center', color: '#bfa77a', mt: 3 }}>
-          Nenhuma turma cadastrada.
+        <Box sx={{ textAlign: "center", color: "#bfa77a", mt: 3 }}>
+          {t("classesPage.table.empty", "Nenhuma turma cadastrada.")}
         </Box>
       )}
     </Container>

@@ -22,12 +22,18 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
-type Snack = { open: boolean; message: string; severity: "success" | "error" | "info" | "warning" };
+type Snack = {
+  open: boolean;
+  message: string;
+  severity: "success" | "error" | "info" | "warning";
+};
 
 export default function MinhaConta() {
   const { data: session, update } = useSession();
   const router = useRouter();
+  const { t } = useTranslation();
 
   const [sexo, setSexo] = useState<string>("Não Informar");
 
@@ -44,8 +50,10 @@ export default function MinhaConta() {
     message: "",
     severity: "success",
   });
-  const openSnack = (message: string, severity: Snack["severity"] = "success") =>
-    setSnack({ open: true, message, severity });
+  const openSnack = (
+    message: string,
+    severity: Snack["severity"] = "success"
+  ) => setSnack({ open: true, message, severity });
   const closeSnack = () => setSnack((s) => ({ ...s, open: false }));
 
   useEffect(() => {
@@ -68,11 +76,17 @@ export default function MinhaConta() {
 
   async function handleSaveAvatar() {
     if (!session?.user?.email) {
-      openSnack("Faça login para alterar a foto.", "warning");
+      openSnack(
+        t("accountPage.avatar.login_required", "Faça login para alterar a foto."),
+        "warning"
+      );
       return;
     }
     if (!avatarPreview) {
-      openSnack("Selecione uma imagem primeiro.", "info");
+      openSnack(
+        t("accountPage.avatar.select_first", "Selecione uma imagem primeiro."),
+        "info"
+      );
       return;
     }
     setSavingAvatar(true);
@@ -87,16 +101,27 @@ export default function MinhaConta() {
       });
 
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.error || "Não foi possível salvar a foto.");
+      if (!res.ok)
+        throw new Error(
+          data?.error ||
+            t("api.errors.save_image_error", "Não foi possível salvar a foto.")
+        );
 
       if (data?.url) setAvatarPreview(data.url);
 
-      await update();     
-      router.refresh();   
+      await update(); // atualiza sessão
+      router.refresh(); // atualiza cache de rotas
 
-      openSnack("Foto atualizada com sucesso!", "success");
+      openSnack(
+        t("api.success.image_saved", "Foto atualizada com sucesso!"),
+        "success"
+      );
     } catch (err: any) {
-      openSnack(err?.message || "Erro ao salvar a foto.", "error");
+      openSnack(
+        err?.message ||
+          t("api.errors.save_image_error", "Erro ao salvar a foto."),
+        "error"
+      );
     } finally {
       setSavingAvatar(false);
     }
@@ -116,16 +141,24 @@ export default function MinhaConta() {
       });
 
       const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data?.error || "Não foi possível remover a foto.");
+      if (!res.ok)
+        throw new Error(
+          data?.error ||
+            t("api.errors.save_image_error", "Não foi possível remover a foto.")
+        );
 
       setAvatarPreview(null);
 
       await update();
       router.refresh();
 
-      openSnack("Foto removida.", "success");
+      openSnack(t("api.success.image_removed", "Foto removida."), "success");
     } catch (err: any) {
-      openSnack(err?.message || "Erro ao remover a foto.", "error");
+      openSnack(
+        err?.message ||
+          t("api.errors.save_image_error", "Erro ao remover a foto."),
+        "error"
+      );
     } finally {
       setSavingAvatar(false);
     }
@@ -134,10 +167,15 @@ export default function MinhaConta() {
   return (
     <>
       {/* Tela de carregamento durante upload/refresh */}
-      <Backdrop open={savingAvatar} sx={{ color: "#fff", zIndex: (t) => t.zIndex.modal + 1 }}>
+      <Backdrop
+        open={savingAvatar}
+        sx={{ color: "#fff", zIndex: (t) => t.zIndex.modal + 1 }}
+      >
         <Stack alignItems="center" spacing={2}>
           <CircularProgress color="inherit" />
-          <Typography variant="body1">Atualizando sua foto…</Typography>
+          <Typography variant="body1">
+            {t("accountPage.avatar.updating", "Atualizando sua foto…")}
+          </Typography>
         </Stack>
       </Backdrop>
 
@@ -148,44 +186,61 @@ export default function MinhaConta() {
         onClose={closeSnack}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
-        <Alert onClose={closeSnack} severity={snack.severity} variant="filled" sx={{ width: "100%" }}>
+        <Alert
+          onClose={closeSnack}
+          severity={snack.severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
           {snack.message}
         </Alert>
       </Snackbar>
 
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
         <Typography variant="h4" component="h1" gutterBottom>
-          Informações da conta
+          {t("accountPage.title", "Informações da conta")}
         </Typography>
 
         {/* Meus dados */}
         <Typography variant="h6" sx={{ mt: 3, mb: 2 }}>
-          Meus dados
+          {t("accountPage.my_data.title", "Meus dados")}
         </Typography>
 
         <Paper elevation={1} sx={{ p: 3, mb: 4 }}>
           {/* Foto de perfil */}
-          <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 2, flexWrap: "wrap" }}>
+          <Stack
+            direction="row"
+            spacing={2}
+            alignItems="center"
+            sx={{ mb: 2, flexWrap: "wrap" }}
+          >
             <Avatar
               src={avatarPreview || undefined}
-              alt="Foto do perfil"
+              alt={t("accountPage.avatar.alt", "Foto do perfil")}
               sx={{ width: 72, height: 72 }}
               imgProps={{ referrerPolicy: "no-referrer" }}
             />
             <Stack direction="row" spacing={1} flexWrap="wrap">
               <Button variant="outlined" onClick={handlePickFile} disabled={savingAvatar}>
-                Escolher foto
+                {t("accountPage.avatar.choose", "Escolher foto")}
               </Button>
               <Button
                 variant="contained"
                 onClick={handleSaveAvatar}
                 disabled={savingAvatar || !avatarPreview}
               >
-                {savingAvatar ? "Salvando..." : "Salvar foto"}
+                {savingAvatar
+                  ? t("accountPage.avatar.saving", "Salvando...")
+                  : t("accountPage.avatar.save", "Salvar foto")}
               </Button>
               {avatarPreview && (
-                <Button color="error" variant="text" onClick={handleRemoveAvatar} disabled={savingAvatar}>
-                  Remover
+                <Button
+                  color="error"
+                  variant="text"
+                  onClick={handleRemoveAvatar}
+                  disabled={savingAvatar}
+                >
+                  {t("accountPage.avatar.remove", "Remover")}
                 </Button>
               )}
             </Stack>
@@ -199,35 +254,56 @@ export default function MinhaConta() {
           </Stack>
 
           <TextField
-            label="E-mail"
+            label={t("accountPage.my_data.email", "E-mail")}
             fullWidth
             value={session?.user?.email || ""}
             margin="normal"
             InputProps={{ readOnly: true }}
           />
 
-          <TextField label="Nome" fullWidth defaultValue={session?.user?.name || ""} margin="normal" />
+          <TextField
+            label={t("accountPage.my_data.name", "Nome")}
+            fullWidth
+            defaultValue={session?.user?.name || ""}
+            margin="normal"
+          />
 
-          <TextField label="CPF" fullWidth placeholder="Digite seu CPF" margin="normal" />
+          <TextField
+            label={t("accountPage.my_data.cpf", "CPF")}
+            fullWidth
+            placeholder={t(
+              "accountPage.my_data.cpf_placeholder",
+              "Digite seu CPF"
+            )}
+            margin="normal"
+          />
 
           {/* Sexo em dropdown */}
           <FormControl fullWidth margin="normal">
-            <InputLabel id="sexo-label">Sexo</InputLabel>
+            <InputLabel id="sexo-label">
+              {t("accountPage.my_data.gender", "Sexo")}
+            </InputLabel>
             <Select
               labelId="sexo-label"
               id="sexo"
               value={sexo}
-              label="Sexo"
+              label={t("accountPage.my_data.gender", "Sexo")}
               onChange={(e) => setSexo(e.target.value as string)}
             >
-              <MenuItem value="Feminino">Feminino</MenuItem>
-              <MenuItem value="Masculino">Masculino</MenuItem>
-              <MenuItem value="Não Informar">Não Informar</MenuItem>
+              <MenuItem value="Feminino">
+                {t("accountPage.my_data.gender_female", "Feminino")}
+              </MenuItem>
+              <MenuItem value="Masculino">
+                {t("accountPage.my_data.gender_male", "Masculino")}
+              </MenuItem>
+              <MenuItem value="Não Informar">
+                {t("accountPage.my_data.gender_unspecified", "Não Informar")}
+              </MenuItem>
             </Select>
           </FormControl>
 
           <TextField
-            label="Data de nascimento"
+            label={t("accountPage.my_data.birth", "Data de nascimento")}
             type="date"
             fullWidth
             margin="normal"
@@ -236,28 +312,60 @@ export default function MinhaConta() {
 
           <Box sx={{ mt: 2, display: "flex", gap: 2 }}>
             <Button variant="outlined" color="primary" disabled={savingAvatar}>
-              Salvar alterações
+              {t("accountPage.my_data.save_changes", "Salvar alterações")}
             </Button>
             <Button variant="outlined" color="primary" disabled={savingAvatar}>
-              Mudar senha
+              {t("accountPage.my_data.change_password", "Mudar senha")}
             </Button>
           </Box>
         </Paper>
 
         {/* Endereço */}
         <Typography variant="h6" sx={{ mb: 2 }}>
-          Endereço
+          {t("accountPage.address.title", "Endereço")}
         </Typography>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <Paper elevation={1} sx={{ p: 3 }}>
-              <TextField label="Endereço" fullWidth placeholder="Digite seu endereço" margin="normal" />
-              <TextField label="Cidade" fullWidth placeholder="Digite sua cidade" margin="normal" />
-              <TextField label="CEP" fullWidth placeholder="Digite seu CEP" margin="normal" />
-              <TextField label="Telefone" fullWidth placeholder="Digite seu telefone" margin="normal" />
+              <TextField
+                label={t("accountPage.address.address", "Endereço")}
+                fullWidth
+                placeholder={t(
+                  "accountPage.address.address_placeholder",
+                  "Digite seu endereço"
+                )}
+                margin="normal"
+              />
+              <TextField
+                label={t("accountPage.address.city", "Cidade")}
+                fullWidth
+                placeholder={t(
+                  "accountPage.address.city_placeholder",
+                  "Digite sua cidade"
+                )}
+                margin="normal"
+              />
+              <TextField
+                label={t("accountPage.address.zip", "CEP")}
+                fullWidth
+                placeholder={t(
+                  "accountPage.address.zip_placeholder",
+                  "Digite seu CEP"
+                )}
+                margin="normal"
+              />
+              <TextField
+                label={t("accountPage.address.phone", "Telefone")}
+                fullWidth
+                placeholder={t(
+                  "accountPage.address.phone_placeholder",
+                  "Digite seu telefone"
+                )}
+                margin="normal"
+              />
               <Box sx={{ mt: 2 }}>
                 <Button variant="outlined" color="primary" disabled={savingAvatar}>
-                  Salvar endereço
+                  {t("accountPage.address.save", "Salvar endereço")}
                 </Button>
               </Box>
             </Paper>
