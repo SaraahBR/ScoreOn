@@ -20,18 +20,41 @@
     }
   },
   "features": {
-    "students": { "title": "Turmas e alunos", "desc": "Gerencie turmas e perfis de alunos com facilidade." },
-    "grades": { "title": "Avaliações e médias", "desc": "Registre notas, calcule médias e acompanhe evolução." },
-    "trust": { "title": "Confiável", "desc": "Padrões de acessibilidade e boas práticas." }
+    "students": {
+      "title": "Turmas e alunos",
+      "desc": "Gerencie turmas e perfis de alunos com facilidade."
+    },
+    "grades": {
+      "title": "Avaliações e médias",
+      "desc": "Registre notas, calcule médias e acompanhe evolução."
+    },
+    "trust": {
+      "title": "Confiável",
+      "desc": "Padrões de acessibilidade e boas práticas."
+    }
   },
   "footer": {
-    "links": { "home": "Início", "about": "Quem Somos" },
-    "social": { "instagram": "Instagram", "facebook": "Facebook", "linkedin": "LinkedIn" },
-    "copyright": "© {{year}} Todos os direitos reservados."
+    "links": {
+      "home": "Início",
+      "about": "Quem Somos",
+      "contact": "Fale conosco"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn"
+    },
+    "copyright": "© {{year}} ScoreOn. Todos os direitos reservados."
   },
   "headers": {
-    "home": { "title": "Bem-vindo ao ScoreOn", "subtitle": "Gerencie notas e turmas com eficiência." },
-    "about": { "title": "Sobre Nós", "subtitle": "Conheça mais sobre nossa missão e valores." }
+    "home": {
+      "title": "Bem-vindo ao ScoreOn",
+      "subtitle": "Gerencie notas e turmas com eficiência."
+    },
+    "about": {
+      "title": "Sobre Nós",
+      "subtitle": "Conheça mais sobre nossa missão e valores."
+    }
   },
   "hero": {
     "title": "Centralize as notas dos seus alunos",
@@ -53,7 +76,10 @@
     "password_rules": "A senha deve ter no mínimo 8 caracteres, incluindo letra maiúscula, minúscula, número e caractere especial.",
     "continue": "Continuar",
     "generating_code": "Gerando código...",
-    "errors": { "start_failed": "Erro ao iniciar cadastro", "invalid_code": "Código inválido" },
+    "errors": {
+      "start_failed": "Erro ao iniciar cadastro",
+      "invalid_code": "Código inválido"
+    },
     "code": {
       "info": "O código de confirmação mostrado abaixo é único e será necessário para confirmar a criação da sua conta.",
       "prompt": "Digite o código mostrado abaixo para confirmar seu cadastro:",
@@ -62,12 +88,16 @@
     "confirm": "Confirmar cadastro",
     "confirming": "Confirmando...",
     "back": "Voltar",
-    "success_created": "Conta criada com sucesso! Agora você pode entrar com e-mail e senha."
+    "success_created": "Conta criado com sucesso! Agora você pode entrar com e-mail e senha."
   },
   "reset": {
     "title": "Esqueci a senha",
     "info": "O código de recuperação é o mesmo código mostrado para você no momento do cadastro. Guarde esse código — ele é necessário para redefinir sua senha.",
-    "form": { "email": "E-mail", "code": "Código de recuperação", "new_password": "Nova senha" },
+    "form": {
+      "email": "E-mail",
+      "code": "Código de recuperação",
+      "new_password": "Nova senha"
+    },
     "save": "Salvar nova senha",
     "saving": "Salvando...",
     "success": "Senha atualizada com sucesso! Já pode fazer login.",
@@ -148,28 +178,48 @@
     "actions": { "edit": "Editar", "delete": "Excluir" }
   },
   "gradesPage": {
-    "title": "Gestão de Notas e Avaliações",
+    "title": "Notas e Avaliações",
     "form": {
       "class_label": "Turma",
-      "assessment_name": "Nome da Avaliação",
-      "create_assessment": "Criar Avaliação"
+      "assessment_name": "Nome da avaliação",
+      "weight": "Peso",
+      "create_assessment": "Criar avaliação"
+    },
+    "charts": {
+      "by_student": "Gráfico: média por aluno",
+      "student": "Aluno"
     },
     "assessments": {
-      "title": "Avaliações da Turma",
+      "title": "Avaliações da turma",
       "header_name": "Nome",
+      "weight": "Peso",
+      "weight_short": "peso",
       "header_actions": "Ações",
-      "empty": "Nenhuma avaliação cadastrada para esta turma."
+      "empty": "Nenhuma avaliação."
     },
     "grades": {
-      "title": "Registro de Notas",
+      "title": "Lançar notas",
       "header_student": "Aluno",
       "save": "Salvar"
     },
-    "view": {
-      "title": "Visualização de Notas",
-      "header_student": "Aluno"
+    "summary": {
+      "title": "Médias e Situação",
+      "header_student": "Aluno",
+      "header_avg": "Média",
+      "header_status": "Situação",
+      "approved": "Aprovado",
+      "failed": "Reprovado",
+      "per_assessment": "Médias por avaliação"
     },
-    "actions": { "delete": "Excluir" }
+    "export": {
+      "matrix": "Exportar CSV (Matriz)",
+      "summary": "Exportar CSV (Resumo)"
+    },
+    "term": {
+      "label": "Período/Etapa",
+      "general": "Geral",
+      "all": "Todas"
+    }
   },
   "resetConfirm": {
     "title": "Redefinir senha",
@@ -201,6 +251,10 @@
   "profileMenu": {
     "tooltip_profile": "Perfil",
     "aria_open_menu": "Abrir menu do usuário",
+    "loading": "Carregando perfil…",
+    "aria_profile_of": "Perfil de {{name}}",
+    "profile": "Perfil",
+    "user": "Usuário",
     "my_account": "Minha Conta",
     "create_account": "Criar Conta",
     "my_classes": "Minhas Turmas",
@@ -243,6 +297,130 @@
         "role": "Fundadora & Dev Frontend",
         "desc": "Apaixonada por tecnologia e educação, idealizadora do ScoreOn."
       }
+    }
+  },
+  "docs": {
+    "title": "Documentação do ScoreOn",
+    "intro": "O ScoreOn é um sistema para gestão de notas, turmas e alunos, feito para facilitar o controle acadêmico de escolas e professores.",
+    "howToUse": "Como usar o sistema",
+    "steps": {
+      "one": {
+        "title": "1. Cadastro e Login",
+        "text": "- Clique em \"Começar agora\" e crie sua conta usando Google ou e-mail.<br />- Após entrar, você terá acesso ao painel principal."
+      },
+      "two": {
+        "title": "2. Gerenciar Turmas",
+        "text": "- No menu ou na tela inicial, clique em \"Cadastrar turma\".<br />- Preencha o nome da turma e o ano letivo.<br />- As turmas cadastradas aparecem numa lista onde você pode editar ou excluir."
+      },
+      "three": {
+        "title": "3. Gerenciar Alunos",
+        "text": "- Acesse \"Meus Alunos\".<br />- Cadastre novos alunos vinculando-os a uma turma.<br />- Edite ou exclua conforme necessário."
+      },
+      "four": {
+        "title": "4. Lançar Notas e Avaliações",
+        "text": "- Vá em \"Notas e Avaliações\".<br />- Selecione a turma e o aluno desejado.<br />- Lance as notas e salve.<br />- O sistema calcula as médias automaticamente."
+      },
+      "five": {
+        "title": "5. Consultar Relatórios",
+        "text": "- Gere relatórios por aluno, turma ou disciplina.<br />- Exporte para PDF ou Excel se precisar."
+      }
+    },
+    "faqTitle": "Perguntas Frequentes",
+    "faq": {
+      "q1": "Preciso pagar para usar?",
+      "a1": "Não. O ScoreOn é gratuito para uso escolar.",
+      "q2": "Posso cadastrar várias turmas?",
+      "a2": "Sim. Não há limite de turmas ou alunos.",
+      "q3": "Meus dados estão seguros?",
+      "a3": "Sim. Utilizamos autenticação segura e não compartilhamos seus dados."
+    }
+  },
+  "exemplos": {
+    "titulo": "Exemplos de Uso do ScoreOn",
+    "introducao": "Veja na prática como cadastrar turmas, alunos e lançar notas no ScoreOn. Siga o passo a passo abaixo para entender o fluxo completo:",
+    "passo1": {
+      "titulo": "1. Cadastrando uma Turma",
+      "texto": "- Acesse o menu ou clique em \"Cadastrar turma\" na tela inicial.<br />- Preencha o nome da turma (ex: 3º Ano A) e o ano letivo (ex: 2025).<br />- Clique em \"Cadastrar\". Sua turma aparecerá na lista de turmas."
+    },
+    "passo2": {
+      "titulo": "2. Adicionando Alunos",
+      "texto": "- Entre na turma desejada e clique em \"Adicionar aluno\".<br />- Informe nome, e-mail e outros dados do aluno.<br />- Salve para vincular o aluno à turma."
+    },
+    "passo3": {
+      "titulo": "3. Lançando Notas",
+      "texto": "- Selecione a turma e o aluno.<br />- Clique em \"Lançar nota\" e preencha os campos da avaliação.<br />- Salve para registrar a nota. O sistema calcula a média automaticamente."
+    },
+    "passo4": {
+      "titulo": "4. Gerando Relatórios",
+      "texto": "- Acesse a seção de relatórios.<br />- Escolha o tipo de relatório (por aluno, turma ou disciplina).<br />- Exporte em PDF ou Excel, se desejar."
+    },
+    "dicas": {
+      "titulo": "Dicas Rápidas",
+      "lista1": "Use a busca para encontrar turmas ou alunos rapidamente.",
+      "lista2": "Edite ou exclua registros clicando nos ícones de ação ao lado de cada item.",
+      "lista3": "Todos os dados são salvos automaticamente e podem ser acessados de qualquer dispositivo."
+    }
+  },
+  "contactPage": {
+    "sidebar": {
+      "title": "Contato",
+      "address_html": "Calle de la Paz, 42<br />Ciutat Vella, Valência, Espanha",
+      "email": "GirlsOfCode@gmail.com",
+      "phone": "+34 612 345 678",
+      "find_us": "Nos encontre aqui:"
+    },
+    "form": {
+      "title": "Fale conosco",
+      "fields": { "name": "Nome", "email": "E-mail", "message": "Mensagem" },
+      "submit": "Enviar"
+    },
+    "map": { "loading": "Carregando mapa..." }
+  },
+  "homePage": {
+    "lead": "Gerencie turmas, cadastre alunos e registre avaliações com praticidade.",
+    "benefits": {
+      "title": "Por que usar o ScoreOn?",
+      "items": {
+        "time": {
+          "title": "Economia de tempo",
+          "text": "Automatize tarefas repetitivas e foque no que importa: o ensino."
+        },
+        "security": {
+          "title": "Segurança dos dados",
+          "text": "Seus dados protegidos com tecnologia de ponta e backups automáticos."
+        },
+        "ease": {
+          "title": "Facilidade de uso",
+          "text": "Interface intuitiva, sem complicação. Qualquer pessoa aprende em minutos."
+        }
+      }
+    },
+    "mission": "Nossa missão é simplificar a gestão escolar, tornando o acompanhamento do desempenho dos alunos mais eficiente e transparente para professores, gestores e famílias.",
+    "testimonials": {
+      "title": "O que dizem nossos usuários",
+      "pause_hint": "Passe o mouse para pausar o carrossel agora",
+      "cards": [
+        {
+          "text": "O ScoreOn facilitou muito minha rotina. Agora acompanho o desempenho dos alunos em tempo real!",
+          "author": "Prof. Ana Paula"
+        },
+        {
+          "text": "Simples, rápido e seguro. Recomendo para todos os colegas!",
+          "author": "Prof. Carlos Silva"
+        },
+        {
+          "text": "A plataforma é muito intuitiva. Meus alunos e pais adoram os relatórios!",
+          "author": "Profª. Mariana Souza"
+        },
+        {
+          "text": "O suporte é excelente e sempre me ajudou rápido. Parabéns à equipe!",
+          "author": "Prof. João Mendes"
+        },
+        {
+          "text": "Uso o ScoreOn desde o início. Evoluiu muito e ficou ainda melhor!",
+          "author": "Profª. Sandra Lima"
+        }
+      ]
     }
   }
 }

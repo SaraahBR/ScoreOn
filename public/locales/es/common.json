@@ -20,18 +20,41 @@
     }
   },
   "features": {
-    "students": { "title": "Clases y estudiantes", "desc": "Gestiona clases y perfiles de estudiantes con facilidad." },
-    "grades": { "title": "Evaluaciones y promedios", "desc": "Registra notas, calcula promedios y acompaña la evolución." },
-    "trust": { "title": "Confiable", "desc": "Estándares de accesibilidad y buenas prácticas." }
+    "students": {
+      "title": "Clases y estudiantes",
+      "desc": "Gestiona clases y perfiles de estudiantes con facilidad."
+    },
+    "grades": {
+      "title": "Evaluaciones y promedios",
+      "desc": "Registra notas, calcula promedios y acompaña la evolución."
+    },
+    "trust": {
+      "title": "Confiable",
+      "desc": "Estándares de accesibilidad y buenas prácticas."
+    }
   },
   "footer": {
-    "links": { "home": "Inicio", "about": "Quiénes Somos" },
-    "social": { "instagram": "Instagram", "facebook": "Facebook", "linkedin": "LinkedIn" },
-    "copyright": "© {{year}} Todos los derechos reservados."
+    "links": {
+      "home": "Inicio",
+      "about": "Quiénes Somos",
+      "contact": "Contáctanos"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn"
+    },
+    "copyright": "© {{year}} ScoreOn. Todos los derechos reservados."
   },
   "headers": {
-    "home": { "title": "Bienvenido a ScoreOn", "subtitle": "Administra calificaciones y clases de forma eficiente." },
-    "about": { "title": "Sobre Nosotros", "subtitle": "Conoce más sobre nuestra misión y valores." }
+    "home": {
+      "title": "Bienvenido a ScoreOn",
+      "subtitle": "Administra calificaciones y clases de forma eficiente."
+    },
+    "about": {
+      "title": "Sobre Nosotros",
+      "subtitle": "Conoce más sobre nuestra misión y valores."
+    }
   },
   "hero": {
     "title": "Centraliza las calificaciones de tus alumnos",
@@ -53,7 +76,10 @@
     "password_rules": "La contraseña debe tener al menos 8 caracteres e incluir mayúscula, minúscula, número y carácter especial.",
     "continue": "Continuar",
     "generating_code": "Generando código...",
-    "errors": { "start_failed": "Error al iniciar el registro", "invalid_code": "Código inválido" },
+    "errors": {
+      "start_failed": "Error al iniciar el registro",
+      "invalid_code": "Código inválido"
+    },
     "code": {
       "info": "El código de confirmación que se muestra a continuación es único y será necesario para confirmar la creación de tu cuenta.",
       "prompt": "Introduce el código mostrado a continuación para confirmar tu registro:",
@@ -67,7 +93,11 @@
   "reset": {
     "title": "Olvidé mi contraseña",
     "info": "El código de recuperación es el mismo que se mostró al registrarte. Guárdalo — es necesario para restablecer tu contraseña.",
-    "form": { "email": "Correo", "code": "Código de recuperación", "new_password": "Nueva contraseña" },
+    "form": {
+      "email": "Correo",
+      "code": "Código de recuperación",
+      "new_password": "Nueva contraseña"
+    },
     "save": "Guardar nueva contraseña",
     "saving": "Guardando...",
     "success": "¡Contraseña actualizada con éxito! Ya puedes iniciar sesión.",
@@ -148,28 +178,48 @@
     "actions": { "edit": "Editar", "delete": "Eliminar" }
   },
   "gradesPage": {
-    "title": "Gestión de Notas y Evaluaciones",
+    "title": "Notas y Evaluaciones",
     "form": {
       "class_label": "Clase",
       "assessment_name": "Nombre de la evaluación",
+      "weight": "Peso",
       "create_assessment": "Crear evaluación"
     },
+    "charts": {
+      "by_student": "Gráfico: promedio por estudiante",
+      "student": "Estudiante"
+    },
     "assessments": {
-      "title": "Evaluaciones de la Clase",
+      "title": "Evaluaciones de la clase",
       "header_name": "Nombre",
+      "weight": "Peso",
+      "weight_short": "peso",
       "header_actions": "Acciones",
-      "empty": "No hay evaluaciones para esta clase."
+      "empty": "No hay evaluaciones."
     },
     "grades": {
-      "title": "Registro de Notas",
+      "title": "Registrar notas",
       "header_student": "Estudiante",
       "save": "Guardar"
     },
-    "view": {
-      "title": "Visualización de Notas",
-      "header_student": "Estudiante"
+    "summary": {
+      "title": "Promedios y Estado",
+      "header_student": "Estudiante",
+      "header_avg": "Promedio",
+      "header_status": "Estado",
+      "approved": "Aprobado",
+      "failed": "Reprobado",
+      "per_assessment": "Promedios por evaluación"
     },
-    "actions": { "delete": "Eliminar" }
+    "export": {
+      "matrix": "Exportar CSV (Matriz)",
+      "summary": "Exportar CSV (Resumen)"
+    },
+    "term": {
+      "label": "Período/Etapa",
+      "general": "General",
+      "all": "Todas"
+    }
   },
   "resetConfirm": {
     "title": "Restablecer contraseña",
@@ -193,7 +243,7 @@
     "forgot_password": "Olvidé mi contraseña",
     "login": "Iniciar sesión",
     "loading_ellipsis": "...",
-    "create_account": "Crear cuenta",
+    "create_account": "Crear Cuenta",
     "login_with_google": "Iniciar sesión con Google",
     "terms_notice": "Al continuar, aceptas nuestros términos.",
     "login_failed": "Fallo al iniciar sesión"
@@ -201,6 +251,10 @@
   "profileMenu": {
     "tooltip_profile": "Perfil",
     "aria_open_menu": "Abrir menú de usuario",
+    "loading": "Cargando perfil…",
+    "aria_profile_of": "Perfil de {{name}}",
+    "profile": "Perfil",
+    "user": "Usuario",
     "my_account": "Mi Cuenta",
     "create_account": "Crear Cuenta",
     "my_classes": "Mis Clases",
@@ -243,6 +297,134 @@
         "role": "Fundadora y Dev Frontend",
         "desc": "Apasionada por la tecnología y la educación, idealizadora de ScoreOn."
       }
+    }
+  },
+  "docs": {
+    "title": "Documentación de ScoreOn",
+    "intro": "ScoreOn es un sistema para la gestión de calificaciones, clases y estudiantes, diseñado para facilitar el control académico de escuelas y profesores.",
+    "howToUse": "Cómo usar el sistema",
+    "steps": {
+      "one": {
+        "title": "1. Registro e Inicio de Sesión",
+        "text": "- Haz clic en \"Comenzar ahora\" y crea tu cuenta usando Google o correo electrónico.<br />- Después de iniciar sesión, tendrás acceso al panel principal."
+      },
+      "two": {
+        "title": "2. Gestionar Clases",
+        "text": "- En el menú o en la pantalla de inicio, haz clic en \"Registrar clase\".<br />- Completa el nombre de la clase y el año escolar.<br />- Las clases registradas aparecerán en una lista donde podrás editarlas o eliminarlas."
+      },
+      "three": {
+        "title": "3. Gestionar Estudiantes",
+        "text": "- Accede a la sección \"Mis Estudiantes\".<br />- Registra nuevos estudiantes vinculándolos a una clase.<br />- Edita o elimina estudiantes según sea necesario."
+      },
+      "four": {
+        "title": "4. Ingresar Calificaciones y Evaluaciones",
+        "text": "- Ve a \"Calificaciones y Evaluaciones\".<br />- Selecciona la clase y el estudiante deseado.<br />- Registra las calificaciones y guarda.<br />- El sistema calcula automáticamente los promedios."
+      },
+      "five": {
+        "title": "5. Consultar Informes",
+        "text": "- Genera informes de rendimiento por estudiante, clase o materia.<br />- Exporta informes en PDF o Excel si es necesario."
+      }
+    },
+    "faqTitle": "Preguntas Frecuentes",
+    "faq": {
+      "q1": "¿Debo pagar para usarlo?",
+      "a1": "No, ScoreOn es gratuito para uso escolar.",
+      "q2": "¿Puedo registrar varias clases?",
+      "a2": "Sí, no hay límite de clases o estudiantes.",
+      "q3": "¿Mis datos están seguros?",
+      "a3": "Sí, utilizamos autenticación segura y tus datos no se comparten."
+    }
+  },
+  "exemplos": {
+    "titulo": "Ejemplos de uso de ScoreOn",
+    "introducao": "Vea en la práctica cómo registrar clases, estudiantes y cargar notas en ScoreOn. Siga el paso a paso a continuación para entender el flujo completo:",
+    "passo1": {
+      "titulo": "1. Registrar una Clase",
+      "texto": "- Accede al menú o haz clic en \"Registrar clase\" en la pantalla inicial.<br />- Completa el nombre de la clase (ej.: 3º Año A) y el año lectivo (ej.: 2025).<br />- Haz clic en \"Registrar\". Tu clase aparecerá en la lista de clases."
+    },
+    "passo2": {
+      "titulo": "2. Agregar Estudiantes",
+      "texto": "- Entra en la clase deseada y haz clic en \"Agregar estudiante\".<br />- Informa el nombre, correo electrónico y otros datos del estudiante.<br />- Guarda para vincular el estudiante a la clase."
+    },
+    "passo3": {
+      "titulo": "3. Registrar Notas",
+      "texto": "- Selecciona la clase y el estudiante.<br />- Haz clic en \"Registrar nota\" y completa los campos de la evaluación.<br />- Guarda para registrar la nota. El sistema calcula automáticamente el promedio."
+    },
+    "passo4": {
+      "titulo": "4. Generar Informes",
+      "texto": "- Accede a la sección de informes.<br />- Elige el tipo de informe (por estudiante, clase o asignatura).<br />- Exporta a PDF o Excel, si lo deseas."
+    },
+    "dicas": {
+      "titulo": "Consejos Rápidos",
+      "lista1": "Usa la búsqueda para encontrar clases o estudiantes rápidamente.",
+      "lista2": "Edita o elimina registros haciendo clic en los íconos de acción junto a cada ítem.",
+      "lista3": "Todos los datos se guardan automáticamente y pueden accederse desde cualquier dispositivo."
+    }
+  },
+  "contactPage": {
+    "sidebar": {
+      "title": "Contacto",
+      "address_html": "Calle de la Paz, 42<br />Ciutat Vella, Valencia, España",
+      "email": "GirlsOfCode@gmail.com",
+      "phone": "+34 612 345 678",
+      "find_us": "Encuéntranos aquí:"
+    },
+    "form": {
+      "title": "Contáctanos",
+      "fields": {
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "message": "Mensaje"
+      },
+      "submit": "Enviar"
+    },
+    "map": { "loading": "Cargando mapa..." }
+  },
+  "homePage": {
+    "lead": "Gestiona clases, registra estudiantes y anota evaluaciones con facilidad.",
+    "benefits": {
+      "title": "¿Por qué usar ScoreOn?",
+      "items": {
+        "time": {
+          "title": "Ahorro de tiempo",
+          "text": "Automatiza tareas repetitivas y concéntrate en lo que importa: la enseñanza."
+        },
+        "security": {
+          "title": "Seguridad de los datos",
+          "text": "Tus datos protegidos con tecnología de punta y copias de seguridad automáticas."
+        },
+        "ease": {
+          "title": "Facilidad de uso",
+          "text": "Interfaz intuitiva, sin complicaciones. Cualquiera aprende en minutos."
+        }
+      }
+    },
+    "mission": "Nuestra misión es simplificar la gestión escolar, haciendo el seguimiento del rendimiento de los alumnos más eficiente y transparente para docentes, gestores y familias.",
+    "testimonials": {
+      "title": "Lo que dicen nuestros usuarios",
+      "pause_hint": "Pasa el cursor para pausar el carrusel ahora",
+      "cards": [
+        {
+          "text": "ScoreOn facilitó mucho mi rutina. ¡Ahora sigo el rendimiento de los alumnos en tiempo real!",
+          "author": "Prof. Ana Paula"
+        },
+        {
+          "text": "Sencillo, rápido y seguro. ¡Lo recomiendo a todos los colegas!",
+          "author": "Prof. Carlos Silva"
+        },
+        {
+          "text": "La plataforma es muy intuitiva. ¡A mis alumnos y padres les encantan los informes!",
+          "author": "Prof. Mariana Souza"
+        },
+        {
+          "text": "El soporte es excelente y siempre me ayudó rápido. ¡Felicitaciones al equipo!",
+          "author": "Prof. João Mendes"
+        },
+        {
+          "text": "Uso ScoreOn desde el inicio. ¡Ha evolucionado mucho y está aún mejor!",
+          "author": "Prof. Sandra Lima"
+        }
+      ]
     }
   }
 }
