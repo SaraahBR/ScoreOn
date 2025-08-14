@@ -667,10 +667,10 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
-            <InputLabel>Período/Etapa</InputLabel>
+            <InputLabel>Filtrar por</InputLabel>
             <Select
               value={termFilter}
-              label="Período/Etapa"
+              label="Filtrar por"
               onChange={(e) => setTermFilter(String(e.target.value))}
             >
               {TERMS.map((term) => (
