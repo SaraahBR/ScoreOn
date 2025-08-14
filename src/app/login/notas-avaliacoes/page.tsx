@@ -34,7 +34,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
 import { useSession } from "next-auth/react";
 
-// Recharts (client-only, com tipos compatíveis com next/dynamic)
+// Recharts 
 const ResponsiveContainer = dynamic(
   () => import("recharts").then((m) => m.ResponsiveContainer),
   { ssr: false }
@@ -147,7 +147,7 @@ export default function NotasAvaliacoesPage() {
     setSnack({ open: true, msg, sev });
   const closeSnack = () => setSnack((s) => ({ ...s, open: false }));
 
-  // ---------- Carregamentos ----------
+  // Carregamentos 
   async function loadTurmas() {
     if (!session?.user?.email) return;
     setBusy(true);
@@ -229,7 +229,7 @@ export default function NotasAvaliacoesPage() {
     setEditRow(null);
   }, [turmaSelecionada]);
 
-  // ---------- Filtro ----------
+  // Filtro 
   const avaliacoesFiltradas = useMemo(() => {
     const base = (avaliacoes || []).filter(
       (a) => a.class_id === turmaSelecionada
@@ -238,7 +238,7 @@ export default function NotasAvaliacoesPage() {
     return base.filter((a) => (a.term ?? "Geral") === termFilter);
   }, [avaliacoes, turmaSelecionada, termFilter]);
 
-  // ---------- CRUD Avaliações ----------
+  //  CRUD Avaliações 
   const handleAvaliacaoSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!session?.user?.email || !turmaSelecionada) return;
@@ -362,7 +362,7 @@ export default function NotasAvaliacoesPage() {
     }
   };
 
-  // ---------- Notas (inline + debounce + enter + blur) ----------
+  // Notas (inline + debounce + enter + blur) 
   const saveGrade = async (
   alunoId: number,
   avaliacaoId: number,
@@ -370,9 +370,7 @@ export default function NotasAvaliacoesPage() {
 ) => {
   if (!session?.user?.email || !turmaSelecionada) return;
 
-  // 1) Normaliza vírgula -> ponto e remove lixo
   const cleaned = (rawValue || "").replace(/[^\d.,]/g, "").replaceAll(",", ".");
-  // 2) Garante no máximo um ponto decimal
   const normalized = cleaned.split(".").slice(0, 2).join(".");
   let num = Number(normalized);
 
@@ -381,10 +379,9 @@ export default function NotasAvaliacoesPage() {
     return;
   }
 
-  // 3) Limita faixa e ARREDONDA só aqui
   if (num > GRADE_MAX) num = GRADE_MAX;
   if (num < GRADE_MIN) num = GRADE_MIN;
-  num = Number(num.toFixed(DECIMALS)); // ex.: 10 -> 10.00 -> 10 (para armazenar como número)
+  num = Number(num.toFixed(DECIMALS)); 
 
   try {
     const r = await fetch("/api/grades", {
@@ -394,7 +391,7 @@ export default function NotasAvaliacoesPage() {
         email: session.user.email,
         assessment_id: avaliacaoId,
         student_id: alunoId,
-        value: num, // envia número já validado
+        value: num, 
       }),
     });
     const j = await r.json();
@@ -412,15 +409,11 @@ const handleNotaChange = (
 ) => {
   const key = `${alunoId}-${avaliacaoId}`;
 
-  // 1) Aceita digitação livre (só números, vírgula e ponto)
   const cleaned = valor.replace(/[^\d.,]/g, "").replaceAll(",", ".");
-  // 2) Mantém apenas um separador decimal
   const normalized = cleaned.split(".").slice(0, 2).join(".");
 
-  // 3) NÃO arredonda nem corta aqui; deixa o usuário digitar
   setFormNota((s) => ({ ...s, [key]: normalized }));
 
-  // 4) Se o usuário só digitou "." ou vazio, não dispara nada agora
   if (normalized === "" || normalized === ".") return;
 
   const timers = debounceTimers.current;
@@ -451,7 +444,6 @@ const handleNotaKeyDown = (
         (g) => g.student_id === alunoId && g.assessment_id === avaliacaoId
       )?.value ??
       "";
-    // Arredonda/valida só no salvar
     saveGrade(alunoId, avaliacaoId, String(val));
   }
 };
@@ -487,7 +479,7 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
 
   const turmaNome = turmas.find((t) => t.id === turmaSelecionada)?.name || "";
 
-  // ---------- Médias ----------
+  // Médias
   const mediasAluno = useMemo(() => {
     const map: Record<number, { soma: number; pesos: number }> = {};
     for (const a of alunos) map[a.id] = { soma: 0, pesos: 0 };
@@ -532,7 +524,7 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
     return out;
   }, [avaliacoesFiltradas, grades]);
 
-  // ---------- Exportações CSV ----------
+  // Exportações CSV 
   function toCSV(lines: string[][]) {
     const escape = (s: string) => `"${(s ?? "").replace(/"/g, '""')}"`;
     return lines
@@ -605,7 +597,7 @@ const handleNotaBlur = (alunoId: number, avaliacaoId: number) => {
     );
   };
 
-  // ---------- Dados para gráficos ----------
+  // Dados para gráficos 
   const chartAlunos = useMemo(
     () => alunos.map((a) => ({ name: a.name, media: mediasAluno[a.id] ?? 0 })),
     [alunos, mediasAluno]

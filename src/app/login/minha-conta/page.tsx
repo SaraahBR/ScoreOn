@@ -87,9 +87,9 @@ export default function MinhaConta() {
           setBirthdate(data.birthdate ? String(data.birthdate).slice(0, 10) : "");
 
           setAddress(data.address || "");
-          setNeighborhood(data.neighborhood || "");  // NEW
+          setNeighborhood(data.neighborhood || "");  
           setCity(data.city || "");
-          setStateUF(data.state || "");              // NEW
+          setStateUF(data.state || "");              
           setCep(data.cep || "");
           setPhone(data.phone || "");
 
@@ -98,20 +98,18 @@ export default function MinhaConta() {
           );
         }
       } catch {
-        // silencioso
       } finally {
         setLoadingProfile(false);
       }
     })();
   }, [session?.user?.email]);
 
-  // mantém preview sincronizado quando a sessão muda (ex.: depois de update())
   useEffect(() => {
     const img = (session?.user?.image as string) || null;
     setAvatarPreview((prev) => prev ?? img);
   }, [session?.user?.image]);
 
-  // ---------- avatar handlers ----------
+  // avatar handlers
   function handlePickFile() {
     fileInputRef.current?.click();
   }
@@ -198,7 +196,7 @@ export default function MinhaConta() {
     }
   }
 
-  // ---------- salvar perfil (POST) ----------
+  // Salvar perfil (POST)
   async function handleSaveProfile() {
     if (!session?.user?.email) return;
     setSavingProfile(true);
@@ -213,9 +211,9 @@ export default function MinhaConta() {
           sex,
           birthdate: birthdate || null,
           address,
-          neighborhood,  // NEW
+          neighborhood,  
           city,
-          state: stateUF, // NEW
+          state: stateUF, 
           cep,
           phone,
         }),

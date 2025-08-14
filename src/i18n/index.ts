@@ -16,10 +16,19 @@ if (!i18n.isInitialized) {
       ns: [defaultNS],
       defaultNS,
       backend: { loadPath: "/locales/{{lng}}/{{ns}}.json" },
-      detection: { order: ["cookie", "htmlTag"], caches: ["cookie"] },
+
+      detection: {
+        order: ["cookie", "htmlTag"],
+        caches: ["cookie"],
+      },
+
       interpolation: { escapeValue: false },
       returnNull: false,
-      load: "currentOnly",
+
+      load: "languageOnly",
+      nonExplicitSupportedLngs: true,
+      cleanCode: true,
+
       react: { useSuspense: false },
     });
 }

@@ -14,13 +14,26 @@ export default function I18nProvider({
   const [ready, setReady] = useState(i18n.isInitialized);
 
   useEffect(() => {
-    const init = async () => {
-      if (i18n.language !== initialLanguage) {
-        await i18n.changeLanguage(initialLanguage);
+    let mounted = true;
+
+    const ensure = async () => {
+      const target = initialLanguage.split("-")[0];
+
+      if (!i18n.isInitialized) {
+        await new Promise<void>((resolve) => {
+          i18n.on("initialized", () => resolve());
+        });
       }
-      setReady(true);
+      if (i18n.language !== target) {
+        await i18n.changeLanguage(target);
+      }
+      if (mounted) setReady(true);
     };
-    init();
+
+    ensure();
+    return () => {
+      mounted = false;
+    };
   }, [initialLanguage]);
 
   if (!ready) return null;

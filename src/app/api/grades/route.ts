@@ -11,7 +11,6 @@ const json = (b: any, s = 200) =>
   });
 
 // GET /api/grades?email=...&classId=...
-// -> devolve { assessment_id, student_id, value } para a turma
 export async function GET(req: Request) {
   const sp = new URL(req.url).searchParams;
   const email = sp.get("email");
@@ -30,7 +29,6 @@ export async function GET(req: Request) {
 }
 
 // POST /api/grades  { email, assessment_id, student_id, value }
-// UPSERT pela unique(user_email, assessment_id, student_id)
 export async function POST(req: Request) {
   const { email, assessment_id, student_id, value } = await req
     .json()
@@ -39,7 +37,6 @@ export async function POST(req: Request) {
     return json({ ok: false, error: "missing_fields" }, 400);
   }
 
-  // valida ownership: avaliação e aluno pertencem ao usuário e mesma turma
   const a = await sql/*sql*/ `
     select a.id, a.class_id from assessments a
     where a.id = ${assessment_id} and a.user_email = ${email}

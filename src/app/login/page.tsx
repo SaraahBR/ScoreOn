@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import {
   Button,
@@ -16,13 +17,18 @@ import LoginIcon from "@mui/icons-material/Login";
 import { useTranslation } from "react-i18next";
 
 export default function Page() {
-  const { t } = useTranslation(); // usa common.json
+  const { t, ready } = useTranslation("common");
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  if (!ready) return null;
+
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (loading) return;
     setLoading(true);
     try {
       const res = await signIn("credentials", {
@@ -34,7 +40,7 @@ export default function Page() {
         alert(res.error || t("loginPage.login_failed"));
         return;
       }
-      window.location.href = "/";
+      router.push("/");
     } finally {
       setLoading(false);
     }
@@ -57,6 +63,7 @@ export default function Page() {
             onChange={(e) => setEmail(e.target.value)}
             autoComplete="email"
             required
+            disabled={loading}
           />
 
           <TextField
@@ -68,6 +75,7 @@ export default function Page() {
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
             required
+            disabled={loading}
           />
 
           <Box sx={{ mt: 0.5, mb: 1, textAlign: "right" }}>
@@ -90,10 +98,10 @@ export default function Page() {
                 backgroundColor: "#bfa14a",
                 "&:hover": { backgroundColor: "#a68f3d" },
                 borderRadius: "50%",
-                width: "60px",
-                height: "60px",
-                minWidth: "60px",
-                padding: 0,
+                width: 60,
+                height: 60,
+                minWidth: 60,
+                p: 0,
               }}
               aria-label={t("loginPage.login")}
               title={t("loginPage.login")}
@@ -108,6 +116,7 @@ export default function Page() {
             component={Link}
             href="/login/criar-conta"
             variant="contained"
+            disabled={loading}
             sx={{
               backgroundColor: "#bfa14a",
               "&:hover": { backgroundColor: "#a68f3d" },
@@ -126,9 +135,10 @@ export default function Page() {
 
         <Box>
           <Button
-            onClick={() => signIn("google", { callbackUrl: "/" })}
+            onClick={() => !loading && signIn("google", { callbackUrl: "/" })}
             fullWidth
             variant="contained"
+            disabled={loading}
             sx={{
               backgroundColor: "#bfa14a",
               "&:hover": { backgroundColor: "#a68f3d" },

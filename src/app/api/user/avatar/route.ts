@@ -14,7 +14,7 @@ const STATUS_BY_REASON: Record<ApiErrorKey, number> = {
   email_required: 400,
   invalid_image_format: 400,
   image_corrupted: 400,
-  image_too_large: 413, // Payload Too Large
+  image_too_large: 413, 
   missing_blob_token: 500,
   save_image_error: 500,
 };
@@ -59,7 +59,6 @@ function extFromMime(mime: string) {
   }
 }
 
-// estima bytes do base64 sem decodificar tudo
 function approxBytesFromBase64(b64: string) {
   const len = b64.length;
   const pad = b64.endsWith("==") ? 2 : b64.endsWith("=") ? 1 : 0;
@@ -68,7 +67,7 @@ function approxBytesFromBase64(b64: string) {
 
 const MAX_BYTES = 5 * 1024 * 1024; // 5 MB
 
-// Salva e remove a foto do usuário (Vercel Blob + Postgres)
+// Foto do Usuario (Vercel Blob + Postgres)
 export async function POST(req: Request) {
   const lang = pickLang(req);
 
@@ -85,7 +84,6 @@ export async function POST(req: Request) {
       return json({ ok: false, error: "email_required", lang }, lang, STATUS_BY_REASON.email_required);
     }
 
-    // Remoção
     if (!imageDataUrl) {
       await sql`update users set avatar_url = null where email = ${email}`;
       await sql`insert into users (email) values (${email}) on conflict (email) do nothing`;
@@ -123,7 +121,6 @@ export async function POST(req: Request) {
     const safeEmail = encodeURIComponent(email);
     const buf = Buffer.from(base64, "base64");
 
-    // (opcional) pegar avatar antigo antes de atualizar
     let oldUrl: string | null = null;
     if (cleanup) {
       const prev = await sql<{ avatar_url: string }>`
@@ -145,12 +142,10 @@ export async function POST(req: Request) {
       on conflict (email) do update set avatar_url = ${blob.url}
     `;
 
-    // (opcional) tentar remover o arquivo anterior
     if (cleanup && oldUrl && oldUrl !== blob.url) {
       try {
         await del(oldUrl);
       } catch {
-        // silencioso
       }
     }
 

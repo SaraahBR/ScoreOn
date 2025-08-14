@@ -15,13 +15,11 @@ export async function GET(req: Request) {
   const classIdStr = searchParams.get("classId");
   if (!email) return json({ ok: false, error: "email_required" }, 400);
 
-  // opcionalmente, normaliza para número
   const classId = classIdStr ? Number(classIdStr) : null;
 
   let rows: any[] = [];
 
   if (classId) {
-    // com filtro de turma
     const res = await sql/*sql*/`
       select s.id, s.name, s.registration, s.class_id
       from students s
@@ -30,7 +28,6 @@ export async function GET(req: Request) {
     `;
     rows = res.rows;
   } else {
-    // sem filtro de turma
     const res = await sql/*sql*/`
       select s.id, s.name, s.registration, s.class_id
       from students s
@@ -49,7 +46,6 @@ export async function POST(req: Request) {
   const { email, name, registration, class_id } = await req.json().catch(() => ({}));
   if (!email || !name || !registration || !class_id) return json({ ok: false, error: "missing_fields" }, 400);
 
-  // Garante que a turma pertence ao usuário
   const cls = await sql/*sql*/`select id from classes where id = ${class_id} and user_email = ${email}`;
   if (!cls.rowCount) return json({ ok: false, error: "class_not_found" }, 404);
 
