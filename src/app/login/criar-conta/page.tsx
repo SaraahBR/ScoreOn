@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useState } from "react";
 import { Button, Container, Paper, TextField, Typography, Box, Alert } from "@mui/material";
 import { useTranslation } from "react-i18next";
@@ -152,10 +153,8 @@ export default function Page() {
             )}
 
             <Alert severity="info" sx={{ mb: 2 }}>
-              {/* Mensagem igual à de recuperação de senha */}
-              {t("register.code.info_html", {
-              })}
-              {t("register.code.info")}
+              Atenção! O <strong>código de confirmação</strong> abaixo é <strong>único</strong> e necessário para completar seu cadastro.
+              Guarde-o com cuidado, pois não poderá ser recuperado depois.
             </Alert>
 
             <Typography sx={{ mb: 1 }}>{t("register.code.prompt")}</Typography>

@@ -1,0 +1,13 @@
+.formulario {
+  width: 100%;
+}
+
+.formulario input,
+.formulario textarea {
+  font-size: 1rem;
+}
+
+.formulario button {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}

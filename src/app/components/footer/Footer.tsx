@@ -52,6 +52,9 @@ export default function Footer() {
             <MLink component={Link} href="/quem-somos" className={styles.footerLink}>
               {t("footer.links.about")}
             </MLink>
+            <MLink component={Link} href="/contato" className={styles.footerLink}>
+              Fale conosco
+            </MLink>
           </Stack>
 
           <Stack direction="row" className={styles.social}>
