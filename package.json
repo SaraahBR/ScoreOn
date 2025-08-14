@@ -30,7 +30,6 @@
     "sass": "^1.90.0"
   },
   "devDependencies": {
-    "@next/swc-win32-x64-msvc": "^15.4.6",
     "@swc/jest": "^0.2.39",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.6.4",
