@@ -233,7 +233,13 @@
     "term": {
       "label": "Term/Stage",
       "general": "General",
-      "all": "All"
+      "all": "All",
+      "filter": "Filter by",
+      "filtering": "Filtering",
+      "1st": "1st Bimester",
+      "2nd": "2nd Bimester",
+      "3rd": "3rd Bimester",
+      "4th": "4th Bimester"
     }
   },
   "resetConfirm": {

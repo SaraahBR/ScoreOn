@@ -217,6 +217,7 @@
       "header_student": "Aluno",
       "save": "Salvar"
     },
+
     "summary": {
       "title": "Médias e Situação",
       "header_student": "Aluno",
@@ -233,7 +234,13 @@
     "term": {
       "label": "Período/Etapa",
       "general": "Geral",
-      "all": "Todas"
+      "all": "Todas",
+      "filter": "Filtrar por",
+      "filtering": "Filtrando",
+      "1st": "1º Bimestre",
+      "2nd": "2º Bimestre",
+      "3rd": "3º Bimestre",
+      "4th": "4º Bimestre"
     }
   },
   "resetConfirm": {

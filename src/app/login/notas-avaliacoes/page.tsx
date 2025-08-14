@@ -138,7 +138,7 @@ export default function NotasAvaliacoesPage() {
       t("gradesPage.term.3rd", "3º Bimestre"),
       t("gradesPage.term.4th", "4º Bimestre"),
     ],
-    [t]
+    [i18n.language] 
   );
 
   const [turmas, setTurmas] = useState<Turma[]>([]);
@@ -620,7 +620,9 @@ export default function NotasAvaliacoesPage() {
       row.push(mediasAluno[a.id] != null ? String(mediasAluno[a.id]) : "");
       lines.push(row);
     }
-    const file = `notas_${turmaNome || t("gradesPage.form.class_label", "Turma")}_${termFilter}.csv`;
+    const file = `notas_${
+      turmaNome || t("gradesPage.form.class_label", "Turma")
+    }_${termFilter}.csv`;
     downloadCSV(file, toCSV(lines));
   };
 
@@ -648,7 +650,9 @@ export default function NotasAvaliacoesPage() {
       lines.push([a.name, m == null ? "" : String(m), sit]);
     }
     lines.push([]);
-    lines.push([t("gradesPage.summary.per_assessment", "Médias por avaliação")]);
+    lines.push([
+      t("gradesPage.summary.per_assessment", "Médias por avaliação"),
+    ]);
     lines.push([
       t("gradesPage.assessments.header_name", "Avaliação"),
       t("gradesPage.assessments.weight", "Peso"),
@@ -665,7 +669,9 @@ export default function NotasAvaliacoesPage() {
         m == null ? "" : String(m),
       ]);
     }
-    const file = `resumo_${turmaNome || t("gradesPage.form.class_label", "Turma")}_${termFilter}.csv`;
+    const file = `resumo_${
+      turmaNome || t("gradesPage.form.class_label", "Turma")
+    }_${termFilter}.csv`;
     downloadCSV(file, toCSV(lines));
   };
 
@@ -736,14 +742,17 @@ export default function NotasAvaliacoesPage() {
             >
               {turmas.map((turma) => (
                 <MenuItem key={turma.id} value={turma.id}>
-                  {turma.name} {turma.school_year ? `(${turma.school_year})` : ""}
+                  {turma.name}{" "}
+                  {turma.school_year ? `(${turma.school_year})` : ""}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
 
           <FormControl sx={{ minWidth: 200 }}>
-            <InputLabel>{t("gradesPage.term.filter", "Filtrar por")}</InputLabel>
+            <InputLabel>
+              {t("gradesPage.term.filter", "Filtrar por")}
+            </InputLabel>
             <Select
               value={termFilter}
               label={t("gradesPage.term.filter", "Filtrar por")}
@@ -759,7 +768,10 @@ export default function NotasAvaliacoesPage() {
 
           {termFilter !== t(ALL_TERMS_KEY, "Todas") && (
             <Chip
-              label={`${t("gradesPage.term.filtering", "Filtrando")}: ${termFilter}`}
+              label={`${t(
+                "gradesPage.term.filtering",
+                "Filtrando"
+              )}: ${termFilter}`}
               sx={{ alignSelf: "center" }}
             />
           )}
@@ -795,7 +807,9 @@ export default function NotasAvaliacoesPage() {
               required
             />
             <FormControl sx={{ minWidth: 180 }}>
-              <InputLabel>{t("gradesPage.term.label", "Período/Etapa")}</InputLabel>
+              <InputLabel>
+                {t("gradesPage.term.label", "Período/Etapa")}
+              </InputLabel>
               <Select
                 value={formAvaliacao.term}
                 label={t("gradesPage.term.label", "Período/Etapa")}

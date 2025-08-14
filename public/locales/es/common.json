@@ -253,7 +253,13 @@
     "term": {
       "label": "Período/Etapa",
       "general": "General",
-      "all": "Todas"
+      "all": "Todas",
+      "filter": "Filtrar por",
+      "filtering": "Filtrando",
+      "1st": "1.º Bimestre",
+      "2nd": "2.º Bimestre",
+      "3rd": "3.º Bimestre",
+      "4th": "4.º Bimestre"
     }
   }
   },
