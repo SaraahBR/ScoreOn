@@ -18,6 +18,7 @@ Ele centraliza turmas, alunos, avaliações, lançamento de notas, médias, filt
 - [🌍 Internacionalização (i18n)](#-internacionalização-i18n)
 - [🔐 Autenticação](#-autenticação)
 - [🗄️ Banco de Dados](#️-banco-de-dados)
+- [📦 Vercel Blob Storage](#-vercel-blob-storage)
 - [📡 API — Visão Geral](#-api--visão-geral)
   - [🔑 API — Autenticação & Cadastro](#-api--autenticação--cadastro)
   - [🎓 API — Gestão Acadêmica](#-api--gestão-acadêmica)
@@ -203,7 +204,6 @@ scoreon/
   Usa `signIn('credentials')`, possui botão Google, link para **Esqueci a senha**, CTA **Criar conta**, rótulos traduzidos, bloqueio durante `loading`.  
 - **Menu de Perfil (`src/app/login/profilemenu.tsx`)**  
   Mostra avatar/nome quando autenticado, com opções (Minha Conta, Minhas Turmas, etc.) e **Sair/Entrar**. Usa `aria-*` e `Tooltip`.  
-  **Testes sugeridos:** itens por estado da sessão, abrir/fechar menu, chamar `signOut`.
 
 ---
 
@@ -222,9 +222,8 @@ O **Vercel Blob Storage** é um serviço de armazenamento de objetos oferecido p
 ### 🔹 Por que foi usado no projeto
 No **ScoreOn**, o Vercel Blob Storage foi adotado para:
 - Armazenar **imagens de perfil** dos usuários de forma segura e escalável.
-- Permitir **uploads** de documentos e materiais de apoio (ex.: PDFs, slides, trabalhos escolares).
 - Garantir alta performance no acesso aos arquivos, com distribuição global e URLs públicas/privadas.
-- Evitar a necessidade de configurar e manter um serviço de storage separado (como AWS S3 ou Google Cloud Storage).
+- Evitar a necessidade de configurar e manter um serviço de storage separado (como AWS S3).
 
 Essa abordagem reduziu a complexidade de configuração e manteve a aplicação mais enxuta, integrando o armazenamento de arquivos diretamente no ambiente da Vercel.
 
@@ -346,7 +345,7 @@ Arquivos: `Hero.tsx`, `Hero.module.css`.
 AppBar com ProfileMenu, seletor de idioma (bandeiras) e Drawer mobile.  
 Arquivos: `NavBar.tsx`, `NavBar.module.css`, `NavBar.test.tsx`, `explicaTesteCen.md`.  
 **A11y:** `aria-label` em botões; navegação com roles adequados.  
-**Teste:** troca de idioma altera textos (i18n em memória).
+**Teste:** troca de idioma altera textos na página "Quem Somos" (i18n em memória).
 
 ---
 
@@ -366,12 +365,7 @@ Introdução + 4 passos (Cadastrar Turma, Adicionar Alunos, Lançar Notas, Gerar
 Arquivos: `src/app/exemplos/page.tsx`, `Exemplos.module.css`.
 
 ### Quem Somos (`/quem-somos`)
-Páginas institucional com cards de missão/valores/equipe e animações de entrada.  
-Traduções esperadas:  
-```
-common.about.title, intro, sections.mission.*, sections.values.*, sections.team.*,
-team.{gabriela|sara|sarah}.{name,role,desc}, team_title
-```
+Páginas institucional com cards de missão/valores/equipe.  
 
 ### Minha Conta (`/login/minha-conta`)
 Perfil e avatar (preview, salvar, remover). Feedback com `Backdrop + Snackbar`.  
@@ -525,7 +519,7 @@ Desenvolvido por **Sarah Hernandes, Gabriela Anjos e Sara Sales**.
 Projeto educacional, com foco em acessibilidade, usabilidade e impacto na gestão escolar.
 
 <p align="center">
-  <img src="public/quem-somos.png" alt="Quem Somos" width="700" />
+  <img src="public/quem-somos.png" alt="Quem Somos" width="800" />
 </p>
 
 
