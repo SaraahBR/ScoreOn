@@ -305,17 +305,14 @@
     "team": {
       "gabriela": {
         "name": "Gabriela Anjos",
-        "role": "Backend Dev",
         "desc": "Specialist in scalable and secure solutions for the school environment."
       },
       "sara": {
         "name": "Sara Sales",
-        "role": "UX/UI Designer",
         "desc": "Responsible for ScoreOn’s visual experience and usability."
       },
       "sarah": {
         "name": "Sarah Hernandes",
-        "role": "Founder & Frontend Dev",
         "desc": "Passionate about technology and education, creator of ScoreOn."
       }
     }

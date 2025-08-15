@@ -164,9 +164,9 @@ export default function QuemSomosPage() {
                   <Typography variant="body2" sx={{ color: "#bfa77a", mb: 1 }}>
                     {t(`team.${key}.role`, {
                       defaultValue:
-                        key === "gabriela" ? "Dev Backend" :
-                        key === "sara" ? "UX/UI Designer" :
-                        "Fundadora & Dev Frontend",
+                        key === "gabriela" ? "Dev FullStack" :
+                        key === "sara" ? "Dev FullStack" :
+                        "Dev FullStack",
                     })}
                   </Typography>
                   <Typography variant="body2" sx={{ color: "#5a5956", textAlign: "center" }}>
