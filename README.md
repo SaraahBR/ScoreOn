@@ -5,7 +5,7 @@ Ele centraliza turmas, alunos, avaliações, lançamento de notas, médias, filt
 
 
 <p align="center">
-  <img src="public/logo.png" alt="Logo ScoreOn" width="300" />
+  <img src="public/logo.png" alt="Logo ScoreOn" width="500" />
 </p>
 
 
@@ -526,7 +526,7 @@ Desenvolvido por **Sarah Hernandes, Gabriela Anjos e Sara Sales**.
 Projeto educacional, com foco em acessibilidade, usabilidade e impacto na gestão escolar.
 
 <p align="center">
-  <img src="public/quem-somos.png" alt="Quem Somos" width="300" />
+  <img src="public/quem-somos.png" alt="Quem Somos" width="700" />
 </p>
 
 
