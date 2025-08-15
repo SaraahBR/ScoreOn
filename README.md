@@ -201,7 +201,6 @@ scoreon/
   - Função `pickLang()` infere idioma por `Accept-Language` e define `content-language` na resposta
 - **Página de Login (`src/app/login/page.tsx`)**  
   Usa `signIn('credentials')`, possui botão Google, link para **Esqueci a senha**, CTA **Criar conta**, rótulos traduzidos, bloqueio durante `loading`.  
-  **Testes sugeridos:** bloquear enquanto `loading`, tratar erro mockado do NextAuth, redirecionar ao sucesso.
 - **Menu de Perfil (`src/app/login/profilemenu.tsx`)**  
   Mostra avatar/nome quando autenticado, com opções (Minha Conta, Minhas Turmas, etc.) e **Sair/Entrar**. Usa `aria-*` e `Tooltip`.  
   **Testes sugeridos:** itens por estado da sessão, abrir/fechar menu, chamar `signOut`.
