@@ -5,8 +5,8 @@
 .paper {
   padding: clamp(20px, 4vw, 36px);
   border-radius: 18px;
-  border: 1px solid rgba(0,0,0,0.06);
-  background: linear-gradient(135deg, #fff 0%, #f4ebdd 60%, #efe6d8 100%);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: linear-gradient(135deg, #000000 0%, #f4ebdd 60%, #efe6d8 100%);
 }
 
 .row {
