@@ -1,29 +1,30 @@
-import type { NextAuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from "next-auth";
+import type { NextAuthConfig } from "next-auth";
+import Google from "next-auth/providers/google";
+import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { getUserByEmail } from "@/lib/user-repo";
 import { sql } from "@vercel/postgres";
 
-export const authOptions: NextAuthOptions = {
+const authConfig: NextAuthConfig = {
   providers: [
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
       ? [
-          GoogleProvider({
+          Google({
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
           }),
         ]
       : []),
-    CredentialsProvider({
+    Credentials({
       name: "E-mail e Senha",
       credentials: {
         email: { label: "E-mail", type: "email" },
         password: { label: "Senha", type: "password" },
       },
       async authorize(credentials) {
-        const email = credentials?.email?.toLowerCase().trim();
-        const password = credentials?.password?.trim();
+        const email = (credentials?.email as string)?.toLowerCase().trim();
+        const password = (credentials?.password as string)?.trim();
         if (!email || !password) return null;
 
         const user = await getUserByEmail(email);
@@ -85,3 +86,6 @@ export const authOptions: NextAuthOptions = {
     },
   },
 };
+
+export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
+export const authOptions = authConfig;
